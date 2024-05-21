@@ -17,9 +17,9 @@ source $ZSH/oh-my-zsh.sh
 COMPLETION_WAITING_DOTS="true"
 bindkey '^ ' autosuggest-accept
 
-alias ezsh="nvim ~/.dotfiles/.zshrc"
-alias evim="n ~/.config/nvim"
-alias etmux="nvim ~/.config/tmux/tmux.conf"
+alias ezsh="nvim ~/.dotfiles/zsh/.zshrc"
+alias evim="n ~/.dotfiles/neovim/.config/nvim"
+alias etmux="nvim ~/.dotfiles/tmux/.config/tmux/tmux.conf"
 
 alias gs="git status"
 alias gcb="git checkout -b"
