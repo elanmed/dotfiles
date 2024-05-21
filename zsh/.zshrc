@@ -15,7 +15,7 @@ plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 COMPLETION_WAITING_DOTS="true"
-bindkey '^ ' autosuggest-accept
+bindkey '^ ' autosuggest-execute
 
 alias ezsh="nvim ~/.dotfiles/zsh/.zshrc"
 alias evim="n ~/.dotfiles/neovim/.config/nvim"
