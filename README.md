@@ -4,7 +4,16 @@ A collection of configuration files and custom scripts, centralized in a repo fo
 
 ---
 
+Clone with submodules:
+
+```sh
+git clone --recurse-submodules https://github.com/ElanMedoff/dotfiles
+```
+
+Bootstrap:
+
 ```sh
 chmod +x bootstrap.sh # make script executable
 ./bootstrap.sh
 ```
+
