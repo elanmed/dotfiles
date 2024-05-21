@@ -1,0 +1,29 @@
+{
+  "coc.preferences.formatOnSave": true,
+  "coc.preferences.useQuickfixForLocations": true,
+  "snippets.textmateSnippetsRoots": ["/Users/elanmedoff/.config/nvim/snippets"],
+  "snippets.loadFromExtensions": false,
+  "typescript.suggest.completeFunctionCalls": false,
+  "javascript.suggest.completeFunctionCalls": false,
+  "diagnostic.checkCurrentLine": true,
+  "Lua.diagnostics.globals": ["vim", "settings"],
+  "Lua.hint.enable": false,
+  "Lua.signatureHelp.enable": false,
+  "hover.floatConfig": {
+    "border": true,
+    "rounded": true,
+    "highlight": "CocFloating"
+  },
+  "suggest.floatConfig": {
+    "border": true,
+    "rounded": true,
+    "highlight": "CocFloating"
+  },
+  "diagnostic.floatConfig": {
+    "border": true,
+    "rounded": true,
+    "highlight": "CocFloating"
+  },
+  "pairs.enableCharacters": ["(", "[", "{", "'", "`"],
+  "pairs.enableBackspace": true
+}

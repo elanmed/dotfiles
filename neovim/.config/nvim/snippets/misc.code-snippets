@@ -1,0 +1,10 @@
+{
+  "equals": {
+    "body": ["==="],
+    "prefix": "hh"
+  },
+  "arrow fn": {
+    "body": ["= () => "],
+    "prefix": "afs"
+  },
+}
