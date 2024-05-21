@@ -17,3 +17,9 @@ chmod +x bootstrap.sh # make script executable
 ./bootstrap.sh
 ```
 
+Keep submodules up-to-date:
+
+```sh
+git submodule foreach git pull origin master
+```
+
