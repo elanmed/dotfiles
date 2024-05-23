@@ -14,6 +14,6 @@ const cleanDirs = dirsStdout.split("\n").filter(Boolean).map((dir) =>
 );
 
 for (const dir of cleanDirs) {
-  console.log(chalk.blue(`running stow ${dir}`));
+  console.log(chalk.green(`running stow ${dir}`));
   await $`stow ${dir}`;
 }

@@ -25,6 +25,8 @@ export async function maybeInstallPackage(packageName: string) {
     return;
   }
 
-  console.log(chalk.blue(`installing ${packageName}`));
-  await spinner(() => $`brew install ${packageName}`);
+  await spinner(
+    chalk.green(`installing ${packageName}`),
+    () => $`brew install ${packageName}`,
+  );
 }
