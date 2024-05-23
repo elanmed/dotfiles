@@ -1,5 +1,8 @@
 {
   "tasks": {
-    "bootstrap": "deno run --allow-read --allow-sys --allow-env --allow-run bootstrap.ts"
-  }
+    "root": "deno run --allow-read --allow-sys --allow-env --allow-run bootstrap.ts",
+    "tmux": "deno run --allow-read --allow-sys --allow-env --allow-run tmux/.config/tmux/bootstrap.ts",
+    "neovim": "deno run --allow-read --allow-sys --allow-env --allow-run neovim/.config/nvim/bootstrap.ts"
+  },
+  "lock": false
 }

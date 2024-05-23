@@ -12,9 +12,13 @@ git clone --recurse-submodules https://github.com/ElanMedoff/dotfiles
 
 Bootstrap:
 
+- Install [deno](https://docs.deno.com/runtime/manual/getting_started/installation)
+- Install [zx](https://google.github.io/zx/v7/getting-started#install)
+
 ```sh
-chmod +x bootstrap.sh # make script executable
-./bootstrap.sh
+deno task root
+deno task tmux
+deno task neovim
 ```
 
 Keep submodules up-to-date:
@@ -22,4 +26,3 @@ Keep submodules up-to-date:
 ```sh
 git submodule foreach git pull origin master
 ```
-

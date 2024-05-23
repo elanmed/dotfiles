@@ -1,28 +1,6 @@
 import "npm:zx/globals";
 import { $ } from "npm:zx";
-
-async function hasHomebrew() {
-  const { stdout: brewInstalledStdout } = await $`command -v brew`;
-  if (brewInstalledStdout === "") {
-    console.log(chalk.red("hombrew not installed!"));
-    return false;
-  }
-  return true;
-}
-
-async function hasHomebrewPackage(packageName: string) {
-  const { stdout } = await $`brew ls --versions ${packageName}`;
-  return stdout !== "";
-}
-
-async function maybeInstallPackage(packageName: string) {
-  if (await hasHomebrewPackage(packageName)) {
-    console.log(chalk.green(`${packageName} already installed`));
-    return;
-  }
-
-  await $`brew install ${packageName}`;
-}
+import { hasHomebrew, maybeInstallPackage } from "./helpers.ts";
 
 const hasBrew = await hasHomebrew();
 if (!hasBrew) {
@@ -36,6 +14,6 @@ const cleanDirs = dirsStdout.split("\n").filter(Boolean).map((dir) =>
 );
 
 for (const dir of cleanDirs) {
-  console.log(chalk.green(`running: stow ${dir}`));
+  console.log(chalk.blue(`running stow ${dir}`));
   await $`stow ${dir}`;
 }
