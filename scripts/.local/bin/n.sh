@@ -13,4 +13,3 @@ window=1
 tmux new-window -t "n-${uuid}":1
 tmux select-window -t "n-${uuid}":0
 tmux attach-session -t "n-${uuid}"
-

@@ -1,0 +1,5 @@
+{
+  "tasks": {
+    "bootstrap": "deno run --allow-read --allow-sys --allow-env --allow-run bootstrap.ts"
+  }
+}
