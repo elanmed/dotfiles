@@ -11,7 +11,7 @@ async function hasPackage(
     if (packageManager === "brew") {
       await $`brew ls --versions ${packageName}`;
     } else {
-      await $`dfn list installed ${packageName}`;
+      await $`dnf list installed ${packageName}`;
     }
     return true;
   } catch {
