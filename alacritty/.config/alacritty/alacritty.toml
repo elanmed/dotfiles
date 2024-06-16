@@ -4,15 +4,19 @@ live_config_reload = true
 size = 20.0
 
 [font.normal]
-family = ''
+family = 'JetBrainsMono Nerd Font'
 
 [colors.cursor]
 cursor = '#de935f'
 
 [colors.primary]
-cursor = '#1a1b1d'
+background = '#1C1C1C'
 
 [keyboard]
 bindings = [
 { key = "V", mods = "Control", action = "Paste"}
 ]
+
+[window.padding]
+x = 10 
+y = 10 
