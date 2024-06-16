@@ -1,13 +1,8 @@
 import "npm:zx/globals";
 import { $ } from "npm:zx";
-import { hasHomebrew, maybeInstallPackage } from "./helpers.ts";
+import { installPackage } from "./helpers.ts";
 
-const hasBrew = await hasHomebrew();
-if (!hasBrew) {
-  await $`exit`;
-}
-
-await maybeInstallPackage("stow");
+await installPackage({ packageName: "stow", packageManager: argv.pm });
 const { stdout: dirsStdout } = await $`ls */`;
 const cleanDirs = dirsStdout.split("\n").filter(Boolean).map((dir) =>
   dir.substring(0, dir.length - 1)

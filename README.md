@@ -13,7 +13,8 @@ git clone --recurse-submodules https://github.com/ElanMedoff/dotfiles
 Bootstrap:
 
 - Install [deno](https://docs.deno.com/runtime/manual/getting_started/installation)
-- Install [zx](https://google.github.io/zx/v7/getting-started#install)
+- Install [neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim/921fe8c40c34dd1f3fb35d5b48c484db1b8ae94b)
+- Install [oh-my-zsh](https://ohmyz.sh/#install)
 
 ```sh
 deno task root

@@ -1,32 +1,42 @@
 import "npm:zx/globals";
 import { $ } from "npm:zx";
 
-export async function hasHomebrew() {
-  const { stdout: brewInstalledStdout } = await $`command -v brew`;
-  if (brewInstalledStdout === "") {
-    console.log(chalk.red("hombrew not installed!"));
-    return false;
-  }
-  return true;
-}
-
-async function hasHomebrewPackage(packageName: string) {
+async function hasPackage(
+  { packageName, packageManager }: {
+    packageName: string;
+    packageManager: string;
+  },
+) {
   try {
-    await $`brew ls --versions ${packageName}`;
+    if (packageManager === "brew") {
+      await $`brew ls --versions ${packageName}`;
+    } else {
+      await $`dfn list installed ${packageName}`;
+    }
     return true;
   } catch {
     return false;
   }
 }
 
-export async function maybeInstallPackage(packageName: string) {
-  if (await hasHomebrewPackage(packageName)) {
+export async function installPackage(
+  { packageName, packageManager }: {
+    packageName: string;
+    packageManager: string;
+  },
+) {
+  if (packageManager !== "brew" && packageManager !== "dnf") {
+    throw new Error("the --pm argument only supports `brew` or `dnf`");
+  }
+
+  if (await hasPackage({ packageName, packageManager })) {
     console.log(chalk.blue(`${packageName} already installed`));
     return;
   }
 
-  await spinner(
-    chalk.green(`installing ${packageName}`),
-    () => $`brew install ${packageName}`,
-  );
+  if (packageManager === "brew") {
+    await $`brew install ${packageName}`;
+  } else {
+    await $`sudo dnf install ${packageName}`;
+  }
 }

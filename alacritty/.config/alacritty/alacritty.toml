@@ -1,0 +1,18 @@
+live_config_reload = true
+
+[font]
+size = 20.0
+
+[font.normal]
+family = ''
+
+[colors.cursor]
+cursor = '#de935f'
+
+[colors.primary]
+cursor = '#1a1b1d'
+
+[keyboard]
+bindings = [
+{ key = "V", mods = "Control", action = "Paste"}
+]
