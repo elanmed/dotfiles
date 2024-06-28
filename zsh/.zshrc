@@ -25,9 +25,13 @@ alias etmux="nvim ~/.dotfiles/tmux/.config/tmux/tmux.conf"
 alias gs="git status"
 alias gcb="git checkout -b"
 alias gc="git checkout"
-alias gpush="git push origin HEAD"
-alias gpull="git pull origin master && pnpm install"
-alias grename="git branch -m"
+alias ga="git add -A"
+alias gpoh="git push origin HEAD"
+alias gpom="git pull origin master"
+alias gm="deno task commit-message"
+
+alias ni="npm install"
+alias pi="pnpm install"
 
 alias src="exec zsh"
 alias tsrc="tmux source ~/.config/tmux/tmux.conf"
@@ -53,4 +57,3 @@ cb() {
 }
 gamp () { git add -A && git commit -m $1 && gpush }
 killp() { kill -9 $(lsof -t -i:$1) }
-
