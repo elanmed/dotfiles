@@ -32,10 +32,15 @@ function getMessageFromCode(code: Code) {
 }
 
 const status = await $`git status --short`;
-const message = status.stdout.split("\n").filter(Boolean).map((line) => {
-  const code = line[0];
+const messageArr = status.stdout.split("\n").filter(Boolean).map((line) => {
+  const code = line[1];
   const rest = line.slice(3);
   return `${getMessageFromCode(code as Code)} ${rest}`;
-}).join("\n");
+});
+const title = "parsed from git status:";
+const message = [
+  title,
+  "=".repeat(title.length),
+].concat(messageArr).join("\n");
 
 await $`git commit -m ${message}`;
