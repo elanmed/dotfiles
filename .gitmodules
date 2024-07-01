@@ -1,6 +1,6 @@
 [submodule "neovim/.config/nvim"]
 	path = neovim/.config/nvim
-	url = https://github.com/ElanMedoff/neovim-config
+	url = git@github.com:ElanMedoff/neovim-config.git
 [submodule "tmux/.config/tmux"]
 	path = tmux/.config/tmux
-	url = https://github.com/ElanMedoff/tmux-config
+	url = git@github.com:ElanMedoff/tmux-config.git
