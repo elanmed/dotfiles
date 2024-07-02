@@ -26,9 +26,11 @@ alias gs="git status"
 alias gcb="git checkout -b"
 alias gc="git checkout"
 alias ga="git add -A"
-alias gpoh="git push origin HEAD"
-alias gpom="git pull origin master"
-alias gm="deno task commit-message"
+alias gm="git commit -m"
+alias gpsh="git push origin HEAD"
+alias gpl="git pull origin master"
+alias gamp="git add -A && deno task commit-message && git push origin HEAD"
+alias gms="deno task commit-message"
 
 alias ni="npm install"
 alias pi="pnpm install"
@@ -55,5 +57,4 @@ cb() {
   ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
   echo $ref | pbcopy
 }
-gamp () { git add -A && git commit -m $1 && gpush }
 killp() { kill -9 $(lsof -t -i:$1) }

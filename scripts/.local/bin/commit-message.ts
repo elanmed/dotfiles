@@ -38,7 +38,7 @@ const messageArr = status.stdout.split("\n").filter(Boolean).map((line) => {
   const rest = line.slice(3);
   return `${getMessageFromCode(code as Code)} ${rest}`;
 });
-const title = "files updated:";
+const title = "git status --porcelain";
 const message = [
   title,
   "=".repeat(title.length),
