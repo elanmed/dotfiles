@@ -31,13 +31,14 @@ function getMessageFromCode(code: Code) {
   }
 }
 
-const status = await $`git status --short`;
+const status = await $`git status --porcelain`;
 const messageArr = status.stdout.split("\n").filter(Boolean).map((line) => {
-  const code = line[0];
+  // [0] is index, [1] is working tree
+  const code = line[1];
   const rest = line.slice(3);
   return `${getMessageFromCode(code as Code)} ${rest}`;
 });
-const title = "message parsed from git status:";
+const title = "files updated:";
 const message = [
   title,
   "=".repeat(title.length),
