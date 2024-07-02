@@ -44,4 +44,5 @@ const message = [
   "=".repeat(title.length),
 ].concat(messageArr).join("\n");
 
+// console.log(message);
 await $`git commit -m ${message}`;
