@@ -15,11 +15,18 @@ Bootstrap:
 - Install [Alacritty](https://alacritty.org/)
 - Install [JetBrainsMono Nerd Font](https://www.nerdfonts.com/font-downloads)
 - Install [deno](https://docs.deno.com/runtime/manual/getting_started/installation)
-- Install [neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim/921fe8c40c34dd1f3fb35d5b48c484db1b8ae94b)
-- Install [oh-my-zsh](https://ohmyz.sh/#install)
+- Add deno to the path for the current terminal session:
 
 ```sh
-deno task root
+export PATH=$PATH:~/.deno/bin/
+```
+
+Bootstrap:
+
+```sh
+deno task oh-my-zsh
+deno task stow
+deno task zsh
 deno task tmux
 deno task neovim
 ```
