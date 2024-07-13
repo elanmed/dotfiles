@@ -1,9 +1,5 @@
 export ZSH="$HOME/.oh-my-zsh"
-PATH=$HOME/.local/bin:$PATH
-export PATH=$HOME/.deno/bin:$PATH
-
-# dedupe
-PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
+export PATH=$HOME/.local/bin:$HOME/.deno/bin:$PATH
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -43,9 +39,10 @@ alias cats="highlight -O ansi --force"
 
 alias resetnvim="rm -rf ~/.cache/nvim ~/.config/nvim/plugin ~/.local/share/nvim ~/.config/coc"
 alias vim="nvim"
+alias vi="nvim"
 
 alias n="n.sh"
-alias ps="ps.sh ~/Desktop/local-files/projects/sites/personal-site"
+alias ps="ps.sh"
 
 gif() { ffmpeg -i $1.mov -pix_fmt rgb8 -r 10 $1.gif && gifsicle -O3 $1.gif -o $1.gif }
 mkcd () { mkdir $1 && cd $1 }
