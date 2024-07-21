@@ -9,7 +9,6 @@ h_validate_package_manager $1
 if [[ $1 == "--pm=dnf" ]]
 then 
   h_install_package $1 zsh
-  sudo lchsh $USER
 fi
 
 if [[ -d ~/.oh-my-zsh ]]
