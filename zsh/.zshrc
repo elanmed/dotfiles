@@ -15,7 +15,7 @@ COMPLETION_WAITING_DOTS="true"
 bindkey '^ ' autosuggest-execute
 
 alias ezsh="nvim ~/.dotfiles/zsh/.zshrc"
-alias evim="cd ~/.dotfiles/neovim/.config/nvim && n ."
+alias evim="cd ~/.dotfiles/nvim/.config/nvim && n ."
 alias eterm="nvim ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
 alias etmux="nvim ~/.dotfiles/tmux/.config/tmux/tmux.conf"
 
