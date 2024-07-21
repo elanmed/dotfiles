@@ -11,16 +11,17 @@ then
   exit 1
 fi
 
-h_cecho --query "this script delete your .zshrc. confirm 'y' for yes, anything else to abort: "
+h_cecho --query "this script delete your .zshrc. confirm 'y' for yes, anything else to abort:"
 read answer
 
 if [[ "$answer" != 'y' ]]
 then 
   h_cecho --error "aborting"
+  exit 1
 fi
 
 h_cecho --doing "removing ~/.zshrc"
-rm -rf ~/.zshrc
+rm ~/.zshrc
 
 h_install_package $1 stow
 for dir in */
