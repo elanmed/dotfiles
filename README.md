@@ -11,7 +11,7 @@ Clone with submodules:
 git clone --recurse-submodules https://github.com/ElanMedoff/dotfiles .dotfiles
 ```
 
-Bootstrap:
+Prereqs:
 
 - Install [Alacritty](https://alacritty.org/)
 - Install [JetBrainsMono Nerd Font](https://www.nerdfonts.com/font-downloads)
