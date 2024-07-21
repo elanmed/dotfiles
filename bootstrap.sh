@@ -30,9 +30,11 @@ do
   stow "$stripped_dir"
 done
 
+h_cecho --doing "bootstrapping zsh"
+source ~/.dotfiles/zsh/bootstrap.sh $1
 
-package_manager=$(echo $1 | cut -d= -f2)
-h_cecho --noop "to finish bootstrapping, run:"
-h_cecho --noop "./neovim/.config/nvim/bootstrap.sh --pm=$package_manager"
-h_cecho --noop "./tmux/.config/tmux/bootstrap.sh --pm=$package_manager"
-h_cecho --noop "./zsh/bootstrap.sh"
+h_cecho --doing "bootstrapping tmux"
+source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh $1
+
+h_cecho --doing "bootstrapping vim"
+source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh $1

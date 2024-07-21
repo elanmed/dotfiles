@@ -2,7 +2,8 @@
 
 source ~/.dotfiles/helpers.sh
 
-h_validate_num_args --num=0 "$@"
+h_validate_num_args --num=1 "$@"
+h_validate_package_manager $1
 
 syntax_dir=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 if [[ -d "${syntax_dir}" ]]

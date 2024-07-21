@@ -21,14 +21,13 @@ h_cecho () {
       echo -e "${purple}$2${no_color}"
       ;;
     *)
-      h_option_error "--error|query|noop|doing"
-      exit 1
+      h_format_error "--error|query|noop|doing"
       ;;
   esac
 }
 
 # $1: --pm=brew|dnf
-# $2: package_name
+# $2: package name
 h_install_package () {
   h_validate_num_args --num=2 "$@"
   h_validate_package_manager $1
@@ -64,8 +63,8 @@ h_has_package () {
   return $?
 }
 
-# $1: --num
-# $2: args
+# $1: --num=#expected args
+# $2: the args
 h_validate_num_args () {
   local args=("${@:2}")
   local num_actual="${#args[@]}"
@@ -79,8 +78,7 @@ h_validate_num_args () {
       exit 1
       ;;
     *)
-      h_option_error "--num="
-      exit 1
+      h_format_error "--num="
       ;;
   esac
 }
@@ -91,25 +89,20 @@ h_validate_package_manager () {
     --pm=*)
       if [[ $1 != "--pm=brew" ]] && [[ $1 != "--pm=dnf" ]]
       then
-        h_option_error "--pm=brew|dnf"
-        exit 1
+        h_format_error "--pm=brew|dnf"
       fi
       ;;
     *)
-      h_option_error "--pm=brew|dnf"
-      exit 1
+      h_format_error "--pm=brew|dnf"
       ;;
   esac
 }
 
-# $1: a string of the missing option
-h_option_error () {
-  if [[ "$#" != 1 ]]
-  then 
-    h_cecho --error "expects 1 argument"
-    exit 1
-  fi
+# $1: the missing option
+h_format_error () {
+  h_validate_num_args --num=1 "$@"
 
-  local error_message="bad option, only '$1' is supported"
-  h_cecho --error "$error_message"
+  h_cecho --error "bad option, only '$1' is supported"
+  exit 1
 }
+
