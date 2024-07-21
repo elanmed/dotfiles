@@ -37,5 +37,8 @@ source ~/.dotfiles/zsh/bootstrap.sh $1
 h_cecho --doing "bootstrapping tmux"
 source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh $1
 
+h_cecho --doing "bootstrapping nvm"
+source ~/.dotfiles/nvm/bootstrap.sh $1
+
 h_cecho --doing "bootstrapping vim"
 source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh $1
