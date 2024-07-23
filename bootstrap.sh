@@ -41,4 +41,4 @@ h_cecho --doing "bootstrapping nvm"
 source ~/.dotfiles/nvm/bootstrap.sh $1
 
 h_cecho --doing "bootstrapping nvim"
-source ~/.dotfiles/nvim/.config/nvim/bootstrap.sh $1
+source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh $1
