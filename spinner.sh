@@ -8,11 +8,10 @@ spinner_pid=
 # $1: the message to echo while the spinner runs
 function start_spinner {
     set +m
-    echo -en "$1  "
     { 
       while : ; 
       do for char in "⠋" "⠙" "⠹"	"⠸"	"⠼"	"⠴"	"⠦"	"⠧"	"⠇"	"⠏"
-        do echo -en "\b$char"
+        do echo -en "${1//?/\\b}\b\b$char $1" 
           sleep 0.1
         done
       done & 
@@ -24,7 +23,8 @@ function start_spinner {
 function stop_spinner {
     { kill -9 $spinner_pid && wait; } 2>/dev/null
     set -m
-    echo -en "\b \n"
+    echo -en "\033[2K\r"
+    echo -e "$1"
 }
 
 trap stop_spinner EXIT

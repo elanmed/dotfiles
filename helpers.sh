@@ -15,9 +15,10 @@ h_spinner() {
   local text=$(echo $1 | cut -d= -f2)
   case $1 in 
     --text=*)
-      start_spinner "${purple}$text${no_color}"
+      formatted_text="${purple}$text${no_color}"
+      start_spinner "$formatted_text"
       $args
-      stop_spinner
+      stop_spinner "$formatted_text"
       ;;
     *)
       h_format_error "--text="
