@@ -1,4 +1,5 @@
 #! /bin/bash
+source ~/.dotfiles/spinner.sh
 
 red='\033[0;31m'
 blue='\033[0;34m'
@@ -6,6 +7,27 @@ green='\033[0;32m'
 purple='\033[0;35m'
 no_color='\033[0m' # No Color
 
+# eg: h_spinner --text="hi" sleep 3
+# $1: --text
+# $2: command to run
+h_spinner() {
+  local args="${@:2}"
+  local text=$(echo $1 | cut -d= -f2)
+  case $1 in 
+    --text=*)
+      start_spinner "${purple}$text${no_color}"
+      $args
+      stop_spinner
+      ;;
+    *)
+      h_format_error "--text="
+      ;;
+  esac
+}
+
+# eg: h_cecho --error "something went wrong!"
+# $1: --{error,query,noop,doing}=
+# $2: message to echo
 h_cecho () {
   case $1 in 
     --error)
@@ -26,7 +48,8 @@ h_cecho () {
   esac
 }
 
-# $1: --pm=brew|dnf
+# eg: h_install_package --pm=dnf neovim
+# $1: --pm={brew,dnf}
 # $2: package name
 h_install_package () {
   h_validate_num_args --num=2 "$@"
@@ -48,7 +71,8 @@ h_install_package () {
   fi
 }
 
-# $1: --pm=brew|dnf
+# eg: h_has_package --pm=dnf neovim
+# $1: --pm={brew,dnf}
 # $2: package_name
 h_has_package () {
   h_validate_num_args --num=2 "$@"
@@ -63,7 +87,8 @@ h_has_package () {
   return $?
 }
 
-# $1: --num=#expected args
+# eg: h_validate_num_args --num=2 "$@"
+# $1: --num=
 # $2: the args
 h_validate_num_args () {
   local args=("${@:2}")
@@ -83,7 +108,8 @@ h_validate_num_args () {
   esac
 }
 
-# $1: --pm=brew|dnf
+# eg: h_validate_package_manager --pm=dnf
+# $1: --pm={brew,dnf}
 h_validate_package_manager () {
   case $1 in 
     --pm=*)
@@ -98,6 +124,7 @@ h_validate_package_manager () {
   esac
 }
 
+# eg: h_format_error "--pm={brew,dnf}"
 # $1: the missing option
 h_format_error () {
   h_validate_num_args --num=1 "$@"
