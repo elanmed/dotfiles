@@ -51,7 +51,7 @@ alias n="n.sh"
 alias ps="ps.sh"
 
 gd () {
-	nvim -p $(git diff --name-only) -c ":tabdo :Gvdiffsplit"
+	$NVIM_EXEC -p $(git diff --name-only) -c ":tabdo :Gvdiffsplit"
 }
 nvim() {
   h_cecho --error "use 'vi'!"
