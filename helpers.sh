@@ -1,5 +1,4 @@
 #! /bin/bash
-source ~/.dotfiles/spinner.sh
 
 red='\033[0;31m'
 blue='\033[0;34m'

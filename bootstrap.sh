@@ -11,7 +11,7 @@ then
   exit 1
 fi
 
-h_cecho --query "this script delete your .zshrc. confirm 'y' for yes, anything else to abort:"
+echo -n $(h_cecho --query "this script delete your ~/.zshrc. confirm 'y' for yes, anything else to abort: ")
 read answer
 
 if [[ "$answer" != 'y' ]]
