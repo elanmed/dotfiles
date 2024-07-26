@@ -7,25 +7,6 @@ green='\033[0;32m'
 purple='\033[0;35m'
 no_color='\033[0m' # No Color
 
-# eg: h_spinner --text="hi" sleep 3
-# $1: --text
-# $2: command to run
-h_spinner() {
-  local args="${@:2}"
-  local text=$(echo $1 | cut -d= -f2)
-  case $1 in 
-    --text=*)
-      formatted_text="${purple}$text${no_color}"
-      start_spinner "$formatted_text"
-      $args
-      stop_spinner "$formatted_text"
-      ;;
-    *)
-      h_format_error "--text="
-      ;;
-  esac
-}
-
 # eg: h_cecho --error "something went wrong!"
 # $1: --{error,query,noop,doing}=
 # $2: message to echo
