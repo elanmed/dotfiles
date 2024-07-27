@@ -2,7 +2,6 @@ source ~/.dotfiles/helpers.sh
 
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.local/bin:$HOME/.deno/bin:$PATH
-export EDITOR="nvim"
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
@@ -15,6 +14,7 @@ export COMPLETION_WAITING_DOTS="true"
 bindkey '^ ' autosuggest-execute
 
 NVIM_EXEC=$(which nvim)
+export EDITOR="$NVIM_EXEC"
 
 alias ezsh="$NVIM_EXEC ~/.dotfiles/zsh/.zshrc"
 alias evim="cd ~/.dotfiles/neovim/.config/nvim && n ."
