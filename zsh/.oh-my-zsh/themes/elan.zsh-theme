@@ -11,5 +11,4 @@ NEWLINE=$'\n'
 LINE_ABOVE=""
 for i in {0..5}; LINE_ABOVE="-$LINE_ABOVE"
 
-PROMPT='${LINE_ABOVE}${NEWLINE}$(directory)$(git_prompt_info)${NEWLINE}🍕:: '
-
+PROMPT='$(directory)$(git_prompt_info)${NEWLINE}🍕:: '
