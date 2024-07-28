@@ -17,5 +17,5 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
 
 h_cecho --doing "installing the latest version of node"
-nvm install node
+nvm install 'lts/*'
 
