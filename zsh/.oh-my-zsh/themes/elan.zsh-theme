@@ -1,11 +1,16 @@
+ORANGE="$FG[016]"
+RED="$FG[001]"
+MAGENTA="$FG[005]"
+CYAN="$FG[006]"
+
 directory() {
-   echo "%F{green}%~%{$reset_color%}"
+   echo "${CYAN}%~%{$reset_color%}"
 }
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" ["
 ZSH_THEME_GIT_PROMPT_SUFFIX="]"
-ZSH_THEME_GIT_PROMPT_DIRTY="%F{red} dirty%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%F{cyan} clean%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_DIRTY="${RED} dirty%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="${MAGENTA} clean%{$reset_color%}"
 
 NEWLINE=$'\n'
 LINE_ABOVE=""

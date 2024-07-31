@@ -9,9 +9,6 @@ family = 'JetBrainsMono Nerd Font'
 [colors.cursor]
 cursor = '#de935f'
 
-[colors.primary]
-background = '#1C1C1C'
-
 [keyboard]
 bindings = [
 { key = "V", mods = "Control", action = "Paste"}
