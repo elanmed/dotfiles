@@ -1,5 +1,5 @@
 directory() {
-   echo "%F{cyan}%~%{$reset_color%}"
+   echo "%F{yellow}%~%{$reset_color%}"
 }
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" ["
