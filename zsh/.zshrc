@@ -52,6 +52,7 @@ alias resetnvim="rm -rf ~/.cache/nvim ~/.config/nvim/plugin ~/.local/share/nvim 
 
 alias vi="$NVIM_EXEC"
 alias vim="$NVIM_EXEC -u ~/.dotfiles/neovim/.config/nvim/lua/barebones/init.lua"
+alias tm="tmux"
 alias cat="highlight -O xterm256 --force"
 
 alias n="n.sh"
