@@ -61,13 +61,12 @@ alias ps="ps.sh"
 gd () {
 	$NVIM_EXEC -p $(git diff --name-only) -c ":tabdo :Gvdiffsplit"
 }
-nvim() {
-  h_cecho --error "use 'vi'!"
-}
+nvim() { h_cecho --error "use 'vi' instead!" }
 gif() { ffmpeg -i $1.mov -pix_fmt rgb8 -r 10 $1.gif && gifsicle -O3 $1.gif -o $1.gif }
 mkcd () { mkdir $1 && cd $1 }
 search() { grep "$1" ~/.zsh_history | tail -n 20 }
-cdl() { cd $1 && ls }
+cdl() { h_cecho --error "use 'cl' instead!" }
+cl() { cd $1 && ls }
 zl() { z $1 && ls }
 cb() {
   ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
