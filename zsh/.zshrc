@@ -3,6 +3,9 @@ source ~/.dotfiles/helpers.sh
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.local/bin:$HOME/.deno/bin:$PATH
 
+NVIM_EXEC=$(which nvim)
+export EDITOR="$NVIM_EXEC"
+
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
 [[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
@@ -19,9 +22,7 @@ export plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 export COMPLETION_WAITING_DOTS="true"
 bindkey '^S' autosuggest-execute
-
-NVIM_EXEC=$(which nvim)
-export EDITOR="$NVIM_EXEC"
+bindkey -s '^P' '$NVIM_EXEC $(fzf)\n'
 
 alias ezsh="$NVIM_EXEC ~/.dotfiles/zsh/.zshrc"
 alias evim="cd ~/.dotfiles/neovim/.config/nvim && n ."
