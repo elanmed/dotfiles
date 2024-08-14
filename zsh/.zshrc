@@ -18,7 +18,7 @@ export ZSH_THEME="elan"
 export plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 export COMPLETION_WAITING_DOTS="true"
-bindkey '^ ' autosuggest-execute
+bindkey '^S' autosuggest-execute
 
 NVIM_EXEC=$(which nvim)
 export EDITOR="$NVIM_EXEC"
