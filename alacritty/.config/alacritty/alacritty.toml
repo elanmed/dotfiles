@@ -17,6 +17,11 @@ bindings = [
 { key = "V", mods = "Control", action = "Paste"}
 ]
 
+[window]
+decorations = 'Buttonless'
+
 [window.padding]
 x = 10 
 y = 10 
+
+
