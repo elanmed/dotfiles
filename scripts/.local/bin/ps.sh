@@ -1,4 +1,10 @@
 #!/bin/bash
+if [[ "$TERM_PROGRAM" = tmux ]]
+then
+  h_cecho --error "only run ps.sh outside a tmux session!" 
+  exit
+fi
+
 uuid=$(uuidgen)
 uuid=${uuid:0:8}
 tmux new-session -d -s "n-${uuid}"
