@@ -10,7 +10,7 @@ size = 15.0
 family = 'JetBrainsMono Nerd Font'
 
 [colors.cursor]
-cursor = '#de935f'
+cursor = '#b4b7b4'
 
 [keyboard]
 bindings = [
@@ -18,10 +18,10 @@ bindings = [
 ]
 
 [window]
-decorations = 'Buttonless'
+decorations = 'None'
 
 [window.padding]
-x = 10 
-y = 10 
+x = 5 
+y = 5 
 
 
