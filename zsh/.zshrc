@@ -3,7 +3,7 @@ source ~/.dotfiles/helpers.sh
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.local/bin:$HOME/.deno/bin:$PATH
 
-NVIM_EXEC=$(which nvim)
+export NVIM_EXEC="$(which nvim) -u ~/.dotfiles/neovim/.config/nvim/+feature_complete.lua"
 export EDITOR="$NVIM_EXEC"
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -53,17 +53,13 @@ alias cats="highlight -O ansi --force"
 alias resetnvim="rm -rf ~/.cache/nvim ~/.config/nvim/plugin ~/.local/share/nvim ~/.config/coc"
 
 alias vi="$NVIM_EXEC"
-alias vim="$NVIM_EXEC -u ~/.dotfiles/neovim/.config/nvim/lua/barebones/init.lua"
+alias vim="$NVIM_EXEC -u ~/.dotfiles/neovim/.config/nvim/+barebones.lua"
 alias tm="tmux"
 alias cat="highlight -O xterm256 --force"
 
 alias n="n.sh"
 alias ps="ps.sh"
 
-gd () {
-	$NVIM_EXEC -p $(git diff --name-only) -c ":tabdo :Gvdiffsplit"
-}
-nvim() { h_cecho --error "use 'vi' instead!" }
 gif() { ffmpeg -i $1.mov -pix_fmt rgb8 -r 10 $1.gif && gifsicle -O3 $1.gif -o $1.gif }
 mkcd () { mkdir $1 && cd $1 }
 search() { grep "$1" ~/.zsh_history | tail -n 20 }
