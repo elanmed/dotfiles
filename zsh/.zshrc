@@ -3,8 +3,8 @@ source ~/.dotfiles/helpers.sh
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.local/bin:$HOME/.deno/bin:$PATH
 
-export NVIM_EXEC="$(which nvim) -u ~/.dotfiles/neovim/.config/nvim/+feature_complete.lua"
-export EDITOR="$NVIM_EXEC"
+alias vi="$(which nvim) -u ~/.dotfiles/neovim/.config/nvim/+feature_complete.lua"
+export EDITOR="vi"
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
@@ -23,12 +23,12 @@ source $ZSH/oh-my-zsh.sh
 export COMPLETION_WAITING_DOTS="true"
 bindkey '^S' autosuggest-execute
 # issues using fzf in a function that's registered with zle -N
-bindkey -s '^P' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; "$NVIM_EXEC" "$FILE"; fi \n'
+bindkey -s '^P' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; vi "$FILE"; fi \n'
 
-alias ezsh="$NVIM_EXEC ~/.dotfiles/zsh/.zshrc"
+alias ezsh="vi ~/.dotfiles/zsh/.zshrc"
 alias evim="cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
-alias eterm="$NVIM_EXEC ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
-alias etmux="$NVIM_EXEC ~/.dotfiles/tmux/.config/tmux/tmux.conf"
+alias eterm="vi ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
+alias etmux="vi ~/.dotfiles/tmux/.config/tmux/tmux.conf"
 
 alias gs="git status"
 alias gcb="git checkout -b"
@@ -51,9 +51,7 @@ alias c="clear"
 alias cats="highlight -O ansi --force"
 
 alias resetnvim="rm -rf ~/.cache/nvim ~/.config/nvim/plugin ~/.local/share/nvim ~/.config/coc"
-
-alias vi="$NVIM_EXEC"
-alias vim="$NVIM_EXEC -u ~/.dotfiles/neovim/.config/nvim/+barebones.lua"
+alias vim="$(which nvim) -u ~/.dotfiles/neovim/.config/nvim/+barebones.lua"
 alias tm="tmux"
 alias cat="highlight -O xterm256 --force"
 
@@ -61,6 +59,7 @@ alias n="n.sh"
 alias ps="ps.sh"
 
 gif() { ffmpeg -i $1.mov -pix_fmt rgb8 -r 10 $1.gif && gifsicle -O3 $1.gif -o $1.gif }
+abspath() { echo $(realpath $1) | pbcopy && echo $(realpath $1) }
 mkcd () { mkdir $1 && cd $1 }
 search() { grep "$1" ~/.zsh_history | tail -n 20 }
 cdl() { h_cecho --error "use 'cl' instead!" }
