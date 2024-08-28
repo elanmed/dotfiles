@@ -7,7 +7,7 @@ TERM="xterm-256color"
 size = 15.0
 
 [font.normal]
-family = 'JetBrainsMono Nerd Font'
+family = 'ComicCode Nerd Font'
 
 [colors.cursor]
 cursor = '#b4b7b4'
@@ -23,5 +23,3 @@ decorations = 'None'
 [window.padding]
 x = 5 
 y = 5 
-
-

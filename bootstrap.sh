@@ -40,5 +40,8 @@ source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh $1
 h_cecho --doing "bootstrapping nvm"
 source ~/.dotfiles/nvm/bootstrap.sh $1
 
+h_cecho --doing "bootstrapping fonts"
+source ~/.dotfiles/fonts/bootstrap.sh $1
+
 h_cecho --doing "bootstrapping nvim"
 source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh $1
