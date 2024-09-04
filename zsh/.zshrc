@@ -2,9 +2,7 @@ source ~/.dotfiles/helpers.sh
 
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.local/bin:$HOME/.deno/bin:$PATH
-
-alias vi="$(which nvim) -u ~/.dotfiles/neovim/.config/nvim/+feature_complete.lua"
-export EDITOR="vi"
+export EDITOR="nvim"
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
@@ -23,12 +21,12 @@ source $ZSH/oh-my-zsh.sh
 export COMPLETION_WAITING_DOTS="true"
 bindkey '^S' autosuggest-execute
 # issues using fzf in a function that's registered with zle -N
-bindkey -s '^P' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; vi "$FILE"; fi \n'
+bindkey -s '^P' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; nvim "$FILE"; fi \n'
 
-alias ezsh="vi ~/.dotfiles/zsh/.zshrc"
+alias ezsh="nvim ~/.dotfiles/zsh/.zshrc"
 alias evim="cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
-alias eterm="vi ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
-alias etmux="vi ~/.dotfiles/tmux/.config/tmux/tmux.conf"
+alias eterm="nvim ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
+alias etmux="nvim ~/.dotfiles/tmux/.config/tmux/tmux.conf"
 
 alias gs="git status"
 alias gcb="git checkout -b"
@@ -52,6 +50,7 @@ alias cats="highlight -O ansi --force"
 
 alias resetnvim="rm -rf ~/.cache/nvim ~/.config/nvim/plugin ~/.local/share/nvim ~/.config/coc"
 alias vim="$(which nvim) -u ~/.dotfiles/neovim/.config/nvim/+barebones.lua"
+alias vi="nvim"
 alias tm="tmux"
 alias cat="highlight -O xterm256 --force"
 
