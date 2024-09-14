@@ -57,6 +57,7 @@ alias cat="highlight -O xterm256 --force"
 alias n="n.sh"
 alias ps="ps.sh"
 
+gd () {	nvim -c ":Git difftool -y"}
 gif() { ffmpeg -i $1.mov -pix_fmt rgb8 -r 10 $1.gif && gifsicle -O3 $1.gif -o $1.gif }
 abspath() { echo $(realpath $1) | pbcopy && echo $(realpath $1) }
 mkcd () { mkdir $1 && cd $1 }
