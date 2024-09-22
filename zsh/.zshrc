@@ -49,7 +49,7 @@ alias c="clear"
 alias cats="highlight -O ansi --force"
 
 alias resetnvim="rm -rf ~/.cache/nvim ~/.config/nvim/plugin ~/.local/share/nvim ~/.config/coc"
-alias vim="$(which nvim) -u ~/.dotfiles/neovim/.config/nvim/+barebones.lua"
+alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 alias vi="nvim"
 alias tm="tmux"
 alias cat="highlight -O xterm256 --force"
