@@ -43,8 +43,5 @@ source ~/.dotfiles/nvm/bootstrap.sh $1
 h_cecho --doing "bootstrapping fonts"
 source ~/.dotfiles/fonts/bootstrap.sh $1
 
-h_cecho --doing "bootstrapping duplicity"
-source ~/.dotfiles/duplicity/.duplicity/bootstrap.sh $1
-
 h_cecho --doing "bootstrapping nvim"
 source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh $1
