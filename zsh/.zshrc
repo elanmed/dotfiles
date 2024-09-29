@@ -4,6 +4,17 @@ export ZSH="$HOME/.oh-my-zsh"
 export PATH=$HOME/.local/bin:$HOME/.deno/bin:/usr/local/sbin:$PATH
 export EDITOR="nvim"
 
+# https://stackoverflow.com/a/71271754
+export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
+
+# https://superuser.com/a/613754
+XDG_TEMPLATES_DIR="$HOME"
+XDG_PUBLICSHARE_DIR="$HOME"
+XDG_DOCUMENTS_DIR="$HOME"
+XDG_MUSIC_DIR="$HOME"
+XDG_PICTURES_DIR="$HOME"
+XDG_VIDEOS_DIR="$HOME"
+
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
 [[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
