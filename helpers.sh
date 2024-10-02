@@ -24,7 +24,7 @@ h_cecho () {
       echo -e "${purple}$2${no_color}"
       ;;
     *)
-      h_format_error "--error|query|noop|doing"
+      h_format_error "--{error,query,noop,doing}"
       ;;
   esac
 }
@@ -96,11 +96,11 @@ h_validate_package_manager () {
     --pm=*)
       if [[ $1 != "--pm=brew" ]] && [[ $1 != "--pm=dnf" ]]
       then
-        h_format_error "--pm=brew|dnf"
+        h_format_error "--pm={brew,dnf}"
       fi
       ;;
     *)
-      h_format_error "--pm=brew|dnf"
+      h_format_error "--pm={brew,dnf}"
       ;;
   esac
 }
