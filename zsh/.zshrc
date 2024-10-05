@@ -37,7 +37,8 @@ then
   alias open="xdg-open"
 fi
 # issues using fzf in a function that's registered with zle -N
-bindkey -s '^P' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; open "$FILE"; fi \n'
+bindkey -s '^O' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; open "$FILE"; fi \n'
+bindkey -s '^P' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; nvim "$FILE"; fi \n'
 setopt +o nomatch # allow executing commands with patterns that don't match anything
 
 alias ezsh="nvim ~/.dotfiles/zsh/.zshrc"
