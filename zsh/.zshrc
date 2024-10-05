@@ -31,8 +31,14 @@ export plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 export COMPLETION_WAITING_DOTS="true"
 bindkey '^S' autosuggest-execute
+
+if [[ "$(uname -s)" == "Linux" ]]
+then
+  alias open="xdg-open"
+fi
 # issues using fzf in a function that's registered with zle -N
-bindkey -s '^P' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; nvim "$FILE"; fi \n'
+bindkey -s '^P' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; open "$FILE"; fi \n'
+setopt +o nomatch # allow executing commands with patterns that don't match anything
 
 alias ezsh="nvim ~/.dotfiles/zsh/.zshrc"
 alias evim="cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
@@ -67,6 +73,22 @@ alias cat="highlight -O xterm256 --force"
 
 alias n="n.sh"
 alias ps="ps.sh"
+
+# TODO figure out a way to alias builtin commands directly
+e_ls() {
+  if find * -type f > /dev/null 2>&1
+  then 
+    command ls --color=tty --group-directories-first
+  else
+    command ls -a --color=tty --group-directories-first
+  fi
+}
+alias ls="e_ls"
+
+e_man() {
+  nvim -c "tab Man find" -c "tabonly"
+} 
+alias man="e_man"
 
 gd () {	nvim -c ":Git difftool -y"}
 gif() { ffmpeg -i $1.mov -pix_fmt rgb8 -r 10 $1.gif && gifsicle -O3 $1.gif -o $1.gif }
