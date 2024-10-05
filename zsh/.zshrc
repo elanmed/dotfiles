@@ -23,7 +23,6 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1" ] && \
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
         source "$BASE16_SHELL/profile_helper.sh"
-        
 base16_tomorrow-night
 
 export ZSH_THEME="elan"
@@ -39,7 +38,7 @@ fi
 # issues using fzf in a function that's registered with zle -N
 bindkey -s '^O' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; open "$FILE"; fi \n'
 bindkey -s '^P' 'FILE="$(fzf)"; if [[ "$FILE" != "" ]]; then; nvim "$FILE"; fi \n'
-setopt +o nomatch # allow executing commands with patterns that don't match anything
+setopt +o nomatch # https://unix.stackexchange.com/a/310553
 
 alias ezsh="nvim ~/.dotfiles/zsh/.zshrc"
 alias evim="cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
@@ -56,51 +55,56 @@ alias game="git add -A && git commit --allow-empty-message -m ''"
 alias gpsh="git push origin HEAD"
 alias gpl="git pull origin master"
 
-alias ni="npm install"
-alias pi="pnpm install"
-
 alias src="exec zsh"
 alias tsrc="tmux source ~/.config/tmux/tmux.conf"
 
 alias e="exit"
 alias c="clear"
-alias cats="highlight -O ansi --force"
 
-alias resetnvim="rm -rf ~/.cache/nvim ~/.config/nvim/plugin ~/.local/share/nvim ~/.config/coc"
+alias resetnvim="rm -rf ~/.cache/nvim ~/.local/share/nvim ~/.config/coc"
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 alias vi="nvim"
 alias tm="tmux"
-alias cat="highlight -O xterm256 --force"
+
+alias man='nvim -c "Man find" -c "wincmd o"'
+alias cat="highlight -O ansi --force"
 
 alias n="n.sh"
 alias ps="ps.sh"
 
-# TODO figure out a way to alias builtin commands directly
-e_ls() {
-  if find * -type f > /dev/null 2>&1
+unalias ls
+ls() {
+  if [[ "$(find . -maxdepth 1 ! -name '.*' | wc -l)" == 0 ]]
   then 
-    command ls --color=tty --group-directories-first
-  else
     command ls -a --color=tty --group-directories-first
+  else
+    command ls --color=tty --group-directories-first
   fi
 }
-alias ls="e_ls"
 
-e_man() {
-  nvim -c "tab Man find" -c "tabonly"
-} 
-alias man="e_man"
+if [[ "$(uname -s)" == "Linux" ]]
+then
+  alias pbcopy="xclip"
+fi
 
+abspath() { 
+  ABS_PATH=$(realpath $1)
+  echo "$ABS_PATH" | pbcopy 
+  echo "$ABS_PATH"
+}
 gd () {	nvim -c ":Git difftool -y"}
-gif() { ffmpeg -i $1.mov -pix_fmt rgb8 -r 10 $1.gif && gifsicle -O3 $1.gif -o $1.gif }
-abspath() { echo $(realpath $1) | pbcopy && echo $(realpath $1) }
-mkcd () { mkdir $1 && cd $1 }
+gif() { 
+  ffmpeg -i $1.mov -pix_fmt rgb8 -r 10 $1.gif 
+  gifsicle -O3 $1.gif -o $1.gif 
+}
 search() { grep "$1" ~/.zsh_history | tail -n 20 }
 cdl() { h_cecho --error "use 'cl' instead!" }
+mkcd () { mkdir $1 && cd $1 }
 cl() { cd $1 && ls }
 zl() { z $1 && ls }
 cb() {
-  ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
-  echo $ref | pbcopy
+  REF=$(git symbolic-ref HEAD | cut -d'/' -f3)
+  echo "$REF" | pbcopy
+  echo "$REF"
 }
 killp() { kill -9 $(lsof -t -i:$1) }
