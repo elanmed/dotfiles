@@ -88,9 +88,9 @@ then
 fi
 
 abspath() { 
-  ABS_PATH=$(realpath $1)
-  echo "$ABS_PATH" | pbcopy 
-  echo "$ABS_PATH"
+  local path=$(realpath $1)
+  echo "$path" | pbcopy 
+  echo "$path"
 }
 gd () {	nvim -c ":Git difftool -y"}
 gif() { 
@@ -103,8 +103,8 @@ mkcd () { mkdir $1 && cd $1 }
 cl() { cd $1 && ls }
 zl() { z $1 && ls }
 cb() {
-  REF=$(git symbolic-ref HEAD | cut -d'/' -f3)
-  echo "$REF" | pbcopy
-  echo "$REF"
+  local ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
+  echo "$ref" | pbcopy
+  echo "$ref"
 }
 killp() { kill -9 $(lsof -t -i:$1) }
