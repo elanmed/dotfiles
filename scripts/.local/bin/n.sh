@@ -3,9 +3,9 @@ source ~/.dotfiles/helpers.sh
 
 if [[ "$TERM_PROGRAM" = tmux ]]
 then
-  tmux send-keys "nvim " $1 C-m
+  tmux send-keys "nvim " "$1" "C-m"
   tmux split-window -h
-  tmux send-keys "cd $1 && clear" C-m
+  tmux send-keys "cd $1 && clear" "C-m"
   tmux select-pane -L
   tmux resize-pane -Z
   exit

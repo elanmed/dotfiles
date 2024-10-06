@@ -1,7 +1,7 @@
 #!/bin/bash
-if [[ "$TERM_PROGRAM" = tmux ]]
+if [[ "$TERM_PROGRAM" = "tmux" ]]
 then
-  h_cecho --error "only run ps.sh outside a tmux session!" 
+  h_echo --error "only run ps.sh outside a tmux session!" 
   exit
 fi
 
