@@ -1,32 +1,14 @@
-export PATH=$HOME/.local/bin:$HOME/.deno/bin:/usr/local/sbin:$PATH
+# plugins
+source "$ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$ZSH/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$ZSH/zsh-z/zsh-z.plugin.zsh"
+source "$ZSH/spaceship/spaceship.zsh"
 
-export ZSH="$HOME/.oh-my-zsh"
-export ZSH_THEME="elan"
-# https://stackoverflow.com/a/71271754
-export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
-export plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
-
-source $ZSH/oh-my-zsh.sh
-
-export EDITOR="nvim"
-# https://superuser.com/a/71593
-export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
-export LESS=' -R '
-# https://superuser.com/a/613754
-export XDG_TEMPLATES_DIR="$HOME"
-export XDG_PUBLICSHARE_DIR="$HOME"
-export XDG_DOCUMENTS_DIR="$HOME"
-export XDG_MUSIC_DIR="$HOME"
-export XDG_PICTURES_DIR="$HOME"
-export XDG_VIDEOS_DIR="$HOME"
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
-[[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
-export BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-        source "$BASE16_SHELL/profile_helper.sh"
-base16_tomorrow-night
+# https://dev.to/hbenvenutti/using-zsh-without-omz-4gch
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+# https://unix.stackexchange.com/a/310553
+setopt +o nomatch 
 
 # fzf aliases
 if [[ "$(uname -s)" == "Linux" ]]
@@ -36,15 +18,14 @@ fi
 # TODO: issues using fzf in a function that's registered with zle -N
 bindkey -s '^O' 'file_to_open="$(fzf)"; if [[ "$file_to_open" != "" ]]; then; open "$file_to_open"; fi \n'
 bindkey -s '^P' 'file_to_edit="$(fzf)"; if [[ "$file_to_edit" != "" ]]; then; nvim "$file_to_edit"; fi \n'
-# https://unix.stackexchange.com/a/310553
-setopt +o nomatch 
 
 # autosuggest
-export COMPLETION_WAITING_DOTS="true"
-bindkey '^S' autosuggest-execute
+bindkey '^s' autosuggest-execute
+# https://stackoverflow.com/a/6951487
+stty -ixon -ixoff
 
 # editing
-alias ezsh="nvim ~/.dotfiles/zsh/.zshrc"
+alias ezsh="cd ~/.dotfiles/zsh && n.sh ."
 alias eterm="nvim ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
 alias etmux="nvim ~/.dotfiles/tmux/.config/tmux/tmux.conf"
 alias evim="cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
@@ -85,20 +66,20 @@ ls() {
   fi
 }
 
-mkcd() { mkdir $1 && cd $1 }
-cl() { cd $1 && ls }
-zl() { z $1 && ls }
+mkcd() { mkdir "$1" && cd "$1" }
+cl() { cd "$1" && ls }
+zl() { z "$1" && ls }
 abspath() { 
-  local abs_path=$(realpath $1)
+  local abs_path=$(realpath "$1")
   echo "$abs_path" | xclip -selection clipboard
   echo "$abs_path"
 }
-gd() {	nvim -c ":Git difftool -y"}
+gd() { nvim -c ":Git difftool -y"}
 gif() { 
-  ffmpeg -i $1.mov -pix_fmt rgb8 -r 10 $1.gif 
-  gifsicle -O3 $1.gif -o $1.gif 
+  ffmpeg -i "$1.mov" -pix_fmt rgb8 -r 10 "$1.gif"
+  gifsicle -O3 "$1.gif" -o "$1.gif"
 }
-search() { grep "$1" ~/.zsh_history | tail -n 20 }
+search() { grep "$1" "$ZSH/.zsh_history" | tail -n 20 }
 cb() {
   local branch=$(git symbolic-ref HEAD | cut -d'/' -f3)
   echo "$branch" | xclip -selection clipboard
