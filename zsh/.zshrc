@@ -3,6 +3,7 @@ source "$ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 source "$ZSH/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$ZSH/zsh-z/zsh-z.plugin.zsh"
 source "$ZSH/spaceship/spaceship.zsh"
+base16_tomorrow-night
 
 # https://dev.to/hbenvenutti/using-zsh-without-omz-4gch
 setopt HIST_IGNORE_ALL_DUPS

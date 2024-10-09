@@ -5,7 +5,7 @@ export EDITOR="nvim"
 
 # https://superuser.com/a/71593
 export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
-export LESS=' -R '
+export LESS=" -R "
 
 # https://dev.to/hbenvenutti/using-zsh-without-omz-4gch
 export HISTFILE=$ZSH/.zsh_history
@@ -28,4 +28,3 @@ export BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1" ] && \
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
         source "$BASE16_SHELL/profile_helper.sh"
-base16_tomorrow-night
