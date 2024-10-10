@@ -1,13 +1,42 @@
-# plugins
-source "$ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$ZSH/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$ZSH/zsh-z/zsh-z.plugin.zsh"
-source "$ZSH/spaceship/spaceship.zsh"
+#####################
+### env variables ###
+#####################
+
+# https://github.com/christoomey/vim-tmux-navigator/issues/72#issuecomment-103566743
+export ZSH="$HOME/.oh-my-zsh"
+export ZSH_THEME="spaceship"
+plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
+source $ZSH/oh-my-zsh.sh
+
+export PATH="$HOME/.local/bin:$HOME/.deno/bin:/usr/local/sbin:$PATH"
+export EDITOR="nvim"
+
+# https://superuser.com/a/71593
+export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
+export LESS=" -R "
+
+# https://superuser.com/a/613754
+export XDG_TEMPLATES_DIR="$HOME"
+export XDG_PUBLICSHARE_DIR="$HOME"
+export XDG_DOCUMENTS_DIR="$HOME"
+export XDG_MUSIC_DIR="$HOME"
+export XDG_PICTURES_DIR="$HOME"
+export XDG_VIDEOS_DIR="$HOME"
+export XDG_SCREENCASTS_DIR="$HOME"
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+export BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        source "$BASE16_SHELL/profile_helper.sh"
 base16_tomorrow-night
 
-# https://dev.to/hbenvenutti/using-zsh-without-omz-4gch
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_FIND_NO_DUPS
+################
+### bindkeys ###
+################
+
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch 
 
@@ -17,13 +46,14 @@ then
   alias open="xdg-open"
 fi
 # TODO: issues using fzf in a function that's registered with zle -N
-bindkey -s '^O' 'file_to_open="$(fzf)"; if [[ "$file_to_open" != "" ]]; then; open "$file_to_open"; fi \n'
+bindkey -s '^F' 'file_to_open="$(fzf)"; if [[ "$file_to_open" != "" ]]; then; open "$file_to_open"; fi \n'
 bindkey -s '^P' 'file_to_edit="$(fzf)"; if [[ "$file_to_edit" != "" ]]; then; nvim "$file_to_edit"; fi \n'
-
-# autosuggest
+bindkey -s '^O' 'cd ..\n'
 bindkey '^s' autosuggest-execute
-# https://stackoverflow.com/a/6951487
-stty -ixon -ixoff
+
+###############
+### aliases ###
+###############
 
 # editing
 alias ezsh="cd ~/.dotfiles/zsh && n.sh ."
@@ -57,6 +87,11 @@ alias ps="ps.sh"
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 alias man='nvim -c "Man find" -c "wincmd o"'
 alias cat="highlight -O ansi --force"
+
+#################
+### functions ###
+#################
+
 unalias ls
 ls() {
   if [[ "$(find . -maxdepth 1 ! -name '.*' | wc -l)" == 0 ]]
@@ -66,7 +101,6 @@ ls() {
     command ls --color=tty --group-directories-first "$@"
   fi
 }
-
 mkcd() { mkdir "$1" && cd "$1" }
 cl() { cd "$1" && ls }
 zl() { z "$1" && ls }

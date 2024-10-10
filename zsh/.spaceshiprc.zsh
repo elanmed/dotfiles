@@ -2,12 +2,10 @@
 SPACESHIP_PROMPT_ORDER=(
   dir 
   git 
-  node
   exit_code 
   exec_time 
   char
 )
-
 SPACESHIP_DIR_COLOR="yellow"
 SPACESHIP_DIR_TRUNC_REPO=false
 
