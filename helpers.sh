@@ -15,7 +15,7 @@ h_echo () {
   local mode
   case "$1" in 
     --mode=*)
-      mode="${1#*=}"
+      mode=$(echo "$1" | cut -d'=' -f2)
       ;;
     *)
       h_format_error "--mode={error,query,noop,doing}"
@@ -86,13 +86,13 @@ h_has_package () {
 h_validate_num_args () {
   local args=("${@:2}")
   local num_actual="${#args[@]}"
-  local num_expected=$(echo $1 | cut -d= -f2)
+  local num_expected=$(echo "$1" | cut -d'=' -f2)
 
   case "$1" in 
     --num=$num_actual)
       ;;
     --num=*)
-      h_echo --mode=error "wrong number of arguments, received $num_actual, expected $num_expected"
+      h_echo --mode=error "wrong number of arguments: received $num_actual, expected $num_expected"
       exit 1
       ;;
     *)

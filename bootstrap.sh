@@ -23,7 +23,7 @@ fi
 h_echo --mode=doing "removing ~/.zshrc"
 rm ~/.zshrc
 
-h_install_package "$1" "stow"
+h_install_package "$1" stow
 for dir in */
 do
   stripped_dir="${dir%?}"

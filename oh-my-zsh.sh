@@ -6,9 +6,9 @@ h_validate_num_args --num=1 "$@"
 h_validate_package_manager "$1"
 
 # zsh is already installed for macos
-if [[ $1 == "--pm=dnf" ]]
+if [[ "$1" == "--pm=dnf" ]]
 then 
-  h_install_package "$1" "zsh"
+  h_install_package "$1" zsh
 fi
 
 if [[ -d ~/.oh-my-zsh ]]
