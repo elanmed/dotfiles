@@ -33,23 +33,6 @@ export BASE16_SHELL="$HOME/.config/base16-shell/"
         source "$BASE16_SHELL/profile_helper.sh"
 base16_tomorrow-night
 
-################
-### bindkeys ###
-################
-
-# https://unix.stackexchange.com/a/310553
-setopt +o nomatch 
-
-# fzf aliases
-if [[ "$(uname -s)" == "Linux" ]]
-then
-  alias open="xdg-open"
-fi
-# TODO: issues using fzf in a function that's registered with zle -N
-bindkey -s '^F' 'file_to_open="$(fzf)"; if [[ "$file_to_open" != "" ]]; then; open "$file_to_open"; fi \n'
-bindkey -s '^P' 'file_to_edit="$(fzf)"; if [[ "$file_to_edit" != "" ]]; then; nvim "$file_to_edit"; fi \n'
-bindkey -s '^O' 'cd ..\n'
-bindkey '^s' autosuggest-execute
 
 ###############
 ### aliases ###
@@ -75,7 +58,6 @@ alias game="git add -A && git commit --allow-empty-message -m ''"
 alias gpsh="git push origin HEAD"
 alias gpl="git pull origin master"
 # shorter commands
-alias e="exit"
 alias c="clear"
 alias vi="nvim"
 alias tm="tmux"
@@ -92,6 +74,8 @@ alias cat="highlight -O ansi --force"
 ### functions ###
 #################
 
+# https://unix.stackexchange.com/a/310553
+setopt +o nomatch 
 unalias ls
 ls() {
   if [[ "$(find . -maxdepth 1 ! -name '.*' | wc -l)" == 0 ]]
@@ -120,3 +104,41 @@ cb() {
   echo "$branch" | xclip -selection clipboard
 }
 killp() { kill -9 $(lsof -t -i:$1) }
+
+c() {
+  source ~/Desktop/cd_time_machine/main.sh --change_dir="$1"
+  ls
+}
+time_machine_backwards() {
+  source ~/Desktop/cd_time_machine/main.sh --backwards
+  zle accept-line
+}
+time_machine_forwards() {
+  source ~/Desktop/cd_time_machine/main.sh --forwards
+  zle accept-line
+}
+zle -N time_machine_backwards
+zle -N time_machine_forwards
+
+################
+### bindkeys ###
+################
+
+# based on moving around the vim jumplist
+bindkey '^O' time_machine_backwards
+bindkey '^I' time_machine_forwards
+
+# bindkey -s '^O' 'source /home/elan/Desktop/cd_time_machine/main.sh --backwards \n'
+# bindkey -s '^I' 'source /home/elan/Desktop/cd_time_machine/main.sh --forwards \n'
+
+if [[ "$(uname -s)" == "Linux" ]]
+then
+  alias open="xdg-open"
+fi
+# TODO: issues using fzf in a function that's registered with zle -N
+bindkey -s '^F' 'file_to_open="$(fzf)"; if [[ "$file_to_open" != "" ]]; then; open "$file_to_open"; fi \n'
+bindkey -s '^P' 'file_to_edit="$(fzf)"; if [[ "$file_to_edit" != "" ]]; then; nvim "$file_to_edit"; fi \n'
+bindkey '^s' autosuggest-execute
+
+# TODO: find a better keybidning for this
+bindkey "A" expand-or-complete
