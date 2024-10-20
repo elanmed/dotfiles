@@ -58,10 +58,15 @@ alias game="git add -A && git commit --allow-empty-message -m ''"
 alias gpsh="git push origin HEAD"
 alias gpl="git pull origin master"
 # shorter commands
-alias c="clear"
+alias e="exit"
 alias vi="nvim"
 alias tm="tmux"
-alias lsa="command ls -a --color=tty --group-directories-first"
+if [[ "$(uname -s)" == "Linux" ]]
+then
+  alias lsa="command ls -a --color=tty --group-directories-first"
+else
+  alias lsa="command ls -a --color=tty"
+fi
 # scripts
 alias n="n.sh"
 alias ps="ps.sh"
@@ -82,7 +87,10 @@ ls() {
   then 
     lsa "$@"
   else
-    command ls --color=tty --group-directories-first "$@"
+    ls_cmd="command ls --color=tty"
+    [[ "$(uname -s)" == "Linux" ]] && ls_cmd+=" --group-directories-first"
+    ls_cmd+=" "$@""
+    eval "$ls_cmd"
   fi
 }
 mkcd() { mkdir "$1" && cd "$1" }
