@@ -30,3 +30,4 @@ alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 alias man='nvim -c "Man find" -c "wincmd o"'
 alias cat="highlight -O ansi --force"
 
+alias yt="yt-dlp --sub-langs all --write-subs $1"
