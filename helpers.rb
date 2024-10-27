@@ -67,3 +67,9 @@ def get_package_manager_arg
   validate_package_manager options['package_manager']
   options['package_manager']
 end
+
+def stream_command(command)
+  IO.popen(command).each do |line|
+    puts line
+  end
+end
