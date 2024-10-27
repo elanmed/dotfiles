@@ -33,5 +33,5 @@ then
 else
   h_echo --mode=doing "cloning spaceship"
   git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$spaceship_dir" --depth=1
-  ln -s "$ZSH/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$spaceship_dir"
+  ln -s "$ZSH/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH/custom/themes/spaceship.zsh-theme"
 fi
