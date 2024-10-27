@@ -7,15 +7,15 @@ purple='\033[0;35m'
 no_color='\033[0m'
 
 # eg: h_echo --mode=error "something went wrong!"
-# $1: --mode={error,query,noop,doing}=
-# $2: message to echo
+# $1: --mode={error,query,noop,doing}: the type of message
+# $2: the message itself
 h_echo () {
   h_validate_num_args --num=2 "$@"
 
   local mode
   case "$1" in 
     --mode=*)
-      mode=$(echo "$1" | cut -d'=' -f2)
+      mode=$(h_option_value "$1")
       ;;
     *)
       h_format_error "--mode={error,query,noop,doing}"
@@ -42,51 +42,45 @@ h_echo () {
 }
 
 # eg: h_install_package --pm=dnf neovim
-# $1: --pm={brew,dnf}
-# $2: package name
+# $1: --pm={brew,dnf}: the package manager
+# $2: the package name
 h_install_package () {
   h_validate_num_args --num=2 "$@"
-  h_validate_package_manager $1
+  h_validate_package_manager "$1"
 
-  local package=("${@:2}")
+  local package_manager=$(h_option_value "$1")
+  local package="$2"
 
-  if h_has_package "$1" "$package"
+  if h_has_package "$package_manager" "$package"
   then
     h_echo --mode=noop "$package already installed"
   else 
     h_echo --mode=doing "installing $package"
-    if [[ "$1" == '--pm=brew' ]]
-    then
-      brew install "$package"
-    else 
-      sudo dnf install "$package"
-    fi
+    if [[ "$package_manager" == "brew" ]] && brew install "$package"
+    if [[ "$package_manager" == "dnf" ]] && sudo dnf install "$package"
   fi
 }
 
 # eg: h_has_package --pm=dnf neovim
-# $1: --pm={brew,dnf}
-# $2: package_name
+# $1: --pm={brew,dnf}: the package manager
+# $2: the package name
 h_has_package () {
   h_validate_num_args --num=2 "$@"
   h_validate_package_manager "$1"
 
-  if [[ "$1" == "--pm=brew" ]]
-  then
-    brew ls --versions "$2" > /dev/null 2>&1
-  else
-    dnf list installed "$2" > /dev/null 2>&1
-  fi
+  local package_manager=$(h_option_value "$1")
+
+  if [[ "$package_manager" == "brew" ]] && brew ls --versions "$2" > /dev/null 2>&1
+  if [[ "$package_manager" == "dnf" ]] && dnf list installed "$2" > /dev/null 2>&1
   return "$?"
 }
 
 # eg: h_validate_num_args --num=2 "$@"
-# $1: --num=
+# $1: --pm={0}: the number of arguments expected
 # $2: the args
 h_validate_num_args () {
-  local args=("${@:2}")
-  local num_actual="${#args[@]}"
-  local num_expected=$(echo "$1" | cut -d'=' -f2)
+  local num_actual=$(( $# - 1 ))
+  local num_expected=$(h_option_value "$1")
 
   case "$1" in 
     --num=$num_actual)
@@ -117,7 +111,7 @@ h_validate_package_manager () {
   esac
 }
 
-# eg: h_format_error "--pm={brew,dnf}"
+# eg: h_format_error --pm={brew,dnf}
 # $1: the missing option
 h_format_error () {
   h_validate_num_args --num=1 "$@"
@@ -126,3 +120,8 @@ h_format_error () {
   exit 1
 }
 
+# eg: h_option_value --pm=dnf
+# $1: the entire option, with =
+h_option_value() {
+  echo "$(echo "$1" | cut -d'=' -f2)"
+}
