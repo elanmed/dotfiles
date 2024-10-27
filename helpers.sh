@@ -51,13 +51,13 @@ h_install_package () {
   local package_manager=$(h_option_value "$1")
   local package="$2"
 
-  if h_has_package "$package_manager" "$package"
+  if h_has_package "$1" "$package"
   then
     h_echo --mode=noop "$package already installed"
   else 
     h_echo --mode=doing "installing $package"
-    if [[ "$package_manager" == "brew" ]] && brew install "$package"
-    if [[ "$package_manager" == "dnf" ]] && sudo dnf install "$package"
+    [[ "$package_manager" == "brew" ]] && brew install "$package"
+    [[ "$package_manager" == "dnf" ]] && sudo dnf install "$package"
   fi
 }
 
@@ -70,8 +70,12 @@ h_has_package () {
 
   local package_manager=$(h_option_value "$1")
 
-  if [[ "$package_manager" == "brew" ]] && brew ls --versions "$2" > /dev/null 2>&1
-  if [[ "$package_manager" == "dnf" ]] && dnf list installed "$2" > /dev/null 2>&1
+  if [[ "$package_manager" == "brew" ]]
+  then 
+    brew ls --versions "$2" > /dev/null 2>&1
+  else
+    dnf list installed "$2" > /dev/null 2>&1
+  fi
   return "$?"
 }
 

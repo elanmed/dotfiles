@@ -1,5 +1,4 @@
 #! /bin/bash
-
 source ~/.dotfiles/helpers.sh
 
 h_validate_num_args --num=1 "$@"
@@ -18,4 +17,3 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 h_echo --mode=doing "installing the latest version of node"
 nvm install 'lts/*'
-
