@@ -1,4 +1,3 @@
-
 bindkey -v
 export KEYTIMEOUT=1
 
@@ -44,6 +43,18 @@ bindkey -M viins '^Y' w_exit
 bindkey -M vicmd '^G' clear-screen
 bindkey -M viins '^G' clear-screen
 bindkey -M viins '^S' expand-or-complete
+bindkey -M vicmd 'yy' expand-or-complete
+
+# Yank to the system clipboard
+function vi-yank-xclip {
+    zle vi-yank
+   echo "$CUTBUFFER" | copy 
+}
+
+zle -N vi-yank-xclip
+bindkey -M vicmd 'y' vi-yank-xclip
+bindkey -M visual 'y' vi-yank-xclip
+
 
 cursor_mode() {
     cursor_block='\e[2 q'
