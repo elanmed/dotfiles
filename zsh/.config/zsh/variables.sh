@@ -1,4 +1,3 @@
-
 export PATH="$HOME/.local/bin:$HOME/.deno/bin:/usr/local/sbin:$PATH"
 export EDITOR="nvim"
 
@@ -18,7 +17,6 @@ then
   export XDG_MUSIC_DIR="$HOME"
   export XDG_PICTURES_DIR="$HOME"
   export XDG_VIDEOS_DIR="$HOME"
-  export XDG_SCREENCASTS_DIR="$HOME"
 fi
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
