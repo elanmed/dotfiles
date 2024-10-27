@@ -1,9 +1,10 @@
+#! /bin/bash
 source ~/.dotfiles/helpers.sh
 
 h_validate_num_args --num=1 "$@"
 h_validate_package_manager "$1"
 
-h_install_package "$1" xclip
+[[ "$(uname -s)" == "Linux" ]] && h_install_package "$1" xclip
 h_install_package "$1" fzf
 h_install_package "$1" source-highlight
 h_install_package "$1" highlight
@@ -33,5 +34,11 @@ then
 else
   h_echo --mode=doing "cloning spaceship"
   git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$spaceship_dir" --depth=1
-  ln -s "$ZSH/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH/custom/themes/spaceship.zsh-theme"
+  ln -s "$ZSH/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$spaceship_dir"
 fi
+
+h_echo --mode=doing "symlinking zshrc"
+ln -s ~/.dotfiles/zsh/.config/zsh/.zshrc ~/.zshrc > /dev/null 2>&1
+
+h_echo --mode=doing "symlinking spaceshiprc"
+ln -s ~/.dotfiles/zsh/.config/zsh/.spaceshiprc.zsh ~/.spaceshiprc.zsh > /dev/null 2>&1
