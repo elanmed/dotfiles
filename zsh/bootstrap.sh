@@ -4,7 +4,7 @@ source ~/.dotfiles/helpers.sh
 h_validate_num_args --num=1 "$@"
 h_validate_package_manager "$1"
 
-h_install_package "$1" xclip
+[[ "$(uname -s)" == "Linux" ]] && h_install_package "$1" xclip
 h_install_package "$1" fzf
 h_install_package "$1" source-highlight
 h_install_package "$1" highlight
