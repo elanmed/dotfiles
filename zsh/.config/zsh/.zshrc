@@ -1,4 +1,6 @@
+# Don't use a .zshenv!
 # https://github.com/christoomey/vim-tmux-navigator/issues/72#issuecomment-103566743
+
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_THEME="spaceship"
 plugins=(z zsh-syntax-highlighting zsh-autosuggestions)

@@ -10,7 +10,7 @@ fi
 setopt +o nomatch 
 unalias ls
 ls() {
-  if [[ "$(find . -maxdepth 1 ! -name '.*' | wc -l)" == 0 ]]
+  if [[ $(find . -maxdepth 1 ! -name '.*' | wc -l) -eq 0 ]]
   then 
     lsa "$@"
   else
@@ -27,9 +27,10 @@ copy() {
     pbcopy "$1"
   fi
 }
-mkcd() { mkdir "$1" && cd "$1" }
 cl() { cd "$1" && ls }
 zl() { z "$1" && ls }
+
+mkcd() { mkdir "$1" && cd "$1" }
 abspath() { 
   local abs_path=$(realpath "$1")
   echo "$abs_path" | copy
@@ -46,6 +47,10 @@ cb() {
   echo "$branch" | copy
 }
 killp() { kill -9 $(lsof -t -i:$1) }
+
+setopt nocaseglob
+setopt correct
+setopt auto_cd
 c() {
   source ~/Desktop/cd_time_machine/main.sh --change_dir="$1"
   ls

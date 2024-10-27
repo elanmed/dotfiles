@@ -22,6 +22,7 @@ alias gpl="git pull origin master"
 alias e="exit"
 alias vi="nvim"
 alias tm="tmux"
+alias yt="yt-dlp --sub-langs all --write-subs $1"
 # scripts
 alias n="n.sh"
 alias ps="ps.sh"
@@ -29,5 +30,3 @@ alias ps="ps.sh"
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 alias man='nvim -c "Man find" -c "wincmd o"'
 alias cat="highlight -O ansi --force"
-
-alias yt="yt-dlp --sub-langs all --write-subs $1"

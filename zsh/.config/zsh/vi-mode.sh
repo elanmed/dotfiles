@@ -1,10 +1,7 @@
 bindkey -v
 export KEYTIMEOUT=1
 
-if [[ "$(uname -s)" == "Linux" ]]
-then
-  alias open="xdg-open"
-fi
+[[ "$(uname -s)" == "Linux" ]] && alias open="xdg-open"
 
 fzf_cmd_prefix='file="$(fzf)"; if [[ "$file" != "" ]]; then;'
 fzf_cmd_suffix=' "$file"; fi \n'
@@ -45,7 +42,7 @@ bindkey -M viins '^G' clear-screen
 bindkey -M viins '^S' expand-or-complete
 bindkey -M vicmd 'yy' expand-or-complete
 
-# Yank to the system clipboard
+# yank to the system clipboard
 function vi-yank-xclip {
     zle vi-yank
    echo "$CUTBUFFER" | copy 
@@ -54,7 +51,6 @@ function vi-yank-xclip {
 zle -N vi-yank-xclip
 bindkey -M vicmd 'y' vi-yank-xclip
 bindkey -M visual 'y' vi-yank-xclip
-
 
 cursor_mode() {
     cursor_block='\e[2 q'
