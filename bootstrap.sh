@@ -32,7 +32,7 @@ do
 done
 
 h_echo --mode=doing "bootstrapping zsh"
-source ~/.dotfiles/zsh/bootstrap.sh "$1"
+source ~/.dotfiles/zsh/.config/zsh/bootstrap.sh "$1"
 
 h_echo --mode=doing "bootstrapping tmux"
 source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh "$1"
