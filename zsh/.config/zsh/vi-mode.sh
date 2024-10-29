@@ -43,7 +43,7 @@ bindkey -M viins '^S' expand-or-complete
 bindkey -M vicmd 'yy' expand-or-complete
 
 # yank to the system clipboard
-function vi-yank-xclip {
+vi-yank-xclip() {
   zle vi-yank
   echo "$CUTBUFFER" | copy 
 }
