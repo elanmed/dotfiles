@@ -1,6 +1,6 @@
 
 # editing
-alias ezsh="cd ~/.dotfiles/zsh && n.sh ."
+alias ezsh="cd ~/.dotfiles/zsh/.config/zsh && n.sh ."
 alias eterm="nvim ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
 alias etmux="nvim ~/.dotfiles/tmux/.config/tmux/tmux.conf"
 alias evim="cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
@@ -28,5 +28,4 @@ alias n="n.sh"
 alias ps="ps.sh"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
-alias man='nvim -c "Man find" -c "wincmd o"'
 alias cat="highlight -O ansi --force"

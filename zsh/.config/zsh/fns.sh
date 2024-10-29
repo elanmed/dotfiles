@@ -20,15 +20,18 @@ ls() {
     eval "$ls_cmd"
   fi
 }
-copy() {
-  if [[ "$(uname -s)" == "Linux" ]] then 
-    xclip -selection keyboard "$1"
-  else
-    pbcopy "$1"
-  fi
+if [[ "$(uname -s)" == "Linux" ]] then 
+  alias copy="xclip -selection clipboard"
+else
+  alias copy="pbcopy"
+fi
+
+export ZSHZ_CMD="zsh_z"
+# need `function` https://github.com/ohmyzsh/ohmyzsh/issues/6723#issue-313463147
+function z { 
+  zsh_z "$@" 
+  ls 
 }
-cl() { cd "$1" && ls }
-zl() { z "$1" && ls }
 
 mkcd() { mkdir "$1" && cd "$1" }
 abspath() { 
@@ -41,17 +44,26 @@ gif() {
   ffmpeg -i "$1.mov" -pix_fmt rgb8 -r 10 "$1.gif"
   gifsicle -O3 "$1.gif" -o "$1.gif"
 }
-search() { grep "$1" "$ZSH/.zsh_history" | tail -n 20 }
+search() { grep "$1" "$HISTFILE" | tail -n 20 }
 cb() {
   local branch=$(git symbolic-ref HEAD | cut -d'/' -f3)
   echo "$branch" | copy
 }
 killp() { kill -9 $(lsof -t -i:$1) }
+man_e(){ nvim -c "Man $1" -c "wincmd o" }
+alias man="man_e"
 
-setopt nocaseglob
-setopt correct
+cd() {
+  builtin cd "$@"
+  ls
+}
 setopt auto_cd
 c() {
-  source ~/Desktop/cd_time_machine/main.sh --change_dir="$1"
+  if [[ $# -eq 0 ]]
+  then 
+    builtin cd ~
+  else
+    source ~/Desktop/cd_time_machine/main.sh --change_dir="$1"
+  fi
   ls
 }

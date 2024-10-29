@@ -3,7 +3,7 @@ export EDITOR="nvim"
 
 # https://superuser.com/a/71593
 source_highlight_path="/usr"
-[[ "$(uname -s)" == "Linux" ]] && source_highlight_path+="/local"
+[[ "$(uname -s)" != "Linux" ]] && source_highlight_path+="/local"
 source_highlight_path+="/bin/src-hilite-lesspipe.sh"
 export LESSOPEN="| $source_highlight_path %s"
 export LESS=" -R "

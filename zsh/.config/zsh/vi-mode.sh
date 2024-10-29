@@ -44,8 +44,8 @@ bindkey -M vicmd 'yy' expand-or-complete
 
 # yank to the system clipboard
 function vi-yank-xclip {
-    zle vi-yank
-   echo "$CUTBUFFER" | copy 
+  zle vi-yank
+  echo "$CUTBUFFER" | copy 
 }
 
 zle -N vi-yank-xclip
