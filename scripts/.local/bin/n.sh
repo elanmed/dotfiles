@@ -3,7 +3,7 @@ source ~/.dotfiles/helpers.sh
 
 split_window() {
   tmux split-window -h
-  tmux send-keys "cd $1 && clear" "C-m"
+  tmux send-keys "builtin cd $1 && clear" "C-m"
   tmux select-pane -L
   tmux resize-pane -Z
 }
