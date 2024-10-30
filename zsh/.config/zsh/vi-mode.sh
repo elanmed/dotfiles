@@ -38,7 +38,7 @@ zle -N time_machine_forwards
 exit_widget() {
   exit
 }
-zle -N w_exit
+zle -N exit_widget
 bindkey -M vicmd '^Y' exit_widget
 bindkey -M viins '^Y' exit_widget
 
