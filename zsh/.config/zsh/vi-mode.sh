@@ -1,11 +1,23 @@
 bindkey -v
 export KEYTIMEOUT=1
 
-[[ "$(uname -s)" == "Linux" ]] && alias open="xdg-open"
+bindkey -M viins '^E' autosuggest-execute
+bindkey -M vicmd '^?' vi-backward-word
+bindkey -M vicmd '^?' vi-backward-word
+bindkey -M vicmd '^O' time_machine_backwards
+bindkey -M viins '^O' time_machine_backwards
+bindkey -M vicmd '^I' time_machine_forwards
+bindkey -M viins '^I' time_machine_forwards
+bindkey -M vicmd '^G' clear-screen
+bindkey -M viins '^G' clear-screen
+bindkey -M viins '^S' expand-or-complete
+bindkey -M vicmd 'yy' expand-or-complete
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
 
+[[ "$(uname -s)" == "Linux" ]] && alias open="xdg-open"
 fzf_cmd_prefix='file="$(fzf)"; if [[ "$file" != "" ]]; then;'
 fzf_cmd_suffix=' "$file"; fi \n'
-
 # TODO: issues using fzf with a widget registered with zle -N
 bindkey -sM vicmd '^P' "i $fzf_cmd_prefix nvim $fzf_cmd_suffix"
 bindkey -sM viins '^P' "$fzf_cmd_prefix nvim $fzf_cmd_suffix"
@@ -23,34 +35,24 @@ time_machine_forwards() {
 zle -N time_machine_backwards
 zle -N time_machine_forwards
 
-w_exit() {
+exit_widget() {
   exit
 }
 zle -N w_exit
+bindkey -M vicmd '^Y' exit_widget
+bindkey -M viins '^Y' exit_widget
 
-bindkey -M viins '^E' autosuggest-execute
-bindkey -M vicmd '^?' vi-backward-word
-bindkey -M vicmd '^?' vi-backward-word
-bindkey -M vicmd '^O' time_machine_backwards
-bindkey -M viins '^O' time_machine_backwards
-bindkey -M vicmd '^I' time_machine_forwards
-bindkey -M viins '^I' time_machine_forwards
-bindkey -M vicmd '^Y' w_exit
-bindkey -M viins '^Y' w_exit
-bindkey -M vicmd '^G' clear-screen
-bindkey -M viins '^G' clear-screen
-bindkey -M viins '^S' expand-or-complete
-bindkey -M vicmd 'yy' expand-or-complete
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
 
-# yank to the system clipboard
-vi-yank-xclip() {
+vi-yank-clipboard() {
   zle vi-yank
   echo "$CUTBUFFER" | copy 
 }
-
 zle -N vi-yank-xclip
-bindkey -M vicmd 'y' vi-yank-xclip
-bindkey -M visual 'y' vi-yank-xclip
+bindkey -M vicmd 'y' vi-yank-clipboard
+bindkey -M visual 'y' vi-yank-clipboard
 
 cursor_mode() {
     cursor_block='\e[2 q'
@@ -73,10 +75,3 @@ cursor_mode() {
     zle -N zle-line-init
 }
 cursor_mode
-
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'j' vi-down-line-or-history
-
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd v edit-command-line

@@ -1,4 +1,3 @@
-
 # editing
 alias ezsh="cd ~/.dotfiles/zsh/.config/zsh && n.sh ."
 alias eterm="nvim ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
@@ -22,6 +21,9 @@ alias gpl="git pull origin master"
 alias e="exit"
 alias vi="nvim"
 alias tm="tmux"
+lsa_cmd="command ls -a --color=tty"
+[[ "$(uname -s)" == "Linux" ]] && lsa_cmd+=" --group-directories-first"
+alias lsa="$lsa_cmd"
 alias yt="yt-dlp --sub-langs all --write-subs $1"
 # scripts
 alias n="n.sh"
@@ -29,3 +31,6 @@ alias ps="ps.sh"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 alias cat="highlight -O ansi --force"
+# TODO: merge the two
+man_fn(){ nvim -c "Man $1" -c "wincmd o" }
+alias man="man_fn"
