@@ -2,6 +2,7 @@
 alias ezsh="cd ~/.dotfiles/zsh/.config/zsh && n.sh ."
 alias eterm="nvim ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
 alias etmux="nvim ~/.dotfiles/tmux/.config/tmux/tmux.conf"
+alias edot="nvim ~/.dotfiles && n.sh"
 alias evim="cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
 alias resetnvim="rm -rf ~/.cache/nvim ~/.local/share/nvim ~/.config/coc"
 # sourcing
