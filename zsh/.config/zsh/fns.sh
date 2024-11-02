@@ -1,3 +1,5 @@
+source ~/.dotfiles/helpers.sh
+
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch 
 unalias ls
@@ -30,9 +32,15 @@ c() {
   if [[ $# -eq 0 ]]
   then 
     builtin cd ~
-  else
-    source ~/Desktop/cd_time_machine/main.sh --change_dir="$1"
+    ls
+    return
   fi
+
+  source ~/Desktop/cd_time_machine/main.sh --change_dir="$1"
+  local status_code=$?
+  [[ $status_code -eq 3 ]] && return 3
+  [[ $status_code -eq 1 ]] && return 1
+
   ls
 }
 

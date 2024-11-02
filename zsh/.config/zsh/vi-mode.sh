@@ -26,11 +26,16 @@ bindkey -sM viins '^F' "$fzf_cmd_prefix open $fzf_cmd_suffix"
 
 time_machine_backwards() {
   source ~/Desktop/cd_time_machine/main.sh --backwards
-  zle accept-line
 }
 time_machine_forwards() {
   source ~/Desktop/cd_time_machine/main.sh --forwards
-  zle accept-line
+  if [[ $? -eq 2 ]] 
+  then 
+    echo
+    ls
+    echo -en "${red}Can't move forwards${no_color}"
+    zle accept-line
+  fi
 }
 zle -N time_machine_backwards
 zle -N time_machine_forwards

@@ -1,10 +1,10 @@
 #! /bin/bash
 
-red='\033[0;31m'
-blue='\033[0;34m'
-green='\033[0;32m'
-purple='\033[0;35m'
-no_color='\033[0m'
+export red='\033[0;31m'
+export blue='\033[0;34m'
+export green='\033[0;32m'
+export purple='\033[0;35m'
+export no_color='\033[0m'
 
 # eg: h_echo --mode=error "something went wrong!"
 # $1: --mode={error,query,noop,doing}: the type of message
