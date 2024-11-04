@@ -8,7 +8,7 @@ then
 fi
 
 uuid=$(uuidgen)
-uuid=${uuid:0:8}
+uuid=${uuid:0:3}
 tmux new-session -d -s "n-${uuid}"
 window=0
 tmux rename-window -t "n-${uuid}":0 "code"
