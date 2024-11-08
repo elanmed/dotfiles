@@ -4,10 +4,10 @@ export KEYTIMEOUT=1
 bindkey -M viins '^E' autosuggest-execute
 bindkey -M vicmd '^?' vi-backward-word
 bindkey -M vicmd '^?' vi-backward-word
-bindkey -M vicmd '^O' time_machine_backwards
-bindkey -M viins '^O' time_machine_backwards
-bindkey -M vicmd '^I' time_machine_forwards
-bindkey -M viins '^I' time_machine_forwards
+bindkey -M vicmd '^O' push_backwards
+bindkey -M viins '^O' push_backwards
+bindkey -M vicmd '^I' pop_forwards
+bindkey -M viins '^I' pop_forwards
 bindkey -M vicmd '^G' clear-screen
 bindkey -M viins '^G' clear-screen
 bindkey -M viins '^S' expand-or-complete
@@ -24,12 +24,15 @@ bindkey -sM viins '^P' "$fzf_cmd_prefix nvim $fzf_cmd_suffix"
 bindkey -sM vicmd '^F' "i $fzf_cmd_prefix open $fzf_cmd_suffix"
 bindkey -sM viins '^F' "$fzf_cmd_prefix open $fzf_cmd_suffix"
 
-time_machine_backwards() {
-  source ~/Desktop/cd_time_machine/main.sh --backwards
+# unsetopt pushdsilent
+setopt noautopushd
+
+push_backwards() {
+  pushd .. > /dev/null 2>&1
 }
-time_machine_forwards() {
-  source ~/Desktop/cd_time_machine/main.sh --forwards
-  if [[ $? -eq 2 ]] 
+pop_forwards() {
+  popd > /dev/null 2>&1
+  if [[ $? -eq 1 ]] 
   then 
     echo
     ls
@@ -37,8 +40,8 @@ time_machine_forwards() {
     zle accept-line
   fi
 }
-zle -N time_machine_backwards
-zle -N time_machine_forwards
+zle -N push_backwards
+zle -N pop_forwards
 
 exit_widget() {
   exit

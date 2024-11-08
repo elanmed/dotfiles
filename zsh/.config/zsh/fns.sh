@@ -28,21 +28,6 @@ cd() {
   builtin cd "$@"
   ls
 }
-c() {
-  if [[ $# -eq 0 ]]
-  then 
-    builtin cd ~
-    ls
-    return
-  fi
-
-  source ~/Desktop/cd_time_machine/main.sh --change_dir="$1"
-  local status_code=$?
-  [[ $status_code -eq 3 ]] && return 3
-  [[ $status_code -eq 1 ]] && return 1
-
-  ls
-}
 
 if [[ "$(uname -s)" == "Linux" ]] then 
   alias copy="xclip -selection clipboard"
