@@ -8,7 +8,7 @@ split_window() {
   tmux resize-pane -Z
 }
 
-if [[ "$TERM_PROGRAM" = tmux ]]
+if [[ "$TERM_PROGRAM" == tmux ]]
 then
   tmux send-keys "nvim " "$1" "C-m"
   num_panes=$(tmux display-message -p '#{window_panes}')

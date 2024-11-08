@@ -10,3 +10,5 @@ source ~/.dotfiles/zsh/.config/zsh/variables.sh
 source ~/.dotfiles/zsh/.config/zsh/aliases.sh
 source ~/.dotfiles/zsh/.config/zsh/fns.sh
 source ~/.dotfiles/zsh/.config/zsh/vi-mode.sh
+
+[[ "$TERM_PROGRAM" != tmux ]] && tmux
