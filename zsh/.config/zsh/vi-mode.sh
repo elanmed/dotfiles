@@ -24,9 +24,7 @@ bindkey -sM viins '^P' "$fzf_cmd_prefix nvim $fzf_cmd_suffix"
 bindkey -sM vicmd '^F' "i $fzf_cmd_prefix open $fzf_cmd_suffix"
 bindkey -sM viins '^F' "$fzf_cmd_prefix open $fzf_cmd_suffix"
 
-# unsetopt pushdsilent
 setopt noautopushd
-
 push_backwards() {
   pushd .. > /dev/null 2>&1
 }

@@ -16,7 +16,6 @@ then
   exit
 fi
 
-
 uuid=$(uuidgen)
 uuid=${uuid:0:3}
 tmux new-session -d -s "n-${uuid}"

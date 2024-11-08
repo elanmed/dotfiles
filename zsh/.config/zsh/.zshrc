@@ -3,6 +3,8 @@
 
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_THEME="spaceship"
+export ENABLE_CORRECTION=true
+
 plugins=(z zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
