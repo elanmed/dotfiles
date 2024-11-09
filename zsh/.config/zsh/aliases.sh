@@ -32,6 +32,3 @@ alias ps="ps.sh"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 alias cat="highlight -O ansi --force"
-# TODO: merge the two
-man_fn(){ nvim -c "Man $1" -c "wincmd o" }
-alias man="man_fn"
