@@ -8,8 +8,9 @@ ls() {
   then 
     lsa "$@"
   else
-    ls_cmd="command ls --color=tty"
-    [[ "$(uname -s)" == "Linux" ]] && ls_cmd+=" --group-directories-first"
+    ls_cmd="command ls"
+    [[ "$(uname -s)" == "Linux" ]] && ls_cmd+=" --color=auto"
+    [[ "$(uname -s)" == "Darwin" ]] && ls_cmd+=" -G"
     ls_cmd+=" "$@""
     eval "$ls_cmd"
   fi

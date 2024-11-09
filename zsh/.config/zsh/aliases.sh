@@ -32,3 +32,6 @@ alias ps="ps.sh"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 alias cat="highlight -O ansi --force"
+alias cp="cp -i"
+alias mv='mv -i'
+alias rm='rm -i'

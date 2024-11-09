@@ -1,6 +1,7 @@
 export PATH="$HOME/.local/bin:$HOME/.deno/bin:/usr/local/sbin:$PATH"
 export EDITOR="nvim"
 export MANPAGER='nvim +Man!'
+export TERMINAL="alacritty"
 
 # https://superuser.com/a/71593
 source_highlight_path="/usr"
