@@ -1,4 +1,5 @@
-#! /bin/bash
+#!/bin/bash
+
 source ~/.dotfiles/helpers.sh
 
 h_validate_num_args --num=1 "$@"

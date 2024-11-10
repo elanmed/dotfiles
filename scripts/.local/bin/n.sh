@@ -1,4 +1,5 @@
 #!/bin/bash
+
 source ~/.dotfiles/helpers.sh
 
 split_window() {
