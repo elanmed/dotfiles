@@ -1,5 +1,8 @@
+#!/usr/bin/env zsh
+
 export PATH="$HOME/.local/bin:$HOME/.deno/bin:/usr/local/sbin:$PATH"
 export EDITOR="nvim"
+export VISUAL="nvim"
 export MANPAGER='nvim +Man!'
 export TERMINAL="alacritty"
 

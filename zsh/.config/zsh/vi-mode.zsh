@@ -1,19 +1,27 @@
+#!/usr/bin/env zsh
+
 bindkey -v
 export KEYTIMEOUT=1
 
 bindkey -M viins '^E' autosuggest-execute
+# TODO: why doesn't this work?
+# bindkey -M viins '^S' expand-or-complete
+bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
 bindkey -M vicmd '^?' vi-backward-word
 bindkey -M vicmd '^?' vi-backward-word
-bindkey -M vicmd '^O' push_backwards
-bindkey -M viins '^O' push_backwards
-bindkey -M vicmd '^I' pop_forwards
-bindkey -M viins '^I' pop_forwards
+# bindkey -M vicmd '^O' push-backwards
+# bindkey -M viins '^O' push-backwards
+# bindkey -M vicmd '^I' pop-forwards
+# bindkey -M viins '^I' pop-forwards
 bindkey -M vicmd '^G' clear-screen
 bindkey -M viins '^G' clear-screen
-bindkey -M viins '^S' expand-or-complete
-bindkey -M vicmd 'yy' expand-or-complete
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M vicmd 'yy' vi-yank-clipboard
+
+bindkey -M vicmd 'j' pop-forwards
+bindkey -M vicmd 'k' push-backwards
+# TODO: uncomment once I figure out ^S
+# bindkey -M menuselect 'k' vi-up-line-or-history
+# bindkey -M menuselect 'j' vi-down-line-or-history
 
 [[ "$(uname -s)" == "Linux" ]] && alias open="xdg-open"
 fzf_cmd_prefix='file="$(fzf)"; if [[ "$file" != "" ]]; then;'
@@ -25,10 +33,10 @@ bindkey -sM vicmd '^F' "i $fzf_cmd_prefix open $fzf_cmd_suffix"
 bindkey -sM viins '^F' "$fzf_cmd_prefix open $fzf_cmd_suffix"
 
 setopt noautopushd
-push_backwards() {
+push-backwards() {
   pushd .. > /dev/null 2>&1
 }
-pop_forwards() {
+pop-forwards() {
   popd > /dev/null 2>&1
   if [[ $? -eq 1 ]] 
   then 
@@ -38,15 +46,15 @@ pop_forwards() {
     zle accept-line
   fi
 }
-zle -N push_backwards
-zle -N pop_forwards
+zle -N push-backwards
+zle -N pop-forwards
 
-exit_widget() {
+exit-widget() {
   exit
 }
-zle -N exit_widget
-bindkey -M vicmd '^Y' exit_widget
-bindkey -M viins '^Y' exit_widget
+zle -N exit-widget
+bindkey -M vicmd '^Y' exit-widget
+bindkey -M viins '^Y' exit-widget
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
@@ -56,7 +64,7 @@ vi-yank-clipboard() {
   zle vi-yank
   echo "$CUTBUFFER" | copy 
 }
-zle -N vi-yank-xclip
+zle -N vi-yank-clipboard
 bindkey -M vicmd 'y' vi-yank-clipboard
 bindkey -M visual 'y' vi-yank-clipboard
 

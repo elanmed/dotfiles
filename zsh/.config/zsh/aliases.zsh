@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # editing
 alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && n.sh ."
 alias eterm="nvim ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
@@ -5,9 +7,6 @@ alias etmux="nvim ~/.dotfiles/tmux/.config/tmux/tmux.conf"
 alias edot="builtin cd ~/.dotfiles && n.sh ."
 alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
 alias resetnvim="rm -rf ~/.cache/nvim ~/.local/share/nvim ~/.config/coc"
-# sourcing
-alias src="exec zsh"
-alias tsrc="tmux source ~/.config/tmux/tmux.conf"
 # git
 alias gs="git status"
 alias gcb="git checkout -b"
@@ -22,6 +21,7 @@ alias gpl="git pull origin master"
 alias e="exit"
 alias vi="nvim"
 alias tm="tmux"
+alias tsrc="tmux source ~/.config/tmux/tmux.conf"
 lsa_cmd="command ls -a --color=tty"
 [[ "$(uname -s)" == "Linux" ]] && lsa_cmd+=" --group-directories-first"
 alias lsa="$lsa_cmd"
