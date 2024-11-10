@@ -15,17 +15,11 @@ bindkey -M vicmd '^?' vi-backward-word
 # bindkey -M viins '^I' pop-forwards
 bindkey -M vicmd '^G' clear-screen
 bindkey -M viins '^G' clear-screen
-bindkey -M vicmd 'yy' vi-yank-clipboard
-
-bindkey -M vicmd 'j' pop-forwards
-bindkey -M vicmd 'k' push-backwards
-# TODO: uncomment once I figure out ^S
-# bindkey -M menuselect 'k' vi-up-line-or-history
-# bindkey -M menuselect 'j' vi-down-line-or-history
 
 [[ "$(uname -s)" == "Linux" ]] && alias open="xdg-open"
 fzf_cmd_prefix='file="$(fzf)"; if [[ "$file" != "" ]]; then;'
 fzf_cmd_suffix=' "$file"; fi \n'
+# TODO: conflicts with zsh-autopair
 # TODO: issues using fzf with a widget registered with zle -N
 bindkey -sM vicmd '^P' "i $fzf_cmd_prefix nvim $fzf_cmd_suffix"
 bindkey -sM viins '^P' "$fzf_cmd_prefix nvim $fzf_cmd_suffix"
@@ -48,6 +42,11 @@ pop-forwards() {
 }
 zle -N push-backwards
 zle -N pop-forwards
+bindkey -M vicmd 'j' pop-forwards
+bindkey -M vicmd 'k' push-backwards
+# TODO: uncomment once I figure out ^S
+# bindkey -M menuselect 'k' vi-up-line-or-history
+# bindkey -M menuselect 'j' vi-down-line-or-history
 
 exit-widget() {
   exit
@@ -66,7 +65,6 @@ vi-yank-clipboard() {
 }
 zle -N vi-yank-clipboard
 bindkey -M vicmd 'y' vi-yank-clipboard
-bindkey -M visual 'y' vi-yank-clipboard
 
 cursor_mode() {
     cursor_block='\e[2 q'
