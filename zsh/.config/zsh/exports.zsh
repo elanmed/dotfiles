@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 
 export PATH="$HOME/.local/bin:$HOME/.deno/bin:/usr/local/sbin:$PATH"
 export EDITOR="nvim"

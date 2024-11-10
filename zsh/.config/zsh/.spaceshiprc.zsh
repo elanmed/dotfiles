@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 
 # https://spaceship-prompt.sh/config/intro/
 SPACESHIP_PROMPT_ORDER=(

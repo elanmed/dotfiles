@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 
 # editing
 alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && n.sh ."

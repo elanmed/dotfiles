@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 
 # Don't use a .zshenv!
 # https://github.com/christoomey/vim-tmux-navigator/issues/72#issuecomment-103566743

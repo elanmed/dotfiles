@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch 
