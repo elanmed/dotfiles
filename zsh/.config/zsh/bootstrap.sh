@@ -10,7 +10,8 @@ h_install_package "$1" fzf
 h_install_package "$1" source-highlight
 h_install_package "$1" highlight
 
-if zap version > /dev/null 2>&1
+zap_dir="$HOME/.local/share/zap"
+if [[ -d "$zap_dir" ]]
 then 
   h_echo --mode=noop "zap already installed"
 else
