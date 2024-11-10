@@ -5,9 +5,12 @@ source ~/.dotfiles/helpers.sh
 h_validate_num_args --num=1 "$@"
 h_validate_package_manager "$1"
 
-if [[ ! -d ~/.oh-my-zsh ]]
+if h_has_package "$1" "zsh"
 then
-  h_echo --mode=error "oh-my-zsh is not yet installed, run 'oh-my-zsh.sh' before 'bootstrap.sh'"
+  h_echo --mode=noop "zsh already installed"
+else
+  h_echo --mode=doing "installing zsh, then exiting. re-run the script in a zsh script"
+  h_install_package "$1" zsh
   exit 1
 fi
 
