@@ -8,7 +8,6 @@
 plug "zap-zsh/supercharge"
 plug "zsh-users/zsh-autosuggestions"
 plug "zsh-users/zsh-syntax-highlighting"
-plug "hlissner/zsh-autopair"
 plug "agkozak/zsh-z"
 
 autoload -Uz compinit

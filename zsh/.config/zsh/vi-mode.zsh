@@ -19,7 +19,6 @@ bindkey -M viins '^G' clear-screen
 [[ "$(uname -s)" == "Linux" ]] && alias open="xdg-open"
 fzf_cmd_prefix='file="$(fzf)"; if [[ "$file" != "" ]]; then;'
 fzf_cmd_suffix=' "$file"; fi \n'
-# TODO: conflicts with zsh-autopair
 # TODO: issues using fzf with a widget registered with zle -N
 bindkey -sM vicmd '^P' "i $fzf_cmd_prefix nvim $fzf_cmd_suffix"
 bindkey -sM viins '^P' "$fzf_cmd_prefix nvim $fzf_cmd_suffix"
