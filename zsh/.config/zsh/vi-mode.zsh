@@ -3,16 +3,24 @@
 bindkey -v
 export KEYTIMEOUT=1
 
-bindkey -M viins '^E' autosuggest-execute
-# TODO: why doesn't this work?
-# bindkey -M viins '^S' expand-or-complete
+# by defualt, control+s will pause input to the terminal until 
+# control+q is used to resume input. ssty -ixon disables 
+# pausing/resuming
+stty -ixon
+
+# bindkey -M viins '^E' autosuggest-execute
+bindkey -M viins '^E' end-of-line
+bindkey -M vicmd '^E' end-of-line
+bindkey -M viins '^A' beginning-of-line 
+bindkey -M vicmd '^A' beginning-of-line 
+bindkey -M viins '^S' expand-or-complete
 bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
 bindkey -M vicmd '^?' vi-backward-word
 bindkey -M vicmd '^?' vi-backward-word
-# bindkey -M vicmd '^O' push-backwards
-# bindkey -M viins '^O' push-backwards
-# bindkey -M vicmd '^I' pop-forwards
-# bindkey -M viins '^I' pop-forwards
+bindkey -M vicmd '^O' push-backwards
+bindkey -M viins '^O' push-backwards
+bindkey -M vicmd '^I' pop-forwards
+bindkey -M viins '^I' pop-forwards
 bindkey -M vicmd '^G' clear-screen
 bindkey -M viins '^G' clear-screen
 
@@ -41,11 +49,8 @@ pop-forwards() {
 }
 zle -N push-backwards
 zle -N pop-forwards
-bindkey -M vicmd 'j' pop-forwards
-bindkey -M vicmd 'k' push-backwards
-# TODO: uncomment once I figure out ^S
-# bindkey -M menuselect 'k' vi-up-line-or-history
-# bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
 
 exit-widget() {
   exit
@@ -63,7 +68,7 @@ vi-yank-clipboard() {
   echo "$CUTBUFFER" | copy 
 }
 zle -N vi-yank-clipboard
-bindkey -M vicmd 'y' vi-yank-clipboard
+bindkey -M vicmd y vi-yank-clipboard
 
 cursor_mode() {
     cursor_block='\e[2 q'
