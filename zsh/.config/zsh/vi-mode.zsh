@@ -3,7 +3,7 @@
 bindkey -v
 export KEYTIMEOUT=1
 
-# by defualt, control+s will pause input to the terminal until 
+# by default, control+s will pause input to the terminal until 
 # control+q is used to resume input. ssty -ixon disables 
 # pausing/resuming
 stty -ixon
@@ -16,22 +16,12 @@ bindkey -M vicmd '^A' beginning-of-line
 bindkey -M viins '^S' expand-or-complete
 bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
 bindkey -M vicmd '^?' vi-backward-word
-bindkey -M vicmd '^?' vi-backward-word
 bindkey -M vicmd '^O' push-backwards
 bindkey -M viins '^O' push-backwards
 bindkey -M vicmd '^I' pop-forwards
 bindkey -M viins '^I' pop-forwards
 bindkey -M vicmd '^G' clear-screen
 bindkey -M viins '^G' clear-screen
-
-[[ "$(uname -s)" == "Linux" ]] && alias open="xdg-open"
-fzf_cmd_prefix='file="$(fzf)"; if [[ "$file" != "" ]]; then;'
-fzf_cmd_suffix=' "$file"; fi \n'
-# TODO: issues using fzf with a widget registered with zle -N
-bindkey -sM vicmd '^P' "i $fzf_cmd_prefix nvim $fzf_cmd_suffix"
-bindkey -sM viins '^P' "$fzf_cmd_prefix nvim $fzf_cmd_suffix"
-bindkey -sM vicmd '^F' "i $fzf_cmd_prefix open $fzf_cmd_suffix"
-bindkey -sM viins '^F' "$fzf_cmd_prefix open $fzf_cmd_suffix"
 
 setopt noautopushd
 push-backwards() {
@@ -70,6 +60,7 @@ vi-yank-clipboard() {
 zle -N vi-yank-clipboard
 bindkey -M vicmd y vi-yank-clipboard
 
+# https://thevaluable.dev/zsh-install-configure-mouseless/
 cursor_mode() {
     cursor_block='\e[2 q'
     cursor_beam='\e[6 q'

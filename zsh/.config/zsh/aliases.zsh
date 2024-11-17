@@ -29,6 +29,8 @@ alias yt="yt-dlp --sub-langs all --write-subs $1"
 # scripts
 alias n="n.sh"
 alias ps="ps.sh"
+[[ "$(uname -s)" == "Linux" ]] && alias open="xdg-open"
+alias zf="source fzf-file-explorer.sh"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 alias cat="highlight -O ansi --force"
