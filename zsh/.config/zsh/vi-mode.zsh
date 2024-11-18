@@ -22,11 +22,8 @@ bindkey -M vicmd '^I' pop-forwards
 bindkey -M viins '^I' pop-forwards
 bindkey -M vicmd '^G' clear-screen
 bindkey -M viins '^G' clear-screen
-
-source ~/.dotfiles/scripts/.local/bin/fzf-file-explorer.sh
-zle -N fzf-file-explorer
-bindkey -M vicmd '^P' fzf-file-explorer
-bindkey -M viins '^P' fzf-file-explorer
+bindkey -sM vicmd '^P' "i source fzf-file-explorer.sh\n"
+bindkey -sM viins '^P' "source fzf-file-explorer.sh\n"
 
 setopt noautopushd
 push-backwards() {
