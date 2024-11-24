@@ -8,8 +8,7 @@ export KEYTIMEOUT=1
 # pausing/resuming
 stty -ixon
 
-# bindkey -M viins '^E' autosuggest-execute
-bindkey -M viins '^E' end-of-line
+bindkey -M viins '^E' autosuggest-execute
 bindkey -M vicmd '^E' end-of-line
 bindkey -M viins '^A' beginning-of-line 
 bindkey -M vicmd '^A' beginning-of-line 
@@ -20,6 +19,9 @@ bindkey -M vicmd '^G' clear-screen
 bindkey -M viins '^G' clear-screen
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
+
+export FZF_CTRL_T_OPTS="--layout=reverse-list"
+export FZF_CTRL_R_OPTS="--layout=reverse-list"
 
 # remap fzf default keymapping
 bindkey -rM vicmd '^T'

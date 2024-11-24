@@ -7,10 +7,12 @@
 
 plug "zap-zsh/supercharge"
 plug "zap-zsh/completions"
-plug "zap-zsh/fzf"
 plug "zsh-users/zsh-autosuggestions"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "agkozak/zsh-z"
+
+# https://github.com/junegunn/fzf?tab=readme-ov-file#setting-up-shell-integration
+source <(fzf --zsh)
 
 source "$HOME/.dotfiles/zsh/.config/zsh/exports.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/aliases.zsh"
