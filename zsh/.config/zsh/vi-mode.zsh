@@ -16,14 +16,31 @@ bindkey -M vicmd '^A' beginning-of-line
 bindkey -M viins '^S' expand-or-complete
 bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
 bindkey -M vicmd '^?' vi-backward-word
-bindkey -M vicmd '^O' push-backwards
-bindkey -M viins '^O' push-backwards
-bindkey -M vicmd '^I' pop-forwards
-bindkey -M viins '^I' pop-forwards
 bindkey -M vicmd '^G' clear-screen
 bindkey -M viins '^G' clear-screen
-bindkey -sM vicmd '^P' "i source fzf-file-explorer.sh\n"
-bindkey -sM viins '^P' "source fzf-file-explorer.sh\n"
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+# remap fzf default keymapping
+bindkey -rM vicmd '^T'
+bindkey -rM viins '^T'
+
+fzf-file-execute-widget() {
+  fzf_res="$(__fzf_select)"
+  LBUFFER="${LBUFFER}$fzf_res"
+  if [[ -z "$fzf_res" ]] 
+  then 
+    zle reset-prompt
+    return 1
+  fi
+  local ret=$?
+  zle reset-prompt
+  zle accept-line
+  return $ret
+}
+zle -N fzf-file-execute-widget
+bindkey M vicmd '^P' fzf-file-execute-widget
+bindkey M viins '^P' fzf-file-execute-widget
 
 setopt noautopushd
 push-backwards() {
@@ -41,8 +58,10 @@ pop-forwards() {
 }
 zle -N push-backwards
 zle -N pop-forwards
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M vicmd '^O' push-backwards
+bindkey -M viins '^O' push-backwards
+bindkey -M vicmd '^I' pop-forwards
+bindkey -M viins '^I' pop-forwards
 
 exit-widget() {
   exit
