@@ -16,11 +16,11 @@ ls() {
   fi
 }
 
-export ZSHZ_CMD="zsh_z"
+export ZSHZ_CMD="zshz"
 # need `function` 
 # https://github.com/ohmyzsh/ohmyzsh/issues/6723#issue-313463147
 function z { 
-  zsh_z "$@" 
+  zshz "$@" 
   ls 
 }
 
@@ -51,5 +51,4 @@ gif() {
   ffmpeg -i "$1.mov" -pix_fmt rgb8 -r 10 "$1.gif"
   gifsicle -O3 "$1.gif" -o "$1.gif"
 }
-search() { grep "$1" "$HISTFILE" | tail -n 20 }
 killp() { kill -9 $(lsof -t -i:$1) }

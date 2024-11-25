@@ -13,7 +13,7 @@ bindkey -M vicmd '^E' end-of-line
 bindkey -M viins '^A' beginning-of-line 
 bindkey -M vicmd '^A' beginning-of-line 
 bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
-bindkey -M vicmd '^?' vi-backward-word
+bindkey -M vicmd '^?' vi-backward-word # backspace
 bindkey -M vicmd '^G' clear-screen
 bindkey -M viins '^G' clear-screen
 bindkey -M menuselect 'k' vi-up-line-or-history
@@ -24,7 +24,7 @@ export FZF_CTRL_R_OPTS="--layout=reverse"
 fzf-tab-complete-execute() {
   LBUFFER_BEFORE="${LBUFFER}"
   fzf-tab-complete
-  [[ "${LBUFFER}" == "$LBUFFER_BEFORE" ]] && return
+  [[ "${LBUFFER}" == "${LBUFFER_BEFORE}" ]] && return
   zle accept-line
 }
 zle -N fzf-tab-complete-execute
@@ -63,7 +63,7 @@ bindkey -M viins '^Y' exit-widget
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
+bindkey -M vicmd vv edit-command-line
 
 vi-yank-clipboard() {
   zle vi-yank
