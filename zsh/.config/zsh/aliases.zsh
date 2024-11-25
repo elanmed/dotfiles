@@ -29,6 +29,8 @@ alias yt="yt-dlp --sub-langs all --write-subs $1"
 # scripts
 alias n="n.sh"
 alias ps="ps.sh"
+alias recipes="recipes-gui-run.sh"
+alias reddit="redlib-run.sh"
 [[ "$(uname -s)" == "Linux" ]] && alias open="xdg-open"
 alias zf="source fzf-file-explorer.sh"
 # overrides
