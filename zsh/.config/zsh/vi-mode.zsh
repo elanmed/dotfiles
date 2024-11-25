@@ -12,7 +12,6 @@ bindkey -M viins '^E' autosuggest-execute
 bindkey -M vicmd '^E' end-of-line
 bindkey -M viins '^A' beginning-of-line 
 bindkey -M vicmd '^A' beginning-of-line 
-bindkey -M viins '^S' expand-or-complete
 bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
 bindkey -M vicmd '^?' vi-backward-word
 bindkey -M vicmd '^G' clear-screen
@@ -20,29 +19,19 @@ bindkey -M viins '^G' clear-screen
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 
-export FZF_CTRL_T_OPTS="--layout=reverse-list"
-export FZF_CTRL_R_OPTS="--layout=reverse-list"
+export FZF_CTRL_R_OPTS="--layout=reverse"
 
-# remap fzf default keymapping
-bindkey -rM vicmd '^T'
-bindkey -rM viins '^T'
-
-fzf-file-execute-widget() {
-  fzf_res="$(__fzf_select)"
-  LBUFFER="${LBUFFER}$fzf_res"
-  if [[ -z "$fzf_res" ]] 
-  then 
-    zle reset-prompt
-    return 1
-  fi
-  local ret=$?
-  zle reset-prompt
+fzf-tab-complete-execute() {
+  LBUFFER_BEFORE="${LBUFFER}"
+  fzf-tab-complete
+  [[ "${LBUFFER}" == "$LBUFFER_BEFORE" ]] && return
   zle accept-line
-  return $ret
 }
-zle -N fzf-file-execute-widget
-bindkey M vicmd '^P' fzf-file-execute-widget
-bindkey M viins '^P' fzf-file-execute-widget
+zle -N fzf-tab-complete-execute
+bindkey -M viins '^S' fzf-tab-complete-execute
+
+# bindkey M vicmd '^P' fzf-file-execute-widget
+# bindkey M viins '^P' fzf-file-execute-widget
 
 setopt noautopushd
 push-backwards() {
