@@ -20,6 +20,7 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 
 export FZF_CTRL_R_OPTS="--layout=reverse"
+export FZF_CTRL_T_OPTS="--layout=reverse-list"
 
 fzf-tab-complete-execute() {
   LBUFFER_BEFORE="${LBUFFER}"
@@ -30,8 +31,18 @@ fzf-tab-complete-execute() {
 zle -N fzf-tab-complete-execute
 bindkey -M viins '^S' fzf-tab-complete-execute
 
-# bindkey M vicmd '^P' fzf-file-execute-widget
-# bindkey M viins '^P' fzf-file-execute-widget
+# remap fzf default keymapping
+bindkey -rM vicmd '^T'
+bindkey -rM viins '^T'
+fzf-file-execute() {
+  LBUFFER_BEFORE="${LBUFFER}"
+  fzf-file-widget
+  [[ "${LBUFFER}" == "${LBUFFER_BEFORE}" ]] && return
+  zle accept-line
+}
+zle -N fzf-file-execute
+bindkey M vicmd '^P' fzf-file-execute
+bindkey M viins '^P' fzf-file-execute
 
 setopt noautopushd
 push-backwards() {

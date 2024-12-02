@@ -16,11 +16,11 @@ ls() {
   fi
 }
 
-export ZSHZ_CMD="zshz"
+export ZSHZ_CMD="zsh_z"
 # need `function` 
 # https://github.com/ohmyzsh/ohmyzsh/issues/6723#issue-313463147
 function z { 
-  zshz "$@" 
+  zsh_z "$@" 
   ls 
 }
 
