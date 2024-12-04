@@ -20,7 +20,7 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 
 export FZF_CTRL_R_OPTS="--layout=reverse"
-export FZF_CTRL_T_OPTS="--layout=reverse-list"
+export FZF_CTRL_T_OPTS="--layout=reverse"
 
 fzf-tab-complete-execute() {
   LBUFFER_BEFORE="${LBUFFER}"
