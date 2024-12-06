@@ -83,6 +83,19 @@ vi-yank-clipboard() {
 zle -N vi-yank-clipboard
 bindkey -M vicmd y vi-yank-clipboard
 
+# https://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
+fg-widget () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fg-widget
+bindkey '^Z' fg-widget
+
 # https://thevaluable.dev/zsh-install-configure-mouseless/
 cursor_mode() {
     cursor_block='\e[2 q'
