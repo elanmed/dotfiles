@@ -2,15 +2,34 @@
 
 source ~/.dotfiles/helpers.sh
 
-h_validate_num_args --num=1 "$@"
-h_validate_package_manager "$1"
+server_flag=0
+package_manager=""
 
-if h_has_package "$1" "zsh"
+for arg in "$@"
+do 
+  case "$arg" in 
+    --server)
+      server_flag=1
+      shift
+      ;;
+    --pm=*)
+      package_manager="$arg"
+      shift
+      ;;
+    *)
+      h_format_error "--pm={dnf,brew} --server"
+      ;;
+  esac
+done
+
+h_validate_package_manager "$package_manager"
+
+if h_has_package "$package_manager" "zsh"
 then
   h_echo --mode=noop "zsh already installed"
 else
-  h_echo --mode=doing "installing zsh, then exiting. re-run the script in a zsh script"
-  h_install_package "$1" zsh
+  h_install_package "$package_manager" zsh
+  h_echo --mode=noop "exiting early, re-run the script in a zsh script"
   exit 1
 fi
 
@@ -26,25 +45,49 @@ fi
 h_echo --mode=doing "removing ~/.zshrc"
 rm ~/.zshrc
 
-h_install_package "$1" stow
+h_install_package "$package_manager" stow
 for dir in */
 do
   stripped_dir="${dir%?}"
-  h_echo --mode=doing "running 'stow $stripped_dir'"
-  stow "$stripped_dir"
+  h_array_includes --needle="$stripped_dir" "fonts" "git" "nvm"
+  includes=$?
+  if [[ "$includes" -eq 0 ]]
+  then
+    h_echo --mode=noop "SKIPPING: running 'stow $stripped_dir'"
+  else
+    h_echo --mode=doing "running 'stow $stripped_dir'"
+    stow "$stripped_dir"
+  fi
+
 done
 
 h_echo --mode=doing "bootstrapping zsh"
-source ~/.dotfiles/zsh/.config/zsh/bootstrap.sh "$1"
+source ~/.dotfiles/zsh/.config/zsh/bootstrap.sh "$package_manager"
 
 h_echo --mode=doing "bootstrapping tmux"
-source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh "$1"
+source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh "$package_manager"
 
-h_echo --mode=doing "bootstrapping nvm"
-source ~/.dotfiles/nvm/bootstrap.sh "$1"
+if [[ "$server_flag" -eq 1 ]] 
+then
+  h_echo --mode=noop "SKIPPING: bootstrapping nvm"
+else
+  h_echo --mode=doing "bootstrapping nvm"
+  source ~/.dotfiles/nvm/bootstrap.sh "$package_manager"
+fi
 
-h_echo --mode=doing "bootstrapping fonts"
-source ~/.dotfiles/fonts/bootstrap.sh "$1"
+if [[ "$server_flag" -eq 1 ]] 
+then
+  h_echo --mode=noop "SKIPPING: bootstrapping fonts"
+else
+  h_echo --mode=doing "bootstrapping fonts"
+  source ~/.dotfiles/fonts/bootstrap.sh "$package_manager"
+fi
 
-h_echo --mode=doing "bootstrapping nvim"
-source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh "$1"
+if [[ "$server_flag" -eq 1 ]] 
+then
+  h_echo --mode=noop "SKIPPING: bootstrapping nvim"
+else
+  h_echo --mode=doing "bootstrapping nvim"
+  source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh "$package_manager"
+fi
+

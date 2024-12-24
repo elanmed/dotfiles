@@ -129,3 +129,28 @@ h_format_error () {
 h_option_value() {
   echo "$(echo "$1" | cut -d'=' -f2)"
 }
+
+# eg: h_option_value --needle="1" "1" "2" "3"
+# $1: --needle=
+# $: the items of the array, spread as arguments
+h_array_includes() {
+  case "$1" in 
+    --needle=*)
+      ;;
+    *)
+      h_format_error "--needle="
+      ;;
+  esac
+
+  local needle=$(h_option_value "$1")
+  shift  # remove the first argument
+  local array=("$@")
+
+  for item in "${array[@]}"
+  do
+    if [[ "$item" == "$needle" ]]; then
+      return 0 
+    fi
+  done
+  return 1
+}
