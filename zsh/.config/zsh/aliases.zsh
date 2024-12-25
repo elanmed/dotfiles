@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# TODO: handle n.sh a bit better
+# TODO: look into resetnvim
+
 # editing
 alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && n.sh ."
 alias eterm="nvim ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml"
@@ -23,7 +26,7 @@ alias vi="nvim"
 alias tm="tmux"
 alias tsrc="tmux source ~/.config/tmux/tmux.conf"
 lsa_cmd="command ls -a --color=tty"
-[[ "$(uname -s)" == "Linux" ]] && lsa_cmd+=" --group-directories-first"
+h_is_linux && lsa_cmd+=" --group-directories-first"
 alias lsa="$lsa_cmd"
 alias yt="yt-dlp --sub-langs all --write-subs $1"
 # scripts
@@ -31,7 +34,7 @@ alias n="n.sh"
 alias ps="ps.sh"
 alias recipes="recipes-gui-run.sh"
 alias reddit="redlib-run.sh"
-[[ "$(uname -s)" == "Linux" ]] && alias open="xdg-open"
+h_is_linux && alias open="xdg-open"
 alias zf="source fzf-file-explorer.sh"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"

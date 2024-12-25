@@ -11,12 +11,12 @@ export TERMINAL="alacritty"
 
 # https://superuser.com/a/71593
 source_highlight_path="/usr"
-[[ "$(uname -s)" != "Linux" ]] && source_highlight_path+="/local"
+! h_is_linux && source_highlight_path+="/local"
 source_highlight_path+="/bin/src-hilite-lesspipe.sh"
 export LESSOPEN="| $source_highlight_path %s"
 export LESS=" -R "
 
-if [[ "$(uname -s)" == "Linux" ]]
+if h_is_linux
 then
   # https://superuser.com/a/613754
   export XDG_TEMPLATES_DIR="$HOME"

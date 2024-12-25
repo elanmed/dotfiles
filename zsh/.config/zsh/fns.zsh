@@ -9,8 +9,13 @@ ls() {
     lsa "$@"
   else
     ls_cmd="command ls"
-    [[ "$(uname -s)" == "Linux" ]] && ls_cmd+=" --color=auto"
-    [[ "$(uname -s)" == "Darwin" ]] && ls_cmd+=" -G"
+    if h_is_linux 
+    then
+      [[ "$(uname -s)" == "Linux" ]] && ls_cmd+=" --color=auto"
+    else
+      [[ "$(uname -s)" == "Darwin" ]] && ls_cmd+=" -G"
+    fi
+
     ls_cmd+=" "$@""
     eval "$ls_cmd"
   fi
@@ -30,7 +35,8 @@ cd() {
   ls
 }
 
-if [[ "$(uname -s)" == "Linux" ]] then 
+if h_is_linux
+then 
   alias copy="xclip -selection clipboard"
 else
   alias copy="pbcopy"
