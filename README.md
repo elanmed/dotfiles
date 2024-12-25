@@ -31,7 +31,7 @@ Keep submodules up-to-date:
 git submodule foreach git pull origin master
 ```
 
-notes when using on servers:
+Notes when using on servers:
 
 - Update the gitmodules urls, if necessary
 - Run the root `bootstrap.sh` with the `--server` flag to avoid unecessarily stowing directories
