@@ -72,8 +72,13 @@ done
 h_echo --mode=doing "bootstrapping zsh"
 source ~/.dotfiles/zsh/.config/zsh/bootstrap.sh "$package_manager"
 
-h_echo --mode=doing "bootstrapping tmux"
-source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh "$package_manager"
+if [[ "$server_flag" -eq 1 ]] 
+then
+  h_echo --mode=doing "SKIPPING: bootstrapping tmux"
+else
+  h_echo --mode=doing "bootstrapping tmux"
+  source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh "$package_manager"
+fi
 
 if [[ "$server_flag" -eq 1 ]] 
 then
