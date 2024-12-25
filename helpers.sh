@@ -57,7 +57,7 @@ h_install_package () {
   else 
     h_echo --mode=doing "installing $package"
     [[ "$package_manager" == "brew" ]] && brew install "$package"
-    [[ "$package_manager" == "dnf" ]] && sudo dnf install "$package"
+    [[ "$package_manager" == "dnf" ]] && sudo dnf install "$package" -y
   fi
 }
 
