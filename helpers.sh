@@ -154,3 +154,15 @@ h_array_includes() {
   done
   return 1
 }
+
+# eg: h_is_linux 
+h_is_linux() {
+  h_validate_num_args --num=0 "$@"
+
+  if [[ "$(uname -s)" == "Linux" ]]
+  then 
+    return 0
+  else
+    return 1
+  fi
+}
