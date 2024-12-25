@@ -51,7 +51,7 @@ then
 fi
 
 h_echo --mode=doing "removing ~/.zshrc"
-rm ~/.zshrc
+rm ~/.zshrc > /dev/null 2>&1
 
 h_install_package "$package_manager" stow
 for dir in */
