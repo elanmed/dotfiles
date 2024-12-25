@@ -8,7 +8,9 @@ properly, based on this blog [post](https://www.jakewiesler.com/blog/managing-do
 Clone with submodules:
 
 ```sh
-git clone --recurse-submodules https://github.com/ElanMedoff/dotfiles .dotfiles
+git clone https://github.com/ElanMedoff/dotfiles .dotfiles
+git submodule init
+git submodule update
 ```
 
 Prereqs:
@@ -20,7 +22,7 @@ Bootstrap:
 
 ```sh
 chmod +x ./bootstrap.sh
-./bootstrap.sh
+./bootstrap.sh --pm={brew,dnf}
 ```
 
 Keep submodules up-to-date:
@@ -28,3 +30,16 @@ Keep submodules up-to-date:
 ```sh
 git submodule foreach git pull origin master
 ```
+
+## notes for using on servers
+
+- Update the gitmodules urls, if necessary
+- Run the root `bootstrap.sh` with the `--server` flag to avoid unecessarily stowing directories
+- Update the `~/.spaceshiprc.zsh` to differentiate the shell prompt
+- Update the `vi` alias to `nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua "$@"`
+- disable `tmux` functionality:
+  - Remove the `tmux` call in `~/.dotfiles/zsh/.config/zsh/.zshrc`
+  - Replace `~/.dotfiles/scripts/.local/bin/n.sh` with:
+  ```bash
+  nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua "$@"
+  ```
