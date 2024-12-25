@@ -2,6 +2,12 @@
 
 source ~/.dotfiles/helpers.sh
 
+if ! h_is_command_valid "tmux"
+then 
+  nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua "$@"
+  return
+fi
+
 split_window() {
   tmux split-window -h
   tmux send-keys "builtin cd $1 && clear" "C-m"

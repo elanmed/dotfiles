@@ -57,7 +57,7 @@ h_install_package "$package_manager" stow
 for dir in */
 do
   stripped_dir="${dir%?}"
-  h_array_includes --needle="$stripped_dir" "fonts" "git" "nvm"
+  h_array_includes --needle="$stripped_dir" "fonts" "nvm" "tmux" "base16"
   includes=$?
   if [[ "$includes" -eq 0 ]]
   then

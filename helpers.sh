@@ -179,3 +179,15 @@ h_is_linux() {
     return 1
   fi
 }
+
+# eg: h_is_command_valid "tmux"
+# $1: the command to check
+h_is_command_valid() {
+  if command -v "$1" > /dev/null 2>&1
+  then 
+    return 0
+  else 
+    return 1
+  fi
+}
+

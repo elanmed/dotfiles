@@ -9,6 +9,7 @@ properly, based on this blog [post](https://www.jakewiesler.com/blog/managing-do
 
 ```sh
 git clone https://github.com/ElanMedoff/dotfiles .dotfiles
+# Update the urls in `.gitmodules` from `git@` to `https://` if necessary
 git submodule init
 git submodule update
 ```
@@ -33,13 +34,7 @@ git submodule foreach git pull origin master
 
 #### Notes when using on a server:
 
-- Update the urls in `.gitmodules` from `git@` to `https://`
 - Run the root `bootstrap.sh` with the `--server` flag to avoid unecessarily stowing directories
 - Update the `~/.spaceshiprc.zsh` to differentiate the shell prompt
-- Update the `vi` alias to `nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua "$@"`
-- disable `tmux` functionality:
-  - Remove the `tmux` call in `~/.dotfiles/zsh/.config/zsh/.zshrc`
-  - Replace `~/.dotfiles/scripts/.local/bin/n.sh` with:
-  ```bash
-  nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua "$@"
-  ```
+- Remove `base16_tomorrow-night` call
+- Remove the `tmux` call in `~/.dotfiles/zsh/.config/zsh/.zshrc`

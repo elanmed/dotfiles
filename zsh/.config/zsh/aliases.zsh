@@ -24,7 +24,7 @@ alias gpsh="git push origin HEAD"
 alias gpl="git pull origin master"
 # shorter commands
 alias e="exit"
-alias vi="nvim"
+alias v="nvim"
 alias tm="tmux"
 alias tsrc="tmux source ~/.config/tmux/tmux.conf"
 lsa_cmd="command ls -a --color=tty"

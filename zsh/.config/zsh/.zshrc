@@ -24,7 +24,8 @@ source "$HOME/.dotfiles/zsh/.config/zsh/fns.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/vi-mode.zsh"
 source "$HOME/.zsh/spaceship/spaceship.zsh"
 
-if [[ "$TERM_PROGRAM" != tmux ]]
-then
-  tmux
+if h_is_command_valid "tmux" 
+then 
+  if [[ "$TERM_PROGRAM" != tmux ]]; then; tmux; fi
 fi
+
