@@ -35,7 +35,7 @@ fi
 
 if ! h_string_includes "$(echo $SHELL)" "zsh"
 then 
-  h_install_package "$package_manager" util-linux
+  h_echo --mode=doing "setting the default shell to zsh"
   chsh -s $(which zsh)
   h_echo --mode=noop "exiting early, re-run the script"
   exit 1
