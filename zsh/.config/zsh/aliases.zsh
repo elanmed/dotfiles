@@ -2,7 +2,6 @@
 #
 source ~/.dotfiles/helpers.sh
 
-# TODO: handle n.sh a bit better
 # TODO: look into resetnvim
 
 # editing
