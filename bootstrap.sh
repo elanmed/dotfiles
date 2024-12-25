@@ -29,7 +29,15 @@ then
   h_echo --mode=noop "zsh already installed"
 else
   h_install_package "$package_manager" zsh
-  h_echo --mode=noop "exiting early, re-run the script in a zsh script"
+  h_echo --mode=noop "exiting early, re-run the script"
+  exit 1
+fi
+
+if !h_string_includes "$(echo $SHELL)" "zsh"
+then 
+  h_install_package "$package_manager" util-linux
+  chsh -s $(which zsh)
+  h_echo --mode=noop "exiting early, re-run the script"
   exit 1
 fi
 

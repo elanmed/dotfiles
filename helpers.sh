@@ -155,6 +155,19 @@ h_array_includes() {
   return 1
 }
 
+# eg: h_string_includes "string" "str"
+# $1: the string to search
+# $2: the substring to check
+h_string_includes() {
+  if [[ $1 == *"$2"* ]]
+  then 
+    return 0
+  else 
+    return 1
+  fi
+}
+
+
 # eg: h_is_linux 
 h_is_linux() {
   h_validate_num_args --num=0 "$@"
