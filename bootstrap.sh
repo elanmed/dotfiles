@@ -83,11 +83,7 @@ else
   source ~/.dotfiles/fonts/bootstrap.sh "$package_manager"
 fi
 
-if [[ "$server_flag" -eq 1 ]] 
-then
-  h_echo --mode=noop "SKIPPING: bootstrapping nvim"
-else
-  h_echo --mode=doing "bootstrapping nvim"
-  source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh "$package_manager"
-fi
-
+h_echo --mode=doing "bootstrapping nvim"
+nvim_bootstrap_cmd="source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh $package_manager"
+[[ "$server_flag" -eq 1 ]] && nvim_bootstrap_cmd+=" --server"
+eval "$nvim_bootstrap_cmd"
