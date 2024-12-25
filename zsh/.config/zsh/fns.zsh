@@ -1,4 +1,6 @@
 #!/bin/zsh
+#
+source ~/.dotfiles/helpers.sh
 
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch 
