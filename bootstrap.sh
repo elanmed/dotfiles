@@ -95,3 +95,5 @@ h_echo --mode=doing "bootstrapping nvim"
 nvim_bootstrap_cmd="source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh $package_manager"
 [[ "$server_flag" -eq 1 ]] && nvim_bootstrap_cmd+=" --server"
 eval "$nvim_bootstrap_cmd"
+
+h_echo --mode=noop "if bootstrapping zsh for the first time, run source ~./zshrc"
