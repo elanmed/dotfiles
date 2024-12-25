@@ -33,7 +33,7 @@ else
   exit 1
 fi
 
-if !h_string_includes "$(echo $SHELL)" "zsh"
+if ! h_string_includes "$(echo $SHELL)" "zsh"
 then 
   h_install_package "$package_manager" util-linux
   chsh -s $(which zsh)
