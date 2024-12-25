@@ -1,8 +1,6 @@
 #!/bin/zsh
-#
-source ~/.dotfiles/helpers.sh
 
-# TODO: look into resetnvim
+source ~/.dotfiles/helpers.sh
 
 # editing
 alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && n.sh ."
