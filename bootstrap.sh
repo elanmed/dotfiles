@@ -59,7 +59,7 @@ do
   stripped_dir="${dir%?}"
   h_array_includes --needle="$stripped_dir" "fonts" "nvm" "tmux" "base16"
   includes=$?
-  if [[ "$includes" -eq 0 ]]
+  if [[ "$server_flag" -eq 1 ]] && [[ "$includes" -eq 0 ]]
   then
     h_echo --mode=noop "SKIPPING: running 'stow $stripped_dir'"
   else
@@ -74,7 +74,7 @@ source ~/.dotfiles/zsh/.config/zsh/bootstrap.sh "$package_manager"
 
 if [[ "$server_flag" -eq 1 ]] 
 then
-  h_echo --mode=doing "SKIPPING: bootstrapping tmux"
+  h_echo --mode=noop "SKIPPING: bootstrapping tmux"
 else
   h_echo --mode=doing "bootstrapping tmux"
   source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh "$package_manager"
