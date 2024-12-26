@@ -90,7 +90,7 @@ h_has_package() {
       dnf list installed "$2" >/dev/null 2>&1
       ;;
     apt)
-      dpkg --list "$2" >/dev/null 2>&1
+      dpkg-query --show "$2" >/dev/null 2>&1
       ;;
   esac
 
