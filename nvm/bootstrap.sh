@@ -18,4 +18,4 @@ h_echo --mode=doing "sourcing nvm"
 source "$NVM_DIR/nvm.sh"
 
 h_echo --mode=doing "installing the latest version of node"
-nvm install 'lts/*'
+nvm install

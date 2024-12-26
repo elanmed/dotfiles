@@ -64,7 +64,7 @@ fi
 
 for dir in */; do
   stripped_dir="${dir%?}"
-  h_array_includes --needle="$stripped_dir" "fonts" "nvm" "tmux" "base16"
+  h_array_includes --needle="$stripped_dir" "fonts" "tmux" "base16"
   includes=$?
   if [[ $server_flag ]] && [[ $includes -eq 0 ]]; then
     h_echo --mode=noop "SKIPPING: running 'stow $stripped_dir'"
@@ -78,18 +78,14 @@ done
 h_echo --mode=doing "bootstrapping zsh"
 source ~/.dotfiles/zsh/.config/zsh/bootstrap.sh "$package_manager"
 
+h_echo --mode=doing "bootstrapping nvm"
+source ~/.dotfiles/nvm/bootstrap.sh "$package_manager"
+
 if $server_flag; then
   h_echo --mode=noop "SKIPPING: bootstrapping tmux"
 else
   h_echo --mode=doing "bootstrapping tmux"
   source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh "$package_manager"
-fi
-
-if $server_flag; then
-  h_echo --mode=noop "SKIPPING: bootstrapping nvm"
-else
-  h_echo --mode=doing "bootstrapping nvm"
-  source ~/.dotfiles/nvm/bootstrap.sh "$package_manager"
 fi
 
 if $server_flag; then
