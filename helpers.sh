@@ -204,3 +204,17 @@ h_is_command_valid() {
     return 1
   fi
 }
+
+# eg: h_is_server
+h_is_server() {
+  grep -q '^0$' ~/.dotfiles/.is_server >/dev/null 2>&1
+}
+
+# eg: get_nvim_cmd
+get_nvim_cmd() {
+  if h_is_server; then
+    echo "nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
+  else
+    echo "nvim"
+  fi
+}

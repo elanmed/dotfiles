@@ -6,9 +6,9 @@ export PATH="/usr/bin:/usr/sbin:/usr/local/sbin:$HOME/.local/bin:$HOME/.deno/bin
 # https://tech.serhatteker.com/post/2019-12/remove-duplicates-in-path-zsh/
 typeset -U path
 
-export EDITOR="nvim"
-export VISUAL="nvim"
-export MANPAGER='nvim +Man!'
+export EDITOR="$(get_nvim_cmd)"
+export VISUAL="$(get_nvim_cmd)"
+export MANPAGER="$(get_nvim_cmd) +Man!"
 export TERMINAL="alacritty"
 
 # https://superuser.com/a/71593

@@ -1,4 +1,6 @@
 #!/bin/zsh
+#
+source ~/.dotfiles/helpers.sh
 
 # Don't use a .zshenv!
 # https://github.com/christoomey/vim-tmux-navigator/issues/72#issuecomment-103566743
