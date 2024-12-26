@@ -3,8 +3,26 @@
 
 source ~/.dotfiles/helpers.sh
 
-h_validate_num_args --num=1 "$@"
-h_validate_package_manager "$1"
+server_flag=false
+package_manager=""
+
+for arg in "$@"; do
+  case "$arg" in
+    --server)
+      server_flag=true
+      shift
+      ;;
+    --pm=*)
+      package_manager="$arg"
+      shift
+      ;;
+    *)
+      h_format_error "--pm={brew,dnf,apt} --server"
+      ;;
+  esac
+done
+
+h_validate_package_manager "$package_manager"
 
 NVM_DIR="$HOME/.nvm"
 if [[ -d $NVM_DIR ]]; then
@@ -17,5 +35,9 @@ fi
 h_echo --mode=doing "sourcing nvm"
 source "$NVM_DIR/nvm.sh"
 
-h_echo --mode=doing "installing the latest version of node"
-nvm install
+if $server_flag; then
+  h_echo --mode=noop "SKIPPING: installing the latest version of node"
+else
+  h_echo --mode=doing "installing the latest version of node"
+  nvm install
+fi

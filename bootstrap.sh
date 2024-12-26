@@ -64,22 +64,18 @@ fi
 
 for dir in */; do
   stripped_dir="${dir%?}"
-  h_array_includes --needle="$stripped_dir" "fonts" "tmux" "base16"
+  h_array_includes --needle="$stripped_dir" "fonts" "nvm" "tmux" "base16"
   includes=$?
-  if [[ $server_flag ]] && [[ $includes -eq 0 ]]; then
+  if [[ $server_flag == true ]] && [[ $includes -eq 0 ]]; then
     h_echo --mode=noop "SKIPPING: running 'stow $stripped_dir'"
   else
     h_echo --mode=doing "running 'stow $stripped_dir'"
     stow "$stripped_dir"
   fi
-
 done
 
 h_echo --mode=doing "bootstrapping zsh"
 source ~/.dotfiles/zsh/.config/zsh/bootstrap.sh "$package_manager"
-
-h_echo --mode=doing "bootstrapping nvm"
-source ~/.dotfiles/nvm/bootstrap.sh "$package_manager"
 
 if $server_flag; then
   h_echo --mode=noop "SKIPPING: bootstrapping tmux"
@@ -87,6 +83,11 @@ else
   h_echo --mode=doing "bootstrapping tmux"
   source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh "$package_manager"
 fi
+
+h_echo --mode=doing "bootstrapping nvm"
+nvm_bootstrap_cmd="source ~/.dotfiles/nvm/bootstrap.sh $package_manager"
+[[ $server_flag == true ]] && nvm_bootstrap_cmd+=" --server"
+eval "$nvm_bootstrap_cmd"
 
 if $server_flag; then
   h_echo --mode=noop "SKIPPING: bootstrapping fonts"
@@ -97,7 +98,7 @@ fi
 
 h_echo --mode=doing "bootstrapping nvim"
 nvim_bootstrap_cmd="source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh $package_manager"
-[[ $server_flag ]] && nvim_bootstrap_cmd+=" --server"
+[[ $server_flag == true ]] && nvim_bootstrap_cmd+=" --server"
 eval "$nvim_bootstrap_cmd"
 
 h_echo --mode=noop "if bootstrapping zsh for the first time, run source ~./zshrc"
