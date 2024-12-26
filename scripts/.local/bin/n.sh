@@ -4,7 +4,7 @@
 source ~/.dotfiles/helpers.sh
 
 if ! h_is_command_valid "tmux"; then
-  nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua "$@"
+  "$NVIM_CMD" "$@"
   exit 0
 fi
 
