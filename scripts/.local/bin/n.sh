@@ -5,7 +5,7 @@ source ~/.dotfiles/helpers.sh
 
 if ! h_is_command_valid "tmux"; then
   nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua "$@"
-  return
+  exit 0
 fi
 
 split_window() {

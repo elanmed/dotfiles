@@ -2,7 +2,7 @@
 #
 source ~/.dotfiles/helpers.sh
 
-export PATH="/usr/bin:$HOME/.local/bin:$HOME/.deno/bin:/usr/local/sbin:$PATH"
+export PATH="/usr/bin:/usr/sbin:/usr/local/sbin:$HOME/.local/bin:$HOME/.deno/bin:$PATH"
 # https://tech.serhatteker.com/post/2019-12/remove-duplicates-in-path-zsh/
 typeset -U path
 
