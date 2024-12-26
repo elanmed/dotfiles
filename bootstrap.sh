@@ -17,7 +17,7 @@ for arg in "$@"; do
       shift
       ;;
     *)
-      h_format_error "--pm={dnf,brew} --server"
+      h_format_error "--pm={brew,dnf,apt} --server"
       ;;
   esac
 done
@@ -35,7 +35,7 @@ fi
 if ! h_string_includes "$SHELL" "zsh"; then
   h_echo --mode=doing "setting the default shell to zsh"
   chsh -s "$(which zsh)"
-  h_echo --mode=noop "exiting early, re-run the script"
+  h_echo --mode=noop "exiting early, restart the shell and re-run the script"
   exit 1
 fi
 

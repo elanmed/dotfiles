@@ -42,7 +42,7 @@ h_echo() {
 }
 
 # eg: h_install_package --pm=dnf neovim
-# $1: --pm={brew,dnf}: the package manager
+# $1: --pm={brew,dnf,apt}: the package manager
 # $2: the package name
 h_install_package() {
   h_validate_num_args --num=2 "$@"
@@ -54,15 +54,26 @@ h_install_package() {
 
   if h_has_package "$1" "$package"; then
     h_echo --mode=noop "$package already installed"
-  else
-    h_echo --mode=doing "installing $package"
-    [[ $package_manager == "brew" ]] && brew install "$package"
-    [[ $package_manager == "dnf" ]] && sudo dnf install "$package" -y
+    return
   fi
+
+  h_echo --mode=doing "installing $package"
+  case "$package_manager" in
+    brew)
+      brew install "$package"
+      ;;
+    dnf)
+      sudo dnf install "$package" -y
+      ;;
+    apt)
+      sudo apt install "$package" -y
+      ;;
+  esac
+
 }
 
 # eg: h_has_package --pm=dnf neovim
-# $1: --pm={brew,dnf}: the package manager
+# $1: --pm={brew,dnf,apt}: the package manager
 # $2: the package name
 h_has_package() {
   h_validate_num_args --num=2 "$@"
@@ -71,11 +82,18 @@ h_has_package() {
   local package_manager
   package_manager=$(h_option_value "$1")
 
-  if [[ $package_manager == "brew" ]]; then
-    brew ls --versions "$2" >/dev/null 2>&1
-  else
-    dnf list installed "$2" >/dev/null 2>&1
-  fi
+  case "$package_manager" in
+    brew)
+      brew ls --versions "$2" >/dev/null 2>&1
+      ;;
+    dnf)
+      dnf list installed "$2" >/dev/null 2>&1
+      ;;
+    apt)
+      apt list --installed | grep "^$2/" >/dev/null 2>&1
+      ;;
+  esac
+
   return "$?"
 }
 
@@ -100,21 +118,23 @@ h_validate_num_args() {
 }
 
 # eg: h_validate_package_manager --pm=dnf
-# $1: --pm={brew,dnf}
+# $1: --pm={brew,dnf,apt}
 h_validate_package_manager() {
   case "$1" in
     --pm=*)
-      if [[ $1 != "--pm=brew" ]] && [[ $1 != "--pm=dnf" ]]; then
-        h_format_error "--pm={brew,dnf}"
+      local package_manager
+      package_manager=$(h_option_value "$1")
+      if ! h_array_includes --needle="$package_manager" "brew" "dnf" "apt"; then
+        h_format_error "--pm={brew,dnf,apt}"
       fi
       ;;
     *)
-      h_format_error "--pm={brew,dnf}"
+      h_format_error "--pm={brew,dnf,apt}"
       ;;
   esac
 }
 
-# eg: h_format_error --pm={brew,dnf}
+# eg: h_format_error --pm={brew,dnf,apt}
 # $1: the missing option
 h_format_error() {
   h_validate_num_args --num=1 "$@"
