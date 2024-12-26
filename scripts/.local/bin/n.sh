@@ -1,9 +1,9 @@
 #!/bin/bash
+# shellcheck source=/dev/null
 
 source ~/.dotfiles/helpers.sh
 
-if ! h_is_command_valid "tmux"
-then 
+if ! h_is_command_valid "tmux"; then
   nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua "$@"
   return
 fi
@@ -15,11 +15,10 @@ split_window() {
   tmux resize-pane -Z
 }
 
-if [[ "$TERM_PROGRAM" == tmux ]]
-then
+if [[ $TERM_PROGRAM == tmux ]]; then
   tmux send-keys "nvim " "$1" "C-m"
   num_panes=$(tmux display-message -p '#{window_panes}')
-  [[ "$num_panes" == 1 ]] && split_window "$@"
+  [[ $num_panes == 1 ]] && split_window "$@"
   exit
 fi
 

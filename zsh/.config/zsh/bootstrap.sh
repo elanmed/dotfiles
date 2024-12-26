@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck source=/dev/null
 
 source ~/.dotfiles/helpers.sh
 
@@ -11,8 +12,7 @@ h_install_package "$1" source-highlight
 h_install_package "$1" highlight
 
 zap_dir="$HOME/.local/share/zap"
-if [[ -d "$zap_dir" ]]
-then 
+if [[ -d $zap_dir ]]; then
   h_echo --mode=noop "zap already installed"
 else
   h_echo --mode=doing "installing zap"
@@ -20,8 +20,7 @@ else
 fi
 
 spaceship_dir="$HOME/.zsh/spaceship"
-if [[ -d "$spaceship_dir" ]]
-then
+if [[ -d $spaceship_dir ]]; then
   h_echo --mode=noop "spaceship already installed"
 else
   h_echo --mode=doing "cloning spaceship"
@@ -29,7 +28,7 @@ else
 fi
 
 h_echo --mode=doing "symlinking zshrc"
-ln -s ~/.dotfiles/zsh/.config/zsh/.zshrc ~/.zshrc > /dev/null 2>&1
+ln -s ~/.dotfiles/zsh/.config/zsh/.zshrc ~/.zshrc >/dev/null 2>&1
 
 h_echo --mode=doing "symlinking spaceshiprc"
-ln -s ~/.dotfiles/zsh/.config/zsh/.spaceshiprc.zsh ~/.spaceshiprc.zsh > /dev/null 2>&1
+ln -s ~/.dotfiles/zsh/.config/zsh/.spaceshiprc.zsh ~/.spaceshiprc.zsh >/dev/null 2>&1

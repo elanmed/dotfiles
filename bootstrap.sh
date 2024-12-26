@@ -1,24 +1,24 @@
 #!/bin/bash
 # shellcheck source=/dev/null
 
-source "$HOME/.dotfiles/helpers.sh"
+source ~/.dotfiles/helpers.sh
 
 server_flag=0
 package_manager=""
 
 for arg in "$@"; do
   case "$arg" in
-  --server)
-    server_flag=1
-    shift
-    ;;
-  --pm=*)
-    package_manager="$arg"
-    shift
-    ;;
-  *)
-    h_format_error "--pm={dnf,brew} --server"
-    ;;
+    --server)
+      server_flag=1
+      shift
+      ;;
+    --pm=*)
+      package_manager="$arg"
+      shift
+      ;;
+    *)
+      h_format_error "--pm={dnf,brew} --server"
+      ;;
   esac
 done
 
@@ -68,27 +68,27 @@ for dir in */; do
 done
 
 h_echo --mode=doing "bootstrapping zsh"
-source "$HOME/.dotfiles/zsh/.config/zsh/bootstrap.sh" "$package_manager"
+source ~/.dotfiles/zsh/.config/zsh/bootstrap.sh "$package_manager"
 
 if [[ $server_flag -eq 1 ]]; then
   h_echo --mode=noop "SKIPPING: bootstrapping tmux"
 else
   h_echo --mode=doing "bootstrapping tmux"
-  source "$HOME/.dotfiles/tmux/.config/tmux/bootstrap.sh" "$package_manager"
+  source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh "$package_manager"
 fi
 
 if [[ $server_flag -eq 1 ]]; then
   h_echo --mode=noop "SKIPPING: bootstrapping nvm"
 else
   h_echo --mode=doing "bootstrapping nvm"
-  source "$HOME/.dotfiles/nvm/bootstrap.sh" "$package_manager"
+  source ~/.dotfiles/nvm/bootstrap.sh "$package_manager"
 fi
 
 if [[ $server_flag -eq 1 ]]; then
   h_echo --mode=noop "SKIPPING: bootstrapping fonts"
 else
   h_echo --mode=doing "bootstrapping fonts"
-  source "$HOME/.dotfiles/fonts/bootstrap.sh" "$package_manager"
+  source ~/.dotfiles/fonts/bootstrap.sh "$package_manager"
 fi
 
 h_echo --mode=doing "bootstrapping nvim"

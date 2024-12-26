@@ -9,11 +9,11 @@ export no_color='\033[0m'
 # eg: h_echo --mode=error "something went wrong!"
 # $1: --mode={error,query,noop,doing}: the type of message
 # $2: the message itself
-h_echo () {
+h_echo() {
   h_validate_num_args --num=2 "$@"
 
   local mode
-  case "$1" in 
+  case "$1" in
     --mode=*)
       mode=$(h_option_value "$1")
       ;;
@@ -22,7 +22,7 @@ h_echo () {
       ;;
   esac
 
-  case "$mode" in 
+  case "$mode" in
     "error")
       echo -e "${red}$2${no_color}"
       ;;
@@ -44,37 +44,37 @@ h_echo () {
 # eg: h_install_package --pm=dnf neovim
 # $1: --pm={brew,dnf}: the package manager
 # $2: the package name
-h_install_package () {
+h_install_package() {
   h_validate_num_args --num=2 "$@"
   h_validate_package_manager "$1"
 
-  local package_manager=$(h_option_value "$1")
+  local package_manager
+  package_manager=$(h_option_value "$1")
   local package="$2"
 
-  if h_has_package "$1" "$package"
-  then
+  if h_has_package "$1" "$package"; then
     h_echo --mode=noop "$package already installed"
-  else 
+  else
     h_echo --mode=doing "installing $package"
-    [[ "$package_manager" == "brew" ]] && brew install "$package"
-    [[ "$package_manager" == "dnf" ]] && sudo dnf install "$package" -y
+    [[ $package_manager == "brew" ]] && brew install "$package"
+    [[ $package_manager == "dnf" ]] && sudo dnf install "$package" -y
   fi
 }
 
 # eg: h_has_package --pm=dnf neovim
 # $1: --pm={brew,dnf}: the package manager
 # $2: the package name
-h_has_package () {
+h_has_package() {
   h_validate_num_args --num=2 "$@"
   h_validate_package_manager "$1"
 
-  local package_manager=$(h_option_value "$1")
+  local package_manager
+  package_manager=$(h_option_value "$1")
 
-  if [[ "$package_manager" == "brew" ]]
-  then 
-    brew ls --versions "$2" > /dev/null 2>&1
+  if [[ $package_manager == "brew" ]]; then
+    brew ls --versions "$2" >/dev/null 2>&1
   else
-    dnf list installed "$2" > /dev/null 2>&1
+    dnf list installed "$2" >/dev/null 2>&1
   fi
   return "$?"
 }
@@ -82,13 +82,13 @@ h_has_package () {
 # eg: h_validate_num_args --num=2 "$@"
 # $1: --pm={0}: the number of arguments expected
 # $2: the args
-h_validate_num_args () {
-  local num_actual=$(( $# - 1 ))
-  local num_expected=$(h_option_value "$1")
+h_validate_num_args() {
+  local num_actual=$(($# - 1))
+  local num_expected
+  num_expected=$(h_option_value "$1")
 
-  case "$1" in 
-    --num=$num_actual)
-      ;;
+  case "$1" in
+    --num="$num_actual") ;;
     --num=*)
       h_echo --mode=error "wrong number of arguments: received $num_actual, expected $num_expected"
       exit 1
@@ -101,11 +101,10 @@ h_validate_num_args () {
 
 # eg: h_validate_package_manager --pm=dnf
 # $1: --pm={brew,dnf}
-h_validate_package_manager () {
-  case "$1" in 
+h_validate_package_manager() {
+  case "$1" in
     --pm=*)
-      if [[ "$1" != "--pm=brew" ]] && [[ "$1" != "--pm=dnf" ]]
-      then
+      if [[ $1 != "--pm=brew" ]] && [[ $1 != "--pm=dnf" ]]; then
         h_format_error "--pm={brew,dnf}"
       fi
       ;;
@@ -117,7 +116,7 @@ h_validate_package_manager () {
 
 # eg: h_format_error --pm={brew,dnf}
 # $1: the missing option
-h_format_error () {
+h_format_error() {
   h_validate_num_args --num=1 "$@"
 
   h_echo --mode=error "bad option, only '$1' is supported"
@@ -127,29 +126,28 @@ h_format_error () {
 # eg: h_option_value --pm=dnf
 # $1: the entire option, with =
 h_option_value() {
-  echo "$(echo "$1" | cut -d'=' -f2)"
+  echo "$1" | cut -d'=' -f2
 }
 
 # eg: h_option_value --needle="1" "1" "2" "3"
 # $1: --needle=
 # $: the items of the array, spread as arguments
 h_array_includes() {
-  case "$1" in 
-    --needle=*)
-      ;;
+  case "$1" in
+    --needle=*) ;;
     *)
       h_format_error "--needle="
       ;;
   esac
 
-  local needle=$(h_option_value "$1")
-  shift  # remove the first argument
+  local needle=
+  needle=$(h_option_value "$1")
+  shift # remove the first argument
   local array=("$@")
 
-  for item in "${array[@]}"
-  do
-    if [[ "$item" == "$needle" ]]; then
-      return 0 
+  for item in "${array[@]}"; do
+    if [[ $item == "$needle" ]]; then
+      return 0
     fi
   done
   return 1
@@ -159,21 +157,18 @@ h_array_includes() {
 # $1: the string to search
 # $2: the substring to check
 h_string_includes() {
-  if [[ $1 == *"$2"* ]]
-  then 
+  if [[ $1 == *"$2"* ]]; then
     return 0
-  else 
+  else
     return 1
   fi
 }
 
-
-# eg: h_is_linux 
+# eg: h_is_linux
 h_is_linux() {
   h_validate_num_args --num=0 "$@"
 
-  if [[ "$(uname -s)" == "Linux" ]]
-  then 
+  if [[ "$(uname -s)" == "Linux" ]]; then
     return 0
   else
     return 1
@@ -183,11 +178,9 @@ h_is_linux() {
 # eg: h_is_command_valid "tmux"
 # $1: the command to check
 h_is_command_valid() {
-  if command -v "$1" > /dev/null 2>&1
-  then 
+  if command -v "$1" >/dev/null 2>&1; then
     return 0
-  else 
+  else
     return 1
   fi
 }
-
