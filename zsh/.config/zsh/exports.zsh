@@ -6,9 +6,15 @@ export PATH="/usr/bin:/usr/sbin:/usr/local/sbin:$HOME/.local/bin:$HOME/.deno/bin
 # https://tech.serhatteker.com/post/2019-12/remove-duplicates-in-path-zsh/
 typeset -U path
 
-export EDITOR="$(get_nvim_cmd)"
-export VISUAL="$(get_nvim_cmd)"
-export MANPAGER="$(get_nvim_cmd) +Man!"
+if h_is_server; then
+  export NVIM_CMD="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
+else
+  export NVIM_CMD="nvim"
+fi
+
+export EDITOR="$NVIM_CMD"
+export VISUAL="$NVIM_CMD"
+export MANPAGER="$NVIM_CMD +Man!"
 export TERMINAL="alacritty"
 
 # https://superuser.com/a/71593
