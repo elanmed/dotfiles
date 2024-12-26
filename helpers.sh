@@ -66,7 +66,7 @@ h_install_package() {
       sudo dnf install "$package" -y
       ;;
     apt)
-      sudo apt install "$package" -y
+      sudo apt-get install "$package" -y
       ;;
   esac
 
@@ -90,7 +90,7 @@ h_has_package() {
       dnf list installed "$2" >/dev/null 2>&1
       ;;
     apt)
-      apt list --installed | grep "^$2/" >/dev/null 2>&1
+      dpkg --list "$2" >/dev/null 2>&1
       ;;
   esac
 
