@@ -11,6 +11,7 @@ if h_is_server; then
 else
   export NVIM_CMD="nvim"
 fi
+git config --global core.editor "$NVIM_CMD"
 
 export EDITOR="$NVIM_CMD"
 export VISUAL="$NVIM_CMD"

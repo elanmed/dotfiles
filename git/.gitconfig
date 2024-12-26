@@ -3,7 +3,5 @@
 	email = 54599408+ElanMedoff@users.noreply.github.com
 [color]
 	ui = auto
-[core]
-	editor = nvim
 [pull]
   rebase = false
