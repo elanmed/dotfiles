@@ -11,3 +11,6 @@
 [submodule "zsh/.zsh/spaceship"]
 	path = zsh/.zsh/spaceship
 	url = https://github.com/spaceship-prompt/spaceship-prompt.git
+[submodule "nvm/.nvm"]
+	path = nvm/.nvm
+	url = https://github.com/nvm-sh/nvm.git
