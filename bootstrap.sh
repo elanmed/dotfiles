@@ -81,7 +81,7 @@ if $server_flag; then
   h_echo --mode=noop "SKIPPING: bootstrapping tmux"
 else
   h_echo --mode=doing "bootstrapping tmux"
-  source ~/.dotfiles/tmux/.config/tmux/bootstrap.sh "$package_manager"
+  source ~/.dotfiles/tmux/bootstrap.sh "$package_manager"
 fi
 
 h_echo --mode=doing "bootstrapping nvm"
