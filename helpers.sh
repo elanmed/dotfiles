@@ -87,7 +87,7 @@ h_has_package() {
       brew ls --versions "$2" >/dev/null 2>&1
       ;;
     dnf)
-      dnf list installed "$2" >/dev/null 2>&1
+      rpm -q "$2" >/dev/null 2>&1
       ;;
     apt)
       dpkg-query --show --showformat='${db:Status-Status}\n' "$2" 2>&1 | grep '^installed$' >/dev/null 2>&1
