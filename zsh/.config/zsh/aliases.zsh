@@ -28,6 +28,8 @@ lsa_cmd="command ls -a --color=tty"
 h_is_linux && lsa_cmd+=" --group-directories-first"
 alias lsa="$lsa_cmd"
 alias yt="yt-dlp --sub-langs all --write-subs $1"
+alias wu="sudo wg-quick up"
+alias wd="sudo wg-quick down"
 # scripts
 alias n="n.sh"
 alias ps="ps.sh"
