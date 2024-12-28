@@ -8,3 +8,6 @@
 [submodule "tmux/.tmux/plugins/tpm"]
 	path = tmux/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "zsh/.zsh/spaceship"]
+	path = zsh/.zsh/spaceship
+	url = https://github.com/spaceship-prompt/spaceship-prompt.git

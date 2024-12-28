@@ -19,14 +19,6 @@ else
   zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 --keep
 fi
 
-spaceship_dir="$HOME/.zsh/spaceship"
-if [[ -d $spaceship_dir ]]; then
-  h_echo --mode=noop "spaceship already installed"
-else
-  h_echo --mode=doing "cloning spaceship"
-  git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$spaceship_dir" --depth=1
-fi
-
 h_echo --mode=doing "symlinking zshrc"
 ln -s ~/.dotfiles/zsh/.config/zsh/.zshrc ~/.zshrc >/dev/null 2>&1
 
