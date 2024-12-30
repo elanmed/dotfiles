@@ -2,6 +2,8 @@
 
 fzf-file-explorer() {
   local find_cmd="find $dir -name node_modules -prune -o -name .git -prune -o"
+  local show_preview_cmd
+  show_preview_cmd="[[ $(tput columns) -ge 100 ]] && echo '50%,border-sharp'  || echo 'hidden'"
 
   local dir="$1"
   if [[ $dir == "" ]]; then
@@ -19,7 +21,8 @@ CTRL-O to open | CTRL-E to edit"
   # based on https://thevaluable.dev/practical-guide-fzf-example/
   selection=$(
     eval "$find_cmd -type f -print" | fzf --multi --height=100% --border=sharp --layout=reverse-list \
-      --preview="highlight -O ansi --force {}" --preview-window="50%,border-sharp" \
+      --preview-window="$(eval "$show_preview_cmd")" \
+      --preview="highlight -O ansi --force {}" \
       --prompt='Files > ' \
       --bind="ctrl-o:execute-silent(eval 'echo open > $temp_file')" \
       --bind="ctrl-o:+change-header(
