@@ -20,7 +20,6 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 
 export FZF_CTRL_R_OPTS="--layout=reverse"
-export FZF_CTRL_T_OPTS="--layout=reverse"
 
 fzf-tab-complete-execute() {
   LBUFFER_BEFORE="${LBUFFER}"
@@ -32,17 +31,29 @@ zle -N fzf-tab-complete-execute
 bindkey -M viins '^S' fzf-tab-complete-execute
 
 # remap fzf default keymapping
-bindkey -rM vicmd '^T'
-bindkey -rM viins '^T'
-fzf-file-execute() {
+# bindkey -rM vicmd '^T'
+# bindkey -rM viins '^T'
+# fzf-file-execute() {
+#   LBUFFER_BEFORE="${LBUFFER}"
+#   fzf-file-widget
+#   [[ "${LBUFFER}" == "${LBUFFER_BEFORE}" ]] && return
+#   zle accept-line
+# }
+# zle -N fzf-file-execute
+# bindkey -M vicmd '^P' fzf-file-execute
+# bindkey -M viins '^P' fzf-file-execute
+
+fzf-file-explorer-widget() {
   LBUFFER_BEFORE="${LBUFFER}"
-  fzf-file-widget
+  local dir="$(pwd)"
+  source ~/.dotfiles/scripts/.local/bin/fzf-file-explorer.sh
+  LBUFFER="$(fzf-file-explorer $dir)"
   [[ "${LBUFFER}" == "${LBUFFER_BEFORE}" ]] && return
   zle accept-line
 }
-zle -N fzf-file-execute
-bindkey M vicmd '^P' fzf-file-execute
-bindkey M viins '^P' fzf-file-execute
+zle -N fzf-file-explorer-widget
+bindkey -M vicmd '^P' fzf-file-explorer-widget
+bindkey -M viins '^P' fzf-file-explorer-widget
 
 setopt noautopushd
 push-backwards() {
