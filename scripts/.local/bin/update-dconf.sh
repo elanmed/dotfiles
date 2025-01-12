@@ -3,7 +3,7 @@
 
 source "$HOME/.dotfiles/helpers.sh"
 
-declare -A settings=(
+declare -A shortcut_settings=(
   ["/org/gnome/desktop/wm/keybindings/close"]="<Control>q"
   ["/org/gnome/desktop/wm/keybindings/maximize"]="<Shift><Control>e"
   ["/org/gnome/desktop/wm/keybindings/minimize"]="<Control>m"
@@ -18,8 +18,18 @@ declare -A settings=(
   ["/org/gnome/shell/keybindings/show-screenshot-ui"]="<Shift><Control>4"
 )
 
-for key in "${!settings[@]}"; do
-  value="${settings[$key]}"
-  h_echo --mode=doing "running dconf write $key '$value'"
+declare -A other_settings=(
+  ["/org/gnome/desktop/interface/text-scaling-factor"]="0.85"
+)
+
+for key in "${!shortcut_settings[@]}"; do
+  value="${shortcut_settings[$key]}"
+  h_echo --mode=doing "running dconf write $key ['$value']"
   dconf write "$key" "['$value']"
+done
+
+for key in "${!other_settings[@]}"; do
+  value="${other_settings[$key]}"
+  h_echo --mode=doing "running dconf write $key '$value'"
+  dconf write "$key" "$value"
 done
