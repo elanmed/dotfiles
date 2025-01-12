@@ -13,7 +13,10 @@ cursor = '#b4b7b4'
 
 [keyboard]
 bindings = [
-{ key = "V", mods = "Control", action = "Paste"},
+{ key = "v", mods = "Control", action = "Paste"},
+# { key = "t", mods = "Control", action = "CreateNewTab"},
+# { key = "]", mods = "Control | Shift", action = "SelectNextTab"},
+# { key = "[", mods = "Control | Shift", action = "SelectPreviousTab"},
 ]
 
 [window]
