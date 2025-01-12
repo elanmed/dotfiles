@@ -64,7 +64,7 @@ fi
 
 for dir in */; do
   stripped_dir="${dir%?}"
-  h_array_includes --needle="$stripped_dir" "fonts" "nvm" "tmux" "base16"
+  h_array_includes --needle="$stripped_dir" "fonts" "nvm" "tmux" "base16" "alacritty" "ghostty"
   includes=$?
   if [[ $server_flag == true ]] && [[ $includes -eq 0 ]]; then
     h_echo --mode=noop "SKIPPING: running 'stow $stripped_dir'"
