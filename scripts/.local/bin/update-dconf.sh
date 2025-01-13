@@ -19,6 +19,8 @@ declare -A shortcut_settings=(
 )
 
 declare -A other_settings=(
+  ["/org/gnome/desktop/interface/color-scheme"]="'prefers-dark'"
+  ["/org/gnome/desktop/interface/enable-hot-corners"]="false"
   ["/org/gnome/desktop/interface/text-scaling-factor"]="0.85"
 )
 
