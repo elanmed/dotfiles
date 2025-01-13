@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck source=/dev/null
 
-source ~/.dotfiles/helpers.sh
+source "$HOME/.dotfiles/helpers.sh"
 
 h_validate_num_args --num=1 "$@"
 h_validate_package_manager "$1"

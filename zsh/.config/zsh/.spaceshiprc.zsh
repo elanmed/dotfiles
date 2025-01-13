@@ -23,7 +23,7 @@ SPACESHIP_EXIT_CODE_SHOW=true
 prefix="🚀"
 if h_is_linux; then
   if h_is_toolbx; then 
-    prefix="TOOLBOX 🚀"
+    prefix="TOOLBX 🚀"
   else
     prefix="HOST 🚀"
   fi
