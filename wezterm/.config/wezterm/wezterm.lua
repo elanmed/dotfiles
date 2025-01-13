@@ -27,5 +27,7 @@ config.colors = {
   cursor_bg = '#b4b7b4',
 }
 config.window_decorations = "NONE"
+config.hide_tab_bar_if_only_one_tab = true
+config.show_tab_index_in_tab_bar = false
 
 return config
