@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck source=/dev/null
 
-source ~/.dotfiles/helpers.sh
+source "$HOME/.dotfiles/helpers.sh"
 
 server_flag=false
 package_manager=""
