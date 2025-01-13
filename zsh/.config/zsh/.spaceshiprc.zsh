@@ -10,7 +10,11 @@ SPACESHIP_PROMPT_ORDER=(
   exec_time 
   char
 )
-SPACESHIP_DIR_COLOR="yellow"
+dir_color="yellow"
+if h_is_linux && ! h_is_toolbx; then
+  dir_color="red"
+fi
+SPACESHIP_DIR_COLOR="$dir_color"
 SPACESHIP_DIR_TRUNC_REPO=false
 SPACESHIP_DIR_TRUNC=10
 
@@ -21,12 +25,8 @@ SPACESHIP_EXIT_CODE_PREFIX="status code: "
 SPACESHIP_EXIT_CODE_SHOW=true
 
 prefix="🚀"
-if h_is_linux; then
-  if h_is_toolbx; then 
-    prefix="TOOLBOX 🚀"
-  else
-    prefix="HOST 🚀"
-  fi
+if h_is_linux && ! h_is_toolbx; then
+  prefix="HOST"
 fi
 
 SPACESHIP_CHAR_SYMBOL=" "
