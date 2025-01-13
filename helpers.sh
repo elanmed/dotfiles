@@ -195,6 +195,17 @@ h_is_linux() {
   fi
 }
 
+# eg: h_is_toolbx
+h_is_toolbx() {
+  h_validate_num_args --num=0 "$@"
+
+  if [[ "$(hostname)" == "toolbx" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 # eg: h_is_command_valid "tmux"
 # $1: the command to check
 h_is_command_valid() {

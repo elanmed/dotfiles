@@ -18,7 +18,12 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # filename coloring
 zstyle ':completion:*:descriptions' format '[%d]' # labeled, colored descriptions
 
 # https://github.com/junegunn/fzf?tab=readme-ov-file#setting-up-shell-integration
-source <(fzf --zsh)
+
+if h_is_linux && ! h_is_toolbx; then 
+  source <(fzf --zsh 2>/dev/null)
+else
+  source <(fzf --zsh)
+fi
 
 source "$HOME/.dotfiles/zsh/.config/zsh/exports.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/aliases.zsh"
