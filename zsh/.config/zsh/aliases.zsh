@@ -4,7 +4,7 @@ source ~/.dotfiles/helpers.sh
 
 # editing
 alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && n.sh ."
-alias eterm="$NVIM_CMD ~/.dotfiles/alacritty/.config/wezterm/.config/wezterm/wezterm.lua"
+alias eterm="$NVIM_CMD ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
 alias etmux="$NVIM_CMD ~/.dotfiles/tmux/.config/tmux/tmux.conf"
 alias edot="builtin cd ~/.dotfiles && n.sh ."
 alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
