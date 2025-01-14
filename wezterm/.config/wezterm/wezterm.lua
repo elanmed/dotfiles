@@ -1,8 +1,20 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
+-- https://stackoverflow.com/a/326715
+function os.capture(cmd, raw)
+  local f = assert(io.popen(cmd, 'r'))
+  local s = assert(f:read('*a'))
+  f:close()
+  if raw then return s end
+  s = string.gsub(s, '^%s+', '')
+  s = string.gsub(s, '%s+$', '')
+  s = string.gsub(s, '[\n\r]+', ' ')
+  return s
+end
+
 local function is_linux()
-  return package.cpath:match("%p[\\|/]?%p(%a+)") == "so"
+  return os.capture("uname -s") == "Linux"
 end
 
 local function cmd_or_ctrl()
@@ -10,11 +22,10 @@ local function cmd_or_ctrl()
 end
 
 local config = wezterm.config_builder()
-
-config.font_size = 13.0
 config.font = wezterm.font(
-  'ComicCode Ligatures Nerd Font'
+  'ComicCodeLigatures Nerd Font'
 )
+config.font_size = 13.0
 config.keys = {
   { key = 'v', mods = cmd_or_ctrl(),             action = act.PasteFrom 'Clipboard' },
   { key = 't', mods = cmd_or_ctrl(),             action = act.SpawnTab 'CurrentPaneDomain' },
