@@ -30,6 +30,6 @@ if h_is_linux && ! h_is_toolbx; then
 fi
 
 SPACESHIP_CHAR_SYMBOL=" "
-SPACESHIP_CHAR_SUFFIX="\n$prefix:: "
+SPACESHIP_CHAR_SUFFIX="\n$prefix :: "
 
 SPACESHIP_PROMPT_ADD_NEWLINE=false
