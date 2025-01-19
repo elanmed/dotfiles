@@ -29,8 +29,8 @@ config.font_size = 13.0
 config.keys = {
   { key = 'v', mods = cmd_or_ctrl(),             action = act.PasteFrom 'Clipboard' },
   { key = 't', mods = cmd_or_ctrl(),             action = act.SpawnTab 'CurrentPaneDomain' },
-  { key = 'w', mods = cmd_or_ctrl(),             action = act.CloseCurrentTab { confirm = true } },
-  { key = 'n', mods = cmd_or_ctrl(),             action = act.SpawnWindow },
+  { key = 'y', mods = cmd_or_ctrl() .. '|SHIFT', action = act.CloseCurrentTab { confirm = true } },
+  -- { key = 'n', mods = cmd_or_ctrl(),             action = act.SpawnWindow },
   { key = '{', mods = cmd_or_ctrl() .. '|SHIFT', action = act.ActivateTabRelative(-1) },
   { key = '}', mods = cmd_or_ctrl() .. '|SHIFT', action = act.ActivateTabRelative(1) },
 }
