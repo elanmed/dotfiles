@@ -37,7 +37,7 @@ config.keys = {
 config.colors = {
   cursor_bg = '#b4b7b4',
 }
-if is_linux then
+if is_linux() then
   config.window_decorations = "NONE"
 end
 config.hide_tab_bar_if_only_one_tab = true
