@@ -3,7 +3,7 @@
 fzf-file-explorer() {
   local find_cmd="find $dir -name node_modules -prune -o -name .git -prune -o"
   local show_preview_cmd
-  show_preview_cmd="[[ $(tput columns) -ge 100 ]] && echo '50%,border-sharp'  || echo 'hidden'"
+  show_preview_cmd="[[ $(tput cols) -ge 100 ]] && echo '50%,border-sharp'  || echo 'hidden'"
 
   local dir="$1"
   if [[ $dir == "" ]]; then
