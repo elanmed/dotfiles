@@ -35,7 +35,6 @@ config.keys = {
 }
 config.colors = {
   cursor_bg = '#b4b7b4',
-  cursor_fg = '#b4b7b4',
   cursor_border = '#b4b7b4',
 
 }
