@@ -67,7 +67,7 @@ h_install_package() {
       sudo dnf install "$package" -y
       ;;
     pacman)
-      sudo pacman --sync "$package" --noconfirm
+      sudo pacman --sync --quiet --noconfirm "$package"
       ;;
     apt)
       sudo apt-get install "$package" -y
