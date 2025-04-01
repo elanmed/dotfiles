@@ -22,7 +22,7 @@ git submodule update
 
 ```sh
 chmod +x ./bootstrap.sh
-./bootstrap.sh --pm={brew,dnf,apt} {--server}
+./bootstrap.sh --pm={brew,pacman,dnf,apt} {--server}
 ```
 
 #### Keep submodules up-to-date:

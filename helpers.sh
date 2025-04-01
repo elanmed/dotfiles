@@ -41,8 +41,8 @@ h_echo() {
   esac
 }
 
-# eg: h_install_package --pm=dnf neovim
-# $1: --pm={brew,dnf,apt}: the package manager
+# eg: h_install_package --pm=pacman neovim
+# $1: --pm={brew,pacman,dnf,apt}: the package manager
 # $2: the package name
 h_install_package() {
   h_validate_num_args --num=2 "$@"
@@ -58,6 +58,7 @@ h_install_package() {
   fi
 
   h_echo --mode=doing "installing $package"
+
   case "$package_manager" in
     brew)
       brew install "$package"
@@ -65,15 +66,17 @@ h_install_package() {
     dnf)
       sudo dnf install "$package" -y
       ;;
+    pacman)
+      sudo pacman --sync "$package" --noconfirm
+      ;;
     apt)
       sudo apt-get install "$package" -y
       ;;
   esac
-
 }
 
-# eg: h_has_package --pm=dnf neovim
-# $1: --pm={brew,dnf,apt}: the package manager
+# eg: h_has_package --pm=pacman neovim
+# $1: --pm={brew,pacman,dnf,apt}: the package manager
 # $2: the package name
 h_has_package() {
   h_validate_num_args --num=2 "$@"
@@ -88,6 +91,9 @@ h_has_package() {
       ;;
     dnf)
       rpm -q "$2" >/dev/null 2>&1
+      ;;
+    pacman)
+      pacman --query | grep "^$2 " >/dev/null 2>&1
       ;;
     apt)
       dpkg-query --show --showformat='${db:Status-Status}\n' "$2" 2>&1 | grep '^installed$' >/dev/null 2>&1
@@ -117,24 +123,24 @@ h_validate_num_args() {
   esac
 }
 
-# eg: h_validate_package_manager --pm=dnf
-# $1: --pm={brew,dnf,apt}
+# eg: h_validate_package_manager --pm=pacman
+# $1: --pm={brew,pacman,dnf,apt}
 h_validate_package_manager() {
   case "$1" in
     --pm=*)
       local package_manager
       package_manager=$(h_option_value "$1")
-      if ! h_array_includes --needle="$package_manager" "brew" "dnf" "apt"; then
-        h_format_error "--pm={brew,dnf,apt}"
+      if ! h_array_includes --needle="$package_manager" "brew" "pacman" "dnf" "apt"; then
+        h_format_error "--pm={brew,pacman,dnf,apt}"
       fi
       ;;
     *)
-      h_format_error "--pm={brew,dnf,apt}"
+      h_format_error "--pm={brew,pacman,dnf,apt}"
       ;;
   esac
 }
 
-# eg: h_format_error --pm={brew,dnf,apt}
+# eg: h_format_error --pm={brew,pacman,dnf,apt}
 # $1: the missing option
 h_format_error() {
   h_validate_num_args --num=1 "$@"
@@ -143,7 +149,7 @@ h_format_error() {
   exit 1
 }
 
-# eg: h_option_value --pm=dnf
+# eg: h_option_value --pm=pacman
 # $1: the entire option, with =
 h_option_value() {
   echo "$1" | cut -d'=' -f2

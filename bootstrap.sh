@@ -17,7 +17,7 @@ for arg in "$@"; do
       shift
       ;;
     *)
-      h_format_error "--pm={brew,dnf,apt} --server"
+      h_format_error "--pm={brew,pacman,dnf,apt} --server"
       ;;
   esac
 done
