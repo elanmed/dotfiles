@@ -1,7 +1,0 @@
-[user]
-	name = Elan Medoff
-	email = 54599408+ElanMedoff@users.noreply.github.com
-[color]
-	ui = auto
-[core]
-	editor = nvim -u ~/.config/nvim/lua/barebones/init.lua
