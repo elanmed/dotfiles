@@ -6,4 +6,4 @@
 [pull]
   rebase = false
 [core]
-	editor = "$NVIM_CMD"
+	editor = "$NVIM_CMD" -c "startinsert"
