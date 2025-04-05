@@ -8,14 +8,14 @@ export KEYTIMEOUT=1
 # pausing/resuming
 stty -ixon
 
-bindkey -M viins '^E' autosuggest-execute
-bindkey -M vicmd '^E' end-of-line
-bindkey -M viins '^A' beginning-of-line 
-bindkey -M vicmd '^A' beginning-of-line 
+bindkey -M viins '^e' autosuggest-execute
+bindkey -M vicmd '^e' end-of-line
+bindkey -M viins '^a' beginning-of-line 
+bindkey -M vicmd '^a' beginning-of-line 
 bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
 bindkey -M vicmd '^?' vi-backward-word # backspace
-bindkey -M vicmd '^G' clear-screen
-bindkey -M viins '^G' clear-screen
+bindkey -M vicmd '^g' clear-screen
+bindkey -M viins '^g' clear-screen
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 
@@ -28,7 +28,7 @@ fzf-tab-complete-execute() {
   zle accept-line
 }
 zle -N fzf-tab-complete-execute
-bindkey -M viins '^S' fzf-tab-complete-execute
+bindkey -M viins '^s' fzf-tab-complete-execute
 
 # remap fzf default keymapping
 # bindkey -rM vicmd '^T'
@@ -52,8 +52,8 @@ fzf-file-explorer-widget() {
   zle accept-line
 }
 zle -N fzf-file-explorer-widget
-bindkey -M vicmd '^P' fzf-file-explorer-widget
-bindkey -M viins '^P' fzf-file-explorer-widget
+bindkey -M vicmd '^p' fzf-file-explorer-widget
+bindkey -M viins '^p' fzf-file-explorer-widget
 
 setopt noautopushd
 push-backwards() {
@@ -71,17 +71,25 @@ pop-forwards() {
 }
 zle -N push-backwards
 zle -N pop-forwards
-bindkey -M vicmd '^O' push-backwards
-bindkey -M viins '^O' push-backwards
-bindkey -M vicmd '^I' pop-forwards
-bindkey -M viins '^I' pop-forwards
+bindkey -M vicmd '^o' push-backwards
+bindkey -M viins '^o' push-backwards
+bindkey -M vicmd '^i' pop-forwards
+bindkey -M viins '^i' pop-forwards
 
 exit-widget() {
   exit
 }
 zle -N exit-widget
-bindkey -M vicmd '^Y' exit-widget
-bindkey -M viins '^Y' exit-widget
+bindkey -M vicmd '^y' exit-widget
+bindkey -M viins '^y' exit-widget
+
+function ranger-widget() {
+  BUFFER="ranger"
+  zle accept-line
+}
+zle -N ranger-widget
+bindkey -M vicmd '^f' ranger-widget
+bindkey -M viins '^f' ranger-widget
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
@@ -105,7 +113,7 @@ fg-widget () {
   fi
 }
 zle -N fg-widget
-bindkey '^Z' fg-widget
+bindkey '^z' fg-widget
 
 # https://thevaluable.dev/zsh-install-configure-mouseless/
 cursor_mode() {
