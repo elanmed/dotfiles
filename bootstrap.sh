@@ -53,6 +53,7 @@ rm ~/.zshrc >/dev/null 2>&1
 h_install_package "$package_manager" stow
 h_install_package "$package_manager" shfmt
 h_install_package "$package_manager" shellcheck
+h_install_package "$package_manager" ranger
 
 if $server_flag; then
   h_echo --mode=doing "writing 0 to .is_server"
