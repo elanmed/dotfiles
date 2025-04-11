@@ -15,7 +15,7 @@ fi
 export EDITOR="$NVIM_CMD"
 export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
-export TERMINAL="alacritty"
+export BAT_THEME="ansi"
 
 # https://superuser.com/a/71593
 source_highlight_path="/usr"
