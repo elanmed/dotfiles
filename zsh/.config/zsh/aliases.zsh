@@ -39,7 +39,7 @@ alias n="n.sh"
 alias ps="ps.sh"
 alias recipes="recipes-gui-run.sh"
 alias reddit="redlib-run.sh"
-h_is_linux && alias open="xdg-open"
+h_is_linux && alias open="flatpak-xdg-open"
 alias zf="source fzf-file-explorer.sh"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"

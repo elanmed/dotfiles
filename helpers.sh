@@ -152,7 +152,7 @@ h_format_error() {
 # eg: h_option_value --pm=pacman
 # $1: the entire option, with =
 h_option_value() {
-  echo "$1" | cut -d'=' -f2
+  echo "$1" | cut --delimiter='=' --fields=2
 }
 
 # eg: h_option_value --needle="1" "1" "2" "3"
