@@ -10,7 +10,6 @@ alias edot="builtin cd ~/.dotfiles && n.sh ."
 alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
 alias resetnvim="rm -rf ~/.cache/nvim ~/.local/share/nvim ~/.config/coc"
 # git
-# alias gs="git status"
 alias gd="nvim -c ':DiffviewOpen'"
 alias gs="nvim -c ':Gedit :'"
 alias gcb="git checkout -b"
@@ -43,7 +42,6 @@ h_is_linux && alias open="flatpak-xdg-open"
 alias zf="source fzf-file-explorer.sh"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
-alias cat="highlight -O ansi --force"
 alias cp="cp -i"
 alias mv='mv -i'
 alias rm='rm -i'

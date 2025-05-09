@@ -14,8 +14,6 @@ bindkey -M viins '^a' beginning-of-line
 bindkey -M vicmd '^a' beginning-of-line 
 bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
 bindkey -M vicmd '^?' vi-backward-word # backspace
-bindkey -M vicmd '^g' clear-screen
-bindkey -M viins '^g' clear-screen
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 
@@ -28,20 +26,7 @@ fzf-tab-complete-execute() {
   zle accept-line
 }
 zle -N fzf-tab-complete-execute
-bindkey -M viins '^s' fzf-tab-complete-execute
-
-# remap fzf default keymapping
-# bindkey -rM vicmd '^T'
-# bindkey -rM viins '^T'
-# fzf-file-execute() {
-#   LBUFFER_BEFORE="${LBUFFER}"
-#   fzf-file-widget
-#   [[ "${LBUFFER}" == "${LBUFFER_BEFORE}" ]] && return
-#   zle accept-line
-# }
-# zle -N fzf-file-execute
-# bindkey -M vicmd '^P' fzf-file-execute
-# bindkey -M viins '^P' fzf-file-execute
+bindkey -M viins '^x' fzf-tab-complete-execute
 
 fzf-file-explorer-widget() {
   LBUFFER_BEFORE="${LBUFFER}"
@@ -93,7 +78,8 @@ bindkey -M viins '^f' ranger-widget
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd vv edit-command-line
+bindkey -M vicmd '^t' edit-command-line
+bindkey -M viins '^t' edit-command-line
 
 vi-yank-clipboard() {
   zle vi-yank

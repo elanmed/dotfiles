@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 source ~/.dotfiles/helpers.sh
 
 export PATH="/usr/bin:/usr/sbin:/usr/local/sbin:$PATH"
