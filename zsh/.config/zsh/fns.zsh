@@ -6,20 +6,16 @@ source ~/.dotfiles/helpers.sh
 setopt +o nomatch 
 unalias ls
 ls() {
-  if [[ $(find . -maxdepth 1 ! -name '.*' | wc -l) -eq 0 ]]
+  if [[ "$(find . -maxdepth 1 ! -name '.*' | wc -l)" -eq 0 ]]
   then 
-    lsa "$@"
+    command ls -a "$@"
   else
-    ls_cmd="command ls"
     if h_is_linux 
     then
-      [[ "$(uname -s)" == "Linux" ]] && ls_cmd+=" --color=auto"
+      command ls --color=auto "$@"
     else
-      [[ "$(uname -s)" == "Darwin" ]] && ls_cmd+=" -G"
+      command ls -G "$@"
     fi
-
-    ls_cmd+=" "$@""
-    eval "$ls_cmd"
   fi
 }
 
@@ -44,12 +40,12 @@ else
   alias copy="pbcopy"
 fi
 abspath() { 
-  local abs_path=$(realpath "$1")
+  local abs_path="$(realpath "$1")"
   echo "$abs_path" | copy
   echo "$abs_path"
 }
 cb() {
-  local branch=$(git symbolic-ref HEAD | cut -d'/' -f3)
+  local branch="$(git symbolic-ref HEAD | cut -d'/' -f3)"
   echo "$branch" | copy
 }
 

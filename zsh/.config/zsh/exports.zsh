@@ -2,7 +2,9 @@
 
 source ~/.dotfiles/helpers.sh
 
-export PATH="/usr/bin:/usr/sbin:/usr/local/sbin:$PATH"
+export PATH="/usr/bin:$PATH"
+export PATH="/usr/sbin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.deno/bin:$PATH"
@@ -41,10 +43,12 @@ then
   export XDG_VIDEOS_DIR="$HOME"
 fi
 
+# https://github.com/nvm-sh/nvm#git-install
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+# https://github.com/chriskempson/base16-shell#bashzsh
 export BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1" ] && \
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
