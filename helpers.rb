@@ -23,7 +23,7 @@ def validate_package_manager(package_manager)
   valid_package_managers.include? package_manager
 end
 
-def is_linux
+def linux?
   `uname -s`.strip
 end
 
