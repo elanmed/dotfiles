@@ -20,7 +20,7 @@ end.parse!
 
 raise OptionParser::MissingArgument if options['package_manager'].nil?
 
-`which zsh`
+`which zsh >/dev/null 2>&1`
 if $CHILD_STATUS == 0
   puts 'zsh already installed'.noop
 else
