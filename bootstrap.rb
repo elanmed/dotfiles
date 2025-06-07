@@ -1,4 +1,7 @@
+#!/usr/bin/env ruby
+
 require '~/.dotfiles/helpers'
+require '~/.dotfiles/neovim/.config/nvim/bootstrap'
 require 'optparse'
 require 'English'
 require 'fileutils'
@@ -102,6 +105,9 @@ FileUtils.ln_sf(
   File.expand_path('~/.dotfiles/zsh/.config/zsh/.spaceshiprc.zsh'),
   File.expand_path('~/.spaceshiprc.zsh')
 )
-puts 'restart the shell to install zap'
+puts 'restart the shell to install zap'.noop
 
-# TODO: call nvim init
+puts 'bootstrapping neovim'.doing
+
+server = options['server'] or false
+bootstrap_nvim(server: server, package_manager: options['package_manager'])
