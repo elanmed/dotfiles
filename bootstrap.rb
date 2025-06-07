@@ -1,6 +1,7 @@
 require '~/.dotfiles/helpers'
 require 'optparse'
 require 'English'
+require 'fileutils'
 
 options = {}
 
@@ -20,7 +21,7 @@ end.parse!
 raise OptionParser::MissingArgument if options['package_manager'].nil?
 
 `which zsh`
-if $CHILD_STATUS
+if $CHILD_STATUS == 0
   puts 'zsh already installed'.noop
 else
   install_package(options['package_manager'], 'zsh')
@@ -48,6 +49,7 @@ unless answer == 'y'
 end
 
 puts 'removing ~/.zshrc'
+# TODO: handle no zshrc
 FileUtils.rm([File.expand_path('~/.zshrc')])
 
 install_package(options['package_manager'], 'stow')
@@ -60,49 +62,52 @@ install_package(options['package_manager'], 'fzf')
 install_package(options['package_manager'], 'source-highlight')
 install_package(options['package_manager'], 'highlight')
 
-puts "writing #{server ? 0 : 1} to .is_server"
-File.write('./.is_server', server ? 0 : 1)
+puts "writing #{options['server'] ? 0 : 1} to .is_server"
+File.write('./.is_server', options['server'] ? 0 : 1)
 
 desktop_only_dirs = %w[fonts nvm tmux base16 wezterm]
-Dir.glob('./*').each do |dir|
-  if server && desktop_only_dirs.include?(dir)
+Dir.glob('./*').each do |raw_dir|
+  next unless FileTest.directory?(raw_dir)
+
+  dir = File.basename(raw_dir)
+  if options['server'] && desktop_only_dirs.include?(dir)
     puts "SKIPPING: running 'stow #{dir}'".noop
   else
     puts "running 'stow #{dir}'".doing
+    `stow #{dir}`
   end
 end
 
-if server
+if options['server']
   puts 'SKIPPING: bootstrapping tmux'.noop
 else
   puts 'bootstrapping tmux'.doing
   `~/.tmux/plugins/tpm/bin/install_plugins`
 end
 
-if server
+if options['server']
   puts 'SKIPPING: bootstrapping fonts'.noop
 else
   puts 'bootstrapping fonts'.doing
 
   if linux?
     puts 'fonts already in the correct directory'.noop
-    return
-  end
-
-  fonts_dir = File.expand_path('~/.dotfiles/fonts/.local/share/fonts/*')
-  Dir.glob(fonts_dir).each do |dir|
-    FileUtils.cp_r(
-      dir,
-      File.expand_path('~/.dotfiles/tester')
-    )
+  else
+    fonts_dir = File.expand_path('~/.dotfiles/fonts/.local/share/fonts/*')
+    Dir.glob(fonts_dir).each do |dir|
+      FileUtils.cp_r(
+        dir,
+        File.expand_path('~/.dotfiles/tester')
+      )
+    end
   end
 end
 
 puts 'bootstrapping nvm'.doing
 puts 'sourcing nvm'.doing
-`source "$HOME/.nvm/nvm.sh"`
+`source ~/.nvm/nvm.sh`
 
-if server
+if options['server']
   puts 'SKIPPING: installing the latest version of node'.noop
 else
   puts 'installing the latest version of node'.doing
@@ -110,21 +115,16 @@ else
 end
 
 puts 'bootstrapping zsh'.doing
-zap_dir = File.expand_path('~/.local/share/zap')
-if FileTest.exist?(zap_dir)
-  puts 'zap already installed'.noop
-else
-  puts 'installing zap'.doing
-  `zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 --keep`
-end
 
+puts 'updating zap'.doing
+`zap update all`
 puts 'symlinking zshrc'.doing
-FileUtils.ln_s(
+FileUtils.ln_sf(
   File.expand_path('~/.dotfiles/zsh/.config/zsh/.zshrc'),
   File.expand_path('~/.zshrc')
 )
 puts 'symlinking spaceshiprc'.doing
-FileUtils.ln_s(
+FileUtils.ln_sf(
   File.expand_path('~/.dotfiles/zsh/.config/zsh/.spaceshiprc.zsh'),
   File.expand_path('~/.spaceshiprc.zsh')
 )

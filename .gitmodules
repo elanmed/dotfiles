@@ -1,7 +1,7 @@
 [submodule "neovim/.config/nvim"]
 	path = neovim/.config/nvim
-	url = git@github.com:ElanMedoff/neovim-config.git
-	; url = https://github.com/ElanMedoff/neovim-config.git
+	url = git@github.com:elanmed/neovim-config.git
+	; url = https://github.com/elanmed/neovim-config.git
 [submodule "base16/.config/base16-shell"]
 	path = base16/.config/base16-shell
 	url = https://github.com/chriskempson/base16-shell.git
@@ -14,3 +14,6 @@
 [submodule "nvm/.nvm"]
 	path = nvm/.nvm
 	url = https://github.com/nvm-sh/nvm.git
+[submodule "zsh/.local/share/zap"]
+	path = zsh/.local/share/zap
+	url = https://github.com/zap-zsh/zap

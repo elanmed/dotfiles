@@ -8,21 +8,16 @@ properly, based on this blog [post](https://www.jakewiesler.com/blog/managing-do
 #### Clone with submodules:
 
 ```sh
-git clone https://github.com/ElanMedoff/dotfiles .dotfiles
+git clone https://github.com/elanmed/dotfiles .dotfiles
 # if necessary, update the urls in `.gitmodules` from `git@` to `https://`
 git submodule init
 git submodule update
 ```
 
-#### Prereqs:
-
-- Install [Alacritty](https://alacritty.org/)
-
 #### Bootstrap:
 
 ```sh
-chmod +x ./bootstrap.sh
-./bootstrap.sh --pm={brew,pacman,dnf,apt} {--server}
+ruby bootstrap.rb --p={brew,pacman,dnf,apt} {--server}
 ```
 
 #### Keep submodules up-to-date:
