@@ -40,18 +40,6 @@ unless shell.include?('zsh')
   exit 0
 end
 
-puts "this script delete your ~/.zshrc. confirm 'y' for yes, anything else to abort: ".query
-answer = gets.chomp
-
-unless answer == 'y'
-  puts 'aborting'.error
-  exit 0
-end
-
-puts 'removing ~/.zshrc'
-# TODO: handle no zshrc
-FileUtils.rm([File.expand_path('~/.zshrc')])
-
 install_package(options['package_manager'], 'stow')
 install_package(options['package_manager'], 'shfmt')
 install_package(options['package_manager'], 'spellcheck')
@@ -103,21 +91,7 @@ else
   end
 end
 
-puts 'bootstrapping nvm'.doing
-puts 'sourcing nvm'.doing
-`source ~/.nvm/nvm.sh`
-
-if options['server']
-  puts 'SKIPPING: installing the latest version of node'.noop
-else
-  puts 'installing the latest version of node'.doing
-  `nvm install`
-end
-
 puts 'bootstrapping zsh'.doing
-
-puts 'updating zap'.doing
-`zap update all`
 puts 'symlinking zshrc'.doing
 FileUtils.ln_sf(
   File.expand_path('~/.dotfiles/zsh/.config/zsh/.zshrc'),
@@ -128,3 +102,6 @@ FileUtils.ln_sf(
   File.expand_path('~/.dotfiles/zsh/.config/zsh/.spaceshiprc.zsh'),
   File.expand_path('~/.spaceshiprc.zsh')
 )
+puts 'restart the shell to install zap'
+
+# TODO: call nvim init
