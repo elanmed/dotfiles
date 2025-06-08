@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 source "$HOME/.dotfiles/helpers.sh"
+source "$HOME/.dotfiles/zsh/.local/share/zap/zap.zsh"
 
 plug "zap-zsh/supercharge"
 plug "Aloxaf/fzf-tab"
