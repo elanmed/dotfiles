@@ -53,7 +53,7 @@ cb() {
 # https://gist.github.com/SheldonWangRJT/8d3f44a35c8d1386a396b9b49b43c385#solution
 gif() { 
   GIF_FILE="gif-$(date +%T).gif"
-  ffmpeg -i "$1" -pix_fmt rgb8 -r 10 "$GIF_FILE")
+  ffmpeg -i "$1" -pix_fmt rgb8 -r 10 "$GIF_FILE"
   gifsicle --optimize=3 "$GIF_FILE" --output "$GIF_FILE"
 }
 killp() { 
