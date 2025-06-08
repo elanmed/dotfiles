@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 source ~/.dotfiles/helpers.sh
 
 # https://unix.stackexchange.com/a/310553
@@ -50,8 +50,12 @@ cb() {
 }
 
 # misc
+# https://gist.github.com/SheldonWangRJT/8d3f44a35c8d1386a396b9b49b43c385#solution
 gif() { 
-  ffmpeg -i "$1.mov" -pix_fmt rgb8 -r 10 "$1.gif"
-  gifsicle -O3 "$1.gif" -o "$1.gif"
+  GIF_FILE="gif-$(date +%T).gif"
+  ffmpeg -i "$1" -pix_fmt rgb8 -r 10 "$GIF_FILE")
+  gifsicle --optimize=3 "$GIF_FILE" --output "$GIF_FILE"
 }
-killp() { kill -9 $(lsof -t -i:$1) }
+killp() { 
+  kill -9 "$(lsof -t -i:$1)" 
+}
