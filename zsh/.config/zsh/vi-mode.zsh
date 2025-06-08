@@ -61,13 +61,6 @@ bindkey -M viins '^o' push-backwards
 bindkey -M vicmd '^i' pop-forwards
 bindkey -M viins '^i' pop-forwards
 
-exit-widget() {
-  exit
-}
-zle -N exit-widget
-bindkey -M vicmd '^y' exit-widget
-bindkey -M viins '^y' exit-widget
-
 function ranger-widget() {
   BUFFER="ranger"
   zle accept-line
