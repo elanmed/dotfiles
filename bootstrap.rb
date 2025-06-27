@@ -52,6 +52,7 @@ install_package(options['package_manager'], 'xclip')
 install_package(options['package_manager'], 'fzf')
 install_package(options['package_manager'], 'source-highlight')
 install_package(options['package_manager'], 'highlight')
+install_package(options['package_manager'], 'lazygit')
 
 puts "writing #{options['server'] ? 0 : 1} to .is_server"
 File.write('./.is_server', options['server'] ? 0 : 1)
