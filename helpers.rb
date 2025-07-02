@@ -24,7 +24,7 @@ def validate_package_manager(package_manager)
 end
 
 def linux?
-  `uname -s`.strip
+  `uname -s`.strip == 'Linux'
 end
 
 def install_package(package_manager, package)
