@@ -2,15 +2,14 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 
 -- https://stackoverflow.com/a/326715
-function os.capture(cmd, raw)
-  local f = assert(io.popen(cmd, 'r'))
-  local s = assert(f:read('*a'))
-  f:close()
-  if raw then return s end
-  s = string.gsub(s, '^%s+', '')
-  s = string.gsub(s, '%s+$', '')
-  s = string.gsub(s, '[\n\r]+', ' ')
-  return s
+function os.capture(cmd)
+  local file = assert(io.popen(cmd, 'r'))
+  local stdout = assert(file:read('*a'))
+  file:close()
+  stdout = string.gsub(stdout, '^%s+', '')
+  stdout = string.gsub(stdout, '%s+$', '')
+  stdout = string.gsub(stdout, '[\n\r]+', ' ')
+  return stdout
 end
 
 local function is_linux()
@@ -32,9 +31,10 @@ config.keys = {
   { key = 'v', mods = cmd_or_ctrl(), action = act.PasteFrom 'Clipboard' },
   { key = 'p', mods = 'LEADER',      action = act.ActivateTabRelative(-1) },
   { key = 'n', mods = 'LEADER',      action = act.ActivateTabRelative(1) },
-  { key = 'c', mods = 'LEADER',      action = act.SpawnTab 'CurrentPaneDomain' },
+  { key = 'q', mods = 'LEADER',      action = act.QuitApplication },
   { key = 'x', mods = 'LEADER',      action = act.CloseCurrentTab { confirm = true } },
   { key = 'd', mods = 'LEADER',      action = act.CloseCurrentPane { confirm = true } },
+  { key = 'c', mods = 'LEADER',      action = act.SpawnTab 'CurrentPaneDomain' },
   { key = 'u', mods = 'LEADER',      action = act.SplitHorizontal { domain = "CurrentPaneDomain" } },
   { key = 'i', mods = 'LEADER',      action = act.SplitVertical { domain = "CurrentPaneDomain" } },
   { key = 'l', mods = 'LEADER',      action = act.ActivatePaneDirection "Right" },
@@ -64,8 +64,6 @@ config.colors = {
   },
   selection_fg = '#282a2e',
   selection_bg = '#f0c674',
-
-
 }
 
 return config
