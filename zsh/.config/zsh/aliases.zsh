@@ -3,11 +3,11 @@
 source ~/.dotfiles/helpers.sh
 
 # editing
-alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && n.sh ."
+alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && v ."
 alias eterm="$NVIM_CMD ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
 alias etmux="$NVIM_CMD ~/.dotfiles/tmux/.config/tmux/tmux.conf"
-alias edot="builtin cd ~/.dotfiles && n.sh ."
-alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && n.sh ."
+alias edot="builtin cd ~/.dotfiles && v ."
+alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && v ."
 alias resetnvim="rm -rf ~/.cache/nvim ~/.local/share/nvim"
 # git
 alias gs="git status"
@@ -24,6 +24,7 @@ alias lg="lazygit"
 alias e="exit"
 alias c="clear"
 alias v="$NVIM_CMD"
+alias f="toolbox enter fedora"
 alias tm="tmux"
 alias tsrc="tmux source ~/.config/tmux/tmux.conf"
 lsa_cmd="command ls -a --color=tty"
