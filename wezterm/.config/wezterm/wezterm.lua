@@ -1,6 +1,25 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
+local colors = {
+  black = "#1d1f21",
+  extra_dark_grey = "#282a2e",
+  dark_grey = "#373b41",
+  grey = "#969896",
+  light_grey = "#b4b7b4",
+  extra_light_grey = "#c5c8c6",
+  dark_white = "#e0e0e0",
+  white = "#ffffff",
+  red = "#cc6666",
+  orange = "#de935f",
+  yellow = "#f0c674",
+  green = "#b5bd68",
+  cyan = "#8abeb7",
+  blue = "#81a2be",
+  purple = "#b294bb",
+  brown = "#a3685a",
+}
+
 -- https://stackoverflow.com/a/326715
 function os.capture(cmd)
   local file = assert(io.popen(cmd, 'r'))
@@ -50,20 +69,30 @@ end
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.colors = {
-  cursor_bg = '#b4b7b4',
-  cursor_border = '#b4b7b4',
+  split = colors.light_grey,
+  cursor_bg = colors.light_grey,
+  cursor_border = colors.light_grey,
   tab_bar = {
+    background = colors.dark_grey,
     active_tab = {
-      bg_color = '#373b41',
-      fg_color = '#f0c674',
+      bg_color = colors.dark_grey,
+      fg_color = colors.yellow,
     },
     inactive_tab = {
-      bg_color = '#282a2e',
-      fg_color = '#c5c8c6',
+      bg_color = colors.extra_dark_grey,
+      fg_color = colors.extra_light_grey,
+    },
+    new_tab = {
+      bg_color = colors.dark_grey,
+      fg_color = colors.yellow,
     },
   },
-  selection_fg = '#282a2e',
-  selection_bg = '#f0c674',
+  selection_fg = colors.extra_dark_grey,
+  selection_bg = colors.yellow,
+}
+config.inactive_pane_hsb = {
+  saturation = 1,
+  brightness = 1,
 }
 
 return config
