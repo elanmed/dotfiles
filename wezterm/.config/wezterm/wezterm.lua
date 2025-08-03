@@ -73,18 +73,18 @@ config.colors = {
   cursor_bg = colors.light_grey,
   cursor_border = colors.light_grey,
   tab_bar = {
-    background = colors.dark_grey,
+    background = colors.extra_dark_grey,
     active_tab = {
       bg_color = colors.dark_grey,
-      fg_color = colors.yellow,
+      fg_color = colors.purple,
     },
     inactive_tab = {
       bg_color = colors.extra_dark_grey,
       fg_color = colors.extra_light_grey,
     },
     new_tab = {
-      bg_color = colors.dark_grey,
-      fg_color = colors.yellow,
+      bg_color = colors.extra_dark_grey,
+      fg_color = colors.purple,
     },
   },
   selection_fg = colors.extra_dark_grey,
