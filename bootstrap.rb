@@ -36,7 +36,7 @@ shell = `echo "$SHELL"`
 unless shell.include?('zsh')
   puts 'setting the default shell to zsh'.doing
 
-  which_zsh = `which zsh`
+  which_zsh = `which zsh`.strip
   `chsh -s #{which_zsh}`
 
   puts 'exiting early, restart the shell and re-run the script'.noop
@@ -89,7 +89,7 @@ else
     Dir.glob(fonts_dir).each do |dir|
       FileUtils.cp_r(
         dir,
-        File.expand_path('~/.dotfiles/tester')
+        File.expand_path('~/Library/Fonts')
       )
     end
   end
