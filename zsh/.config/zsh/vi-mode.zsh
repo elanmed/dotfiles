@@ -26,7 +26,7 @@ fzf-tab-complete-execute() {
   zle accept-line
 }
 zle -N fzf-tab-complete-execute
-bindkey -M viins '^n' fzf-tab-complete-execute
+bindkey -M viins '^x' fzf-tab-complete-execute
 
 fzf-file-explorer-widget() {
   LBUFFER_BEFORE="${LBUFFER}"
