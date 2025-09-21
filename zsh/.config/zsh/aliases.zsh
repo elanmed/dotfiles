@@ -3,11 +3,11 @@
 source ~/.dotfiles/helpers.sh
 
 # editing
-alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && v ."
+alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && v"
 alias eterm="$NVIM_CMD ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
 alias etmux="$NVIM_CMD ~/.dotfiles/tmux/.config/tmux/tmux.conf"
-alias edot="builtin cd ~/.dotfiles && v ."
-alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && v ."
+alias edot="builtin cd ~/.dotfiles && v"
+alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && v"
 alias resetnvim="rm -rf ~/.cache/nvim ~/.local/share/nvim"
 # git
 alias gs="git status"
