@@ -61,14 +61,6 @@ bindkey -M viins '^o' push-backwards
 bindkey -M vicmd '^i' pop-forwards
 bindkey -M viins '^i' pop-forwards
 
-function ranger-widget() {
-  BUFFER="ranger"
-  zle accept-line
-}
-zle -N ranger-widget
-bindkey -M vicmd '^f' ranger-widget
-bindkey -M viins '^f' ranger-widget
-
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd '^t' edit-command-line
