@@ -45,8 +45,6 @@ end
 
 install_package(options['package_manager'], 'stow')
 install_package(options['package_manager'], 'shfmt')
-install_package(options['package_manager'], 'spellcheck')
-install_package(options['package_manager'], 'ranger')
 install_package(options['package_manager'], 'tmux')
 install_package(options['package_manager'], 'xclip')
 install_package(options['package_manager'], 'fzf')
