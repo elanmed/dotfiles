@@ -69,7 +69,7 @@ end
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = true
 config.colors = {
-  split = colors.light_grey,
+  split = colors.purple,
   cursor_bg = colors.light_grey,
   cursor_border = colors.light_grey,
   tab_bar = {
