@@ -24,7 +24,7 @@ SPACESHIP_EXIT_CODE_SYMBOL=""
 SPACESHIP_EXIT_CODE_PREFIX="status code: "
 SPACESHIP_EXIT_CODE_SHOW=true
 
-prefix="󰣇"
+prefix="󰮤"
 if h_is_linux && ! h_is_toolbx; then
   prefix="HOST"
 fi
