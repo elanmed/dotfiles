@@ -45,6 +45,20 @@ config.font = wezterm.font(
 )
 config.font_size = 12.0
 
+local function is_vim(pane)
+  return pane:get_user_vars().IS_NVIM == 'true'
+end
+
+local function smart_move(key, direction)
+  return wezterm.action_callback(function(win, pane)
+    if is_vim(pane) then
+      win:perform_action({ SendKey = { key = key, mods = 'CTRL' }, }, pane)
+    else
+      win:perform_action({ ActivatePaneDirection = direction }, pane)
+    end
+  end)
+end
+
 config.leader = { key = "Space", mods = 'CTRL' }
 config.keys = {
   { key = 'v', mods = cmd_or_ctrl(), action = act.PasteFrom 'Clipboard' },
@@ -56,12 +70,12 @@ config.keys = {
   { key = 'c', mods = 'LEADER|CTRL', action = act.SpawnTab 'CurrentPaneDomain' },
   { key = 'u', mods = 'LEADER|CTRL', action = act.SplitHorizontal { domain = "CurrentPaneDomain" } },
   { key = 'i', mods = 'LEADER|CTRL', action = act.SplitVertical { domain = "CurrentPaneDomain" } },
-  { key = 'l', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection "Right" },
-  { key = 'h', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection "Left" },
   { key = 'k', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection "Up" },
   { key = 'j', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection "Down" },
   { key = 'e', mods = 'LEADER|CTRL', action = act.TogglePaneZoomState },
   { key = 'v', mods = 'LEADER|CTRL', action = act.ActivateCopyMode },
+  { key = 'l', mods = 'CTRL',        action = smart_move("l", "Right") },
+  { key = 'h', mods = 'CTRL',        action = smart_move("h", "Left") },
 }
 if is_linux() then
   config.window_decorations = "NONE"
