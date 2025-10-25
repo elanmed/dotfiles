@@ -1,4 +1,4 @@
-local wezterm = require 'wezterm'
+local wezterm = require "wezterm"
 local act = wezterm.action
 
 local colors = {
@@ -22,60 +22,58 @@ local colors = {
 
 -- https://stackoverflow.com/a/326715
 function os.capture(cmd)
-  local file = assert(io.popen(cmd, 'r'))
-  local stdout = assert(file:read('*a'))
+  local file = assert(io.popen(cmd, "r"))
+  local stdout = assert(file:read "*a")
   file:close()
-  stdout = string.gsub(stdout, '^%s+', '')
-  stdout = string.gsub(stdout, '%s+$', '')
-  stdout = string.gsub(stdout, '[\n\r]+', ' ')
+  stdout = string.gsub(stdout, "^%s+", "")
+  stdout = string.gsub(stdout, "%s+$", "")
+  stdout = string.gsub(stdout, "[\n\r]+", " ")
   return stdout
 end
 
 local function is_linux()
-  return os.capture("uname -s") == "Linux"
+  return os.capture "uname -s" == "Linux"
 end
 
 local function cmd_or_ctrl()
-  return is_linux() and 'CTRL' or 'CMD'
+  return is_linux() and "CTRL" or "CMD"
 end
 
 local config = wezterm.config_builder()
-config.font = wezterm.font(
-  'ComicCodeLigatures Nerd Font'
-)
+config.font = wezterm.font "ComicCodeLigatures Nerd Font"
 config.font_size = 12.0
 
 local function is_vim(pane)
-  return pane:get_user_vars().IS_NVIM == 'true'
+  return pane:get_user_vars().IS_NVIM == "true"
 end
 
 local function smart_move(key, direction)
   return wezterm.action_callback(function(win, pane)
     if is_vim(pane) then
-      win:perform_action({ SendKey = { key = key, mods = 'CTRL' }, }, pane)
+      win:perform_action({ SendKey = { key = key, mods = "CTRL", }, }, pane)
     else
-      win:perform_action({ ActivatePaneDirection = direction }, pane)
+      win:perform_action({ ActivatePaneDirection = direction, }, pane)
     end
   end)
 end
 
-config.leader = { key = "Space", mods = 'CTRL' }
+config.leader = { key = "Space", mods = "CTRL", }
 config.keys = {
-  { key = 'v', mods = cmd_or_ctrl(), action = act.PasteFrom 'Clipboard' },
-  { key = 'p', mods = 'LEADER|CTRL', action = act.ActivateTabRelative(-1) },
-  { key = 'n', mods = 'LEADER|CTRL', action = act.ActivateTabRelative(1) },
-  { key = 'q', mods = 'LEADER|CTRL', action = act.QuitApplication },
-  { key = 'x', mods = 'LEADER|CTRL', action = act.CloseCurrentTab { confirm = true } },
-  { key = 'd', mods = 'LEADER|CTRL', action = act.CloseCurrentPane { confirm = true } },
-  { key = 'c', mods = 'LEADER|CTRL', action = act.SpawnTab 'CurrentPaneDomain' },
-  { key = 'u', mods = 'LEADER|CTRL', action = act.SplitHorizontal { domain = "CurrentPaneDomain" } },
-  { key = 'i', mods = 'LEADER|CTRL', action = act.SplitVertical { domain = "CurrentPaneDomain" } },
-  { key = 'k', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection "Up" },
-  { key = 'j', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection "Down" },
-  { key = 'e', mods = 'LEADER|CTRL', action = act.TogglePaneZoomState },
-  { key = 'v', mods = 'LEADER|CTRL', action = act.ActivateCopyMode },
-  { key = 'l', mods = 'CTRL',        action = smart_move("l", "Right") },
-  { key = 'h', mods = 'CTRL',        action = smart_move("h", "Left") },
+  { key = "v", mods = cmd_or_ctrl(), action = act.PasteFrom "Clipboard", },
+  { key = "p", mods = "LEADER|CTRL", action = act.ActivateTabRelative(-1), },
+  { key = "n", mods = "LEADER|CTRL", action = act.ActivateTabRelative(1), },
+  { key = "q", mods = "LEADER|CTRL", action = act.QuitApplication, },
+  { key = "x", mods = "LEADER|CTRL", action = act.CloseCurrentTab { confirm = true, }, },
+  { key = "d", mods = "LEADER|CTRL", action = act.CloseCurrentPane { confirm = true, }, },
+  { key = "c", mods = "LEADER|CTRL", action = act.SpawnTab "CurrentPaneDomain", },
+  { key = "u", mods = "LEADER|CTRL", action = act.SplitHorizontal { domain = "CurrentPaneDomain", }, },
+  { key = "i", mods = "LEADER|CTRL", action = act.SplitVertical { domain = "CurrentPaneDomain", }, },
+  { key = "k", mods = "LEADER|CTRL", action = act.ActivatePaneDirection "Up", },
+  { key = "j", mods = "LEADER|CTRL", action = act.ActivatePaneDirection "Down", },
+  { key = "e", mods = "LEADER|CTRL", action = act.TogglePaneZoomState, },
+  { key = "v", mods = "LEADER|CTRL", action = act.ActivateCopyMode, },
+  { key = "l", mods = "CTRL", action = smart_move("l", "Right"), },
+  { key = "h", mods = "CTRL", action = smart_move("h", "Left"), },
 }
 if is_linux() then
   config.window_decorations = "NONE"
