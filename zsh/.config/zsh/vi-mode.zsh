@@ -37,8 +37,8 @@ fzf-file-explorer-widget() {
   zle accept-line
 }
 zle -N fzf-file-explorer-widget
-bindkey -M vicmd '^p' fzf-file-explorer-widget
-bindkey -M viins '^p' fzf-file-explorer-widget
+bindkey -M vicmd '^f' fzf-file-explorer-widget
+bindkey -M viins '^f' fzf-file-explorer-widget
 
 setopt noautopushd
 push-backwards() {
