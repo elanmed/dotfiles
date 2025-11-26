@@ -38,7 +38,7 @@ def install_package(package_manager, package)
   when 'pacman'
     `sudo pacman --sync --needed --quiet --noconfirm #{package}`
   when 'apt'
-    puts 'not implemented yet'
+    `sudo apt install #{package}`
   else
     raise ArgumentError 'package_manager must be one of {brew,pacman,dnf,apt}'
   end
