@@ -13,7 +13,7 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface enable-hot-corners false
 gsettings set org.gnome.desktop.interface scaling-factor 2
 gsettings set org.gnome.desktop.interface text-scaling-factor 0.85
-gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 30
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 35
 gsettings set org.gnome.desktop.peripherals.keyboard delay 200
 gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
 gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
