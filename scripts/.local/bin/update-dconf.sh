@@ -1,0 +1,22 @@
+# Keybindings (bracket settings)
+gsettings set org.gnome.desktop.wm.keybindings close "['<Control>q']"
+gsettings set org.gnome.desktop.wm.keybindings maximize "['<Shift><Control>e']"
+gsettings set org.gnome.desktop.wm.keybindings minimize "['<Control>m']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-left "['<Shift><Control>j']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-right "['<Shift><Control>k']"
+gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Control>Tab']"
+gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Control>Tab']"
+gsettings set org.gnome.mutter.keybindings toggle-tiled-left "['<Shift><Control>h']"
+gsettings set org.gnome.mutter.keybindings toggle-tiled-right "['<Shift><Control>l']"
+gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Shift><Control>4']"
+# Interface and other settings (literal settings)
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.interface enable-hot-corners false
+gsettings set org.gnome.desktop.interface scaling-factor 2
+gsettings set org.gnome.desktop.interface text-scaling-factor 0.85
+gsettings set org.gnome.desktop.peripherals.keyboard delay 200
+gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 20.0
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 19.99
