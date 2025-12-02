@@ -11,7 +11,7 @@ h_is_linux() {
 
 # eg: h_is_toolbx
 h_is_toolbx() {
-  if [[ "$(hostname)" == "toolbx" ]]; then
+  if [[ "$(hostname)" == "toolbx" ]] || [[ "$(hostname)" == "toolbox" ]]; then
     return 0
   else
     return 1
