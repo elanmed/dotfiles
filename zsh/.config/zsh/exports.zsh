@@ -27,13 +27,6 @@ export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
 export BAT_THEME="ansi"
 
-# https://superuser.com/a/71593
-source_highlight_path="/usr"
-! h_is_linux && source_highlight_path+="/local"
-source_highlight_path+="/bin/src-hilite-lesspipe.sh"
-export LESSOPEN="| $source_highlight_path %s"
-export LESS=" -R "
-
 if h_is_linux
 then
   # https://superuser.com/a/613754
