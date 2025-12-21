@@ -9,11 +9,7 @@ export KEYTIMEOUT=1
 stty -ixon
 
 bindkey -M viins '^e' autosuggest-execute
-bindkey -M vicmd '^e' end-of-line
-bindkey -M viins '^a' beginning-of-line 
-bindkey -M vicmd '^a' beginning-of-line 
 bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
-bindkey -M vicmd '^?' vi-backward-word # backspace
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 
