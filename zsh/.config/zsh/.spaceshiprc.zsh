@@ -7,7 +7,6 @@ SPACESHIP_PROMPT_ORDER=(
   dir 
   git 
   exit_code 
-  exec_time 
   char
 )
 dir_color="yellow"
@@ -21,7 +20,7 @@ SPACESHIP_DIR_TRUNC=10
 SPACESHIP_GIT_STATUS_STASHED=""
 
 SPACESHIP_EXIT_CODE_SYMBOL=""
-SPACESHIP_EXIT_CODE_PREFIX="status code: "
+SPACESHIP_EXIT_CODE_PREFIX="exit code: "
 SPACESHIP_EXIT_CODE_SHOW=true
 
 prefix="󰮤"
@@ -30,6 +29,6 @@ if h_is_linux && ! h_is_toolbx; then
 fi
 
 SPACESHIP_CHAR_SYMBOL=" "
-SPACESHIP_CHAR_SUFFIX="\n$prefix :: "
+SPACESHIP_CHAR_SUFFIX="\n󰮤 :: "
 
 SPACESHIP_PROMPT_ADD_NEWLINE=false
