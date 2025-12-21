@@ -26,8 +26,6 @@ export EDITOR="$NVIM_CMD"
 export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
 export BAT_THEME="ansi"
-export SNACKS_WEZTERM=true
-export TERM_PROGRAM="WezTerm"
 
 # https://superuser.com/a/71593
 source_highlight_path="/usr"
