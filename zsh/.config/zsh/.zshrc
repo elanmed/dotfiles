@@ -1,5 +1,13 @@
 #!/bin/zsh
 
+# TODO
+# Replace spaceship with custom prompt 
+## Update prompt without accepting a line
+# Replace fzf tab with fzf completion
+# Look into replicating supercharge
+# Replace zap with submodules
+# Issue with functions not applying when sourced in toolbox
+
 source "$HOME/.dotfiles/helpers.sh"
 source "$HOME/.dotfiles/zsh/.local/share/zap/zap.zsh"
 
@@ -22,18 +30,4 @@ source "$HOME/.dotfiles/zsh/.config/zsh/exports.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/aliases.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/fns.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/vi-mode.zsh"
-# source "$HOME/.zsh/spaceship/spaceship.zsh"
-
-dir_color="yellow"
-if h_is_linux && ! h_is_toolbx; then
-  dir_color="red"
-fi
-prompt_git_branch() {
-  local branch
-  branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d'/' -f3)
-  if [[ -n $branch ]]; then
-    echo "on %F{magenta} $branch%f"
-  fi
-}
-PROMPT='%B%F{'"$dir_color"'}%~%f%b $(prompt_git_branch)
-󰮤 :: '
+source "$HOME/.dotfiles/zsh/.config/zsh/prompt.zsh"
