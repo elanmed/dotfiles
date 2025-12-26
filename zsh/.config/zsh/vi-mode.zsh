@@ -13,16 +13,16 @@ bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 
-export FZF_CTRL_R_OPTS="--layout=reverse"
-
-fzf-tab-complete-execute() {
-  LBUFFER_BEFORE="${LBUFFER}"
-  fzf-tab-complete
-  [[ "${LBUFFER}" == "${LBUFFER_BEFORE}" ]] && return
-  zle accept-line
-}
-zle -N fzf-tab-complete-execute
-bindkey -M viins '^x' fzf-tab-complete-execute
+bindkey -M vicmd '^x' fzf-completion
+bindkey -M viins '^x' fzf-completion
+bindkey -M vicmd '^j' fzf-cd-widget
+bindkey -M viins '^j' fzf-cd-widget
+# defaults:
+FZF_CTRL_R_OPTS="--layout=reverse"
+bindkey -M vicmd '^r' fzf-history-widget
+bindkey -M viins '^r' fzf-history-widget
+bindkey -M vicmd '^t' fzf-file-widget
+bindkey -M viins '^t' fzf-file-widget
 
 fzf-file-explorer-widget() {
   LBUFFER_BEFORE="${LBUFFER}"
@@ -61,8 +61,8 @@ bindkey -M viins '^i' pop-forwards
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd '^t' edit-command-line
-bindkey -M viins '^t' edit-command-line
+bindkey -M vicmd '^g' edit-command-line
+bindkey -M viins '^g' edit-command-line
 
 vi-yank-clipboard() {
   zle vi-yank
