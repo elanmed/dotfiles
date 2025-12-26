@@ -1,3 +1,7 @@
+# perform command substitution and parameter expansion
+# in prompt strings each time the prompt is displayed
+setopt PROMPT_SUBST
+
 prompt_prefix() {
   if h_is_linux && ! h_is_toolbx; then
     echo "%BHOST%b"

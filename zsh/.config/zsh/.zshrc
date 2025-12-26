@@ -1,8 +1,6 @@
 #!/bin/zsh
 
 # TODO
-# Replace spaceship with custom prompt 
-## Update prompt without accepting a line
 # Replace fzf tab with fzf completion
 # Look into replicating supercharge
 # Replace zap with submodules
