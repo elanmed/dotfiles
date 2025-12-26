@@ -39,6 +39,7 @@ bindkey -M viins '^f' fzf-file-explorer-widget
 setopt noautopushd
 push-backwards() {
   pushd .. > /dev/null 2>&1
+  zle reset-prompt
 }
 pop-forwards() {
   popd > /dev/null 2>&1
@@ -49,6 +50,7 @@ pop-forwards() {
     echo -en "${red}Can't move forwards${no_color}"
     zle accept-line
   fi
+  zle reset-prompt
 }
 zle -N push-backwards
 zle -N pop-forwards
