@@ -2,12 +2,6 @@ local wezterm = require "wezterm"
 local act = wezterm.action
 local mux = wezterm.mux
 
-wezterm.on("gui-startup", function(cmd)
-  local _, pane, window = mux.spawn_window(cmd or {})
-  local gui_window = window:gui_window()
-  gui_window:perform_action(wezterm.action.ToggleFullScreen, pane)
-end)
-
 local colors = {
   black = "#1d1f21",
   extra_dark_grey = "#282a2e",
