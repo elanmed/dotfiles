@@ -6,24 +6,19 @@ source ~/.dotfiles/helpers.sh
 setopt +o nomatch 
 unalias ls
 ls() {
-  if [[ "$(find . -maxdepth 1 ! -name '.*' | wc -l)" -eq 0 ]]
-  then 
-    command ls -a "$@"
+  if h_is_linux
+  then
+    command ls --color=auto "$@"
   else
-    if h_is_linux 
-    then
-      command ls --color=auto "$@"
-    else
-      command ls -G "$@"
-    fi
+    command ls -G "$@"
   fi
 }
 
-export ZSHZ_CMD="zsh_z"
-# need `function` 
+unalias z
+# need `function`
 # https://github.com/ohmyzsh/ohmyzsh/issues/6723#issue-313463147
-function z { 
-  zsh_z "$@" 
+function z {
+  zshz "$@"
   ls 
 }
 
