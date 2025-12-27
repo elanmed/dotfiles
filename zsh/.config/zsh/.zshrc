@@ -1,14 +1,11 @@
 #!/bin/zsh
 
 # TODO
-# Look into replicating supercharge
 # Replace zap with submodules
-# Issue with functions not applying when sourced in toolbox
 
 source "$HOME/.dotfiles/helpers.sh"
 source "$HOME/.dotfiles/zsh/.local/share/zap/zap.zsh"
 
-plug "zap-zsh/supercharge"
 plug "zsh-users/zsh-autosuggestions"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "agkozak/zsh-z"
@@ -18,6 +15,7 @@ source <(fzf --zsh)
 
 # Don't use a .zshenv!
 # https://github.com/christoomey/vim-tmux-navigator/issues/72#issuecomment-103566743
+source "$HOME/.dotfiles/zsh/.config/zsh/supercharge.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/exports.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/aliases.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/fns.zsh"

@@ -22,7 +22,6 @@ function z {
   ls 
 }
 
-setopt auto_cd
 cd() {
   builtin cd "$@"
   ls
