@@ -3,26 +3,22 @@
 bindkey -v
 export KEYTIMEOUT=1
 
-# by default, control+s will pause input to the terminal until 
-# control+q is used to resume input. ssty -ixon disables 
-# pausing/resuming
-stty -ixon
-
 bindkey -M viins '^e' autosuggest-execute
 bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 
-bindkey -M vicmd '^x' fzf-completion
-bindkey -M viins '^x' fzf-completion
-bindkey -M vicmd '^j' fzf-cd-widget
-bindkey -M viins '^j' fzf-cd-widget
-# defaults:
+# default
 FZF_CTRL_R_OPTS="--layout=reverse"
 bindkey -M vicmd '^r' fzf-history-widget
 bindkey -M viins '^r' fzf-history-widget
 bindkey -M vicmd '^t' fzf-file-widget
 bindkey -M viins '^t' fzf-file-widget
+# custom
+bindkey -M vicmd '^x' fzf-completion
+bindkey -M viins '^x' fzf-completion
+bindkey -M vicmd '^j' fzf-cd-widget
+bindkey -M viins '^j' fzf-cd-widget
 
 fzf-file-explorer-widget() {
   LBUFFER_BEFORE="${LBUFFER}"
