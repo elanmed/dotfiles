@@ -11,3 +11,12 @@
 [submodule "nvm/.nvm"]
 	path = nvm/.nvm
 	url = https://github.com/nvm-sh/nvm.git
+[submodule "zsh/.zsh/zsh-syntax-highlighting"]
+	path = zsh/.zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "zsh/.zsh/zsh-autosuggestions"]
+	path = zsh/.zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "zsh/.zsh/zsh-z"]
+	path = zsh/.zsh/zsh-z
+	url = https://github.com/agkozak/zsh-z
