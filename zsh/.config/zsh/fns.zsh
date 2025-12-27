@@ -4,6 +4,7 @@ source ~/.dotfiles/helpers.sh
 
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch 
+unalias ls 2>/dev/null
 ls() {
   if h_is_linux
   then
