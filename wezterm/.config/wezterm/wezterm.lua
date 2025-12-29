@@ -1,6 +1,5 @@
 local wezterm = require "wezterm"
 local act = wezterm.action
-local mux = wezterm.mux
 
 local colors = {
   black = "#1d1f21",
@@ -44,13 +43,13 @@ local config = wezterm.config_builder()
 config.font = wezterm.font "ComicCodeLigatures Nerd Font"
 config.font_size = 12.0
 
-local function is_vim(pane)
+local function is_nvim(pane)
   return pane:get_user_vars().IS_NVIM == "true"
 end
 
 local function smart_move(key, direction)
   return wezterm.action_callback(function(win, pane)
-    if is_vim(pane) then
+    if is_nvim(pane) then
       win:perform_action({ SendKey = { key = key, mods = "CTRL", }, }, pane)
     else
       win:perform_action({ ActivatePaneDirection = direction, }, pane)
@@ -58,9 +57,16 @@ local function smart_move(key, direction)
   end)
 end
 
+local function maybe_paste_from_clipboard()
+  return wezterm.action_callback(function(win, pane)
+    if is_nvim(pane) then return end
+    win:perform_action({ PasteFrom = "Clipboard", }, pane)
+  end)
+end
+
 config.leader = { key = "Space", mods = "CTRL", }
 config.keys = {
-  { key = "v", mods = cmd_or_ctrl(), action = act.PasteFrom "Clipboard", },
+  { key = "v", mods = cmd_or_ctrl(), action = maybe_paste_from_clipboard(), },
   { key = "p", mods = "LEADER|CTRL", action = act.ActivateTabRelative(-1), },
   { key = "n", mods = "LEADER|CTRL", action = act.ActivateTabRelative(1), },
   { key = "q", mods = "LEADER|CTRL", action = act.QuitApplication, },
