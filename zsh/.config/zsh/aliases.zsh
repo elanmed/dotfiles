@@ -3,11 +3,11 @@
 source ~/.dotfiles/helpers.sh
 
 # editing
-alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && v"
-alias eterm="$NVIM_CMD ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
-alias etmux="$NVIM_CMD ~/.dotfiles/tmux/.config/tmux/tmux.conf"
-alias edot="builtin cd ~/.dotfiles && v"
-alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && v"
+alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && $NVIM_CMD"
+alias eterm="builtin cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
+alias etmux="builtin cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/tmux/.config/tmux/tmux.conf"
+alias edot="builtin cd ~/.dotfiles && $NVIM_CMD"
+alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && $NVIM_CMD"
 alias resetnvim="rm -rf ~/.cache/nvim ~/.local/share/nvim"
 # git
 alias gs="git status"
@@ -22,9 +22,6 @@ alias tsrc="tmux source ~/.config/tmux/tmux.conf"
 lsa_cmd="command ls -a --color=tty"
 h_is_linux && lsa_cmd+=" --group-directories-first"
 alias lsa="$lsa_cmd"
-# scripts
-alias n="n.sh"
-alias zf="source fzf-file-explorer.sh"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 h_is_linux && alias open="flatpak-xdg-open"

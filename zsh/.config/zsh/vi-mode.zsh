@@ -17,20 +17,8 @@ bindkey -M viins '^t' fzf-file-widget
 # custom
 bindkey -M vicmd '^x' fzf-completion
 bindkey -M viins '^x' fzf-completion
-bindkey -M vicmd '^j' fzf-cd-widget
-bindkey -M viins '^j' fzf-cd-widget
-
-fzf-file-explorer-widget() {
-  LBUFFER_BEFORE="${LBUFFER}"
-  local dir="$(pwd)"
-  source ~/.dotfiles/scripts/.local/bin/fzf-file-explorer.sh
-  LBUFFER="$(fzf-file-explorer $dir)"
-  [[ "${LBUFFER}" == "${LBUFFER_BEFORE}" ]] && return
-  zle accept-line
-}
-zle -N fzf-file-explorer-widget
-bindkey -M vicmd '^f' fzf-file-explorer-widget
-bindkey -M viins '^f' fzf-file-explorer-widget
+bindkey -M vicmd '^f' fzf-cd-widget
+bindkey -M viins '^f' fzf-cd-widget
 
 setopt noautopushd
 push-backwards() {
