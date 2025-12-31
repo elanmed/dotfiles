@@ -50,7 +50,8 @@ end
 local function smart_move(key, direction)
   return wezterm.action_callback(function(win, pane)
     if is_nvim(pane) then
-      win:perform_action({ SendKey = { key = key, mods = "CTRL", }, }, pane)
+      win:perform_action(wezterm.action.SendKey { key = " ", mods = "CTRL", }, pane)
+      win:perform_action(wezterm.action.SendKey { key = key, mods = "CTRL", }, pane)
     else
       win:perform_action({ ActivatePaneDirection = direction, }, pane)
     end
@@ -79,8 +80,8 @@ config.keys = {
   { key = "j", mods = "LEADER|CTRL", action = act.ActivatePaneDirection "Down", },
   { key = "e", mods = "LEADER|CTRL", action = act.TogglePaneZoomState, },
   { key = "v", mods = "LEADER|CTRL", action = act.ActivateCopyMode, },
-  { key = "l", mods = "CTRL", action = smart_move("l", "Right"), },
-  { key = "h", mods = "CTRL", action = smart_move("h", "Left"), },
+  { key = "l", mods = "LEADER|CTRL", action = smart_move("l", "Right"), },
+  { key = "h", mods = "LEADER|CTRL", action = smart_move("h", "Left"), },
 }
 if is_linux() then
   config.window_decorations = "NONE"
