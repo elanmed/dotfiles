@@ -69,13 +69,6 @@ Dir.glob('./*').each do |raw_dir|
 end
 
 if options['server']
-  puts 'SKIPPING: bootstrapping tmux'.noop
-else
-  puts 'bootstrapping tmux'.doing
-  `~/.tmux/plugins/tpm/bin/install_plugins`
-end
-
-if options['server']
   puts 'SKIPPING: bootstrapping fonts'.noop
 else
   puts 'bootstrapping fonts'.doing
@@ -99,14 +92,7 @@ FileUtils.ln_sf(
   File.expand_path('~/.dotfiles/zsh/.config/zsh/.zshrc'),
   File.expand_path('~/.zshrc')
 )
-puts 'symlinking spaceshiprc'.doing
-FileUtils.ln_sf(
-  File.expand_path('~/.dotfiles/zsh/.config/zsh/.spaceshiprc.zsh'),
-  File.expand_path('~/.spaceshiprc.zsh')
-)
-puts 'restart the shell to install zap'.noop
 
 puts 'bootstrapping neovim'.doing
-
 server = options['server'] or false
 bootstrap_nvim(server: server, package_manager: options['package_manager'])
