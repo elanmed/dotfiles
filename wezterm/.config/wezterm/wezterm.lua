@@ -106,9 +106,8 @@ config.colors = {
       fg_color = colors.purple,
     },
   },
-  selection_fg = colors.extra_dark_grey,
-  selection_bg = colors.yellow,
 }
+config.color_scheme = "Tomorrow Night"
 config.inactive_pane_hsb = {
   saturation = 1,
   brightness = 1,
