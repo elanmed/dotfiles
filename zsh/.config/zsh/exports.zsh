@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-source ~/.dotfiles/helpers.sh
-
 PATH="/usr/bin:$PATH"
 PATH="/usr/sbin:$PATH"
 PATH="/usr/local/sbin:$PATH"
@@ -16,7 +14,7 @@ export PATH="$HOME/.dotfiles/neovim/.config/nvim/language_servers/lua-language-s
 # https://tech.serhatteker.com/post/2019-12/remove-duplicates-in-path-zsh/
 typeset -U path
 
-if h_is_server; then
+if grep -q '^0$' "$HOME/.dotfiles/.is_server" >/dev/null 2>&1; then
   export NVIM_CMD="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 else
   export NVIM_CMD="nvim"
@@ -27,7 +25,7 @@ export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
 export BAT_THEME="ansi"
 
-if h_is_linux
+if [[ "$(uname -s)" == "Linux" ]]
 then
   # https://superuser.com/a/613754
   export XDG_TEMPLATES_DIR="$HOME"

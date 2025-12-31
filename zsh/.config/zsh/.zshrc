@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-source "$HOME/.dotfiles/helpers.sh"
-
 # https://github.com/junegunn/fzf#setting-up-shell-integration
 source <(fzf --zsh)
 

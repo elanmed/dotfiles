@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-source ~/.dotfiles/helpers.sh
-
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch 
 unalias ls 2>/dev/null
@@ -27,7 +25,7 @@ cd() {
   ls
 }
 
-if h_is_linux
+if [[ "$(uname -s)" == "Linux" ]]
 then 
   alias copy="xclip -selection clipboard"
 else

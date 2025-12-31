@@ -2,8 +2,16 @@
 # in prompt strings each time the prompt is displayed
 setopt PROMPT_SUBST
 
+is_toolbox() {
+  if [[ "$(hostname)" == "toolbx" ]] || [[ "$(hostname)" == "toolbox" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 prompt_prefix() {
-  if h_is_linux && ! h_is_toolbx; then
+  if [[ "$(uname -s)" == "Linux" ]] && ! is_toolbox; then
     echo "%BHOST%b"
   else
     echo "󰮤"
@@ -11,7 +19,7 @@ prompt_prefix() {
 }
 
 prompt_dir_color() {
-  if h_is_linux && ! h_is_toolbx; then
+  if [[ "$(uname -s)" == "Linux" ]] && ! is_toolbox; then
     echo "red"
   else
     echo "yellow"

@@ -1,8 +1,6 @@
 #!/bin/bash
 # shellcheck source=/dev/null
 
-source ~/.dotfiles/helpers.sh
-
 split_window() {
   tmux split-window -h
   tmux send-keys "builtin cd $1 && clear" "C-m"
@@ -11,7 +9,7 @@ split_window() {
 }
 
 main() {
-  if ! h_is_command_valid "tmux"; then
+  if ! command -v "tmux" >/dev/null 2>&1; then
     "$NVIM_CMD" "$1"
     exit 0
   fi

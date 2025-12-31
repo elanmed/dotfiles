@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-source ~/.dotfiles/helpers.sh
-
 # editing
 alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && $NVIM_CMD"
 alias eterm="builtin cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
@@ -20,11 +18,11 @@ alias f="toolbox enter fedora-toolbox-43"
 alias tm="tmux"
 alias tsrc="tmux source ~/.config/tmux/tmux.conf"
 lsa_cmd="command ls -a --color=tty"
-h_is_linux && lsa_cmd+=" --group-directories-first"
+[[ "$(uname -s)" == "Linux" ]] && lsa_cmd+=" --group-directories-first"
 alias lsa="$lsa_cmd"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
-h_is_linux && alias open="flatpak-xdg-open"
+[[ "$(uname -s)" == "Linux" ]] && alias open="flatpak-xdg-open"
 alias cp="cp -i"
 alias mv='mv -i'
 alias rm='rm -i'
