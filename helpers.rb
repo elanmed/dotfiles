@@ -23,10 +23,6 @@ def validate_package_manager(package_manager)
   valid_package_managers.include? package_manager
 end
 
-def linux?
-  `uname -s`.strip == 'Linux'
-end
-
 def install_package(package_manager, package)
   puts "installing #{package}".doing
 

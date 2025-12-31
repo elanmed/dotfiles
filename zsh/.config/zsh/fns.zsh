@@ -4,8 +4,7 @@
 setopt +o nomatch 
 unalias ls 2>/dev/null
 ls() {
-  if h_is_linux
-  then
+  if [[ "$(uname -s)" == "Linux" ]]; then
     command ls --color=auto "$@"
   else
     command ls -G "$@"
@@ -25,17 +24,18 @@ cd() {
   ls
 }
 
-if [[ "$(uname -s)" == "Linux" ]]
-then 
+if [[ "$(uname -s)" == "Linux" ]]; then 
   alias copy="xclip -selection clipboard"
 else
   alias copy="pbcopy"
 fi
+
 abspath() { 
   local abs_path="$(realpath "$1")"
   echo "$abs_path" | copy
   echo "$abs_path"
 }
+
 cb() {
   local branch="$(git symbolic-ref HEAD | cut -d'/' -f3)"
   echo "$branch" | copy
@@ -48,6 +48,7 @@ gif() {
   ffmpeg -i "$1" -pix_fmt rgb8 -r 10 "$GIF_FILE"
   gifsicle --optimize=3 "$GIF_FILE" --output "$GIF_FILE"
 }
+
 killp() { 
   kill -9 "$(lsof -t -i:$1)" 
 }

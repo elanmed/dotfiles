@@ -80,7 +80,7 @@ if options['server']
 else
   puts 'bootstrapping fonts'.doing
 
-  if linux?
+  if `uname -s`.strip == 'Linux'
     puts 'fonts already in the correct directory'.noop
   else
     fonts_dir = File.expand_path('~/.dotfiles/fonts/.local/share/fonts/*')
