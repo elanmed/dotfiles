@@ -10,4 +10,3 @@ align_array_table = false
 align_continuous_inline_comment = false
 align_chain_expr = false
 end_statement_with_semicolon = never
-
