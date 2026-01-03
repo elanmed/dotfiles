@@ -55,7 +55,7 @@ install_package(options['package_manager'], 'lazygit')
 puts "writing #{options['server'] ? 0 : 1} to .is_server"
 File.write('./.is_server', options['server'] ? 0 : 1)
 
-desktop_only_dirs = %w[fonts nvm tmux base16 wezterm]
+desktop_only_dirs = %w[fonts nvm tmux wezterm]
 Dir.glob('./*').each do |raw_dir|
   next unless FileTest.directory?(raw_dir)
 
