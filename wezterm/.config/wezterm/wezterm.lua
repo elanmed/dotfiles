@@ -58,16 +58,9 @@ local function smart_move(key, direction)
   end)
 end
 
-local function maybe_paste_from_clipboard()
-  return wezterm.action_callback(function(win, pane)
-    if is_nvim(pane) then return end
-    win:perform_action({ PasteFrom = "Clipboard", }, pane)
-  end)
-end
-
 config.leader = { key = "Space", mods = "CTRL", }
 config.keys = {
-  { key = "v", mods = cmd_or_ctrl(), action = maybe_paste_from_clipboard(), },
+  { key = "v", mods = cmd_or_ctrl(), action = act.PasteFrom "Clipboard", },
   { key = "p", mods = "LEADER|CTRL", action = act.ActivateTabRelative(-1), },
   { key = "n", mods = "LEADER|CTRL", action = act.ActivateTabRelative(1), },
   { key = "q", mods = "LEADER|CTRL", action = act.QuitApplication, },
