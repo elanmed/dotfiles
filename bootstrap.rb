@@ -39,7 +39,7 @@ unless shell.include?('zsh')
   which_zsh = `which zsh`.strip
   `chsh -s #{which_zsh}`
 
-  puts 'exiting early, restart the shell and re-run the script'.noop
+  puts 'exiting early, log out and re-run the script'.noop
   exit 0
 end
 
@@ -96,3 +96,5 @@ FileUtils.ln_sf(
 puts 'bootstrapping neovim'.doing
 server = options['server'] or false
 bootstrap_nvim(server: server, package_manager: options['package_manager'])
+
+# TODO nvm doesn't install
