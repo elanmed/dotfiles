@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # https://github.com/junegunn/fzf#setting-up-shell-integration
-source <(fzf --zsh)
+source <(fzf --zsh 2>/dev/null)
 
 # plugins
 source "$HOME/.dotfiles/zsh/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
