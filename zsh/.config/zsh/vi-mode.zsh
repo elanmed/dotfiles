@@ -24,6 +24,9 @@ bindkey -M viins '^t' fzf-file-widget
 # custom
 bindkey -M vicmd '^x' fzf-completion
 bindkey -M viins '^x' fzf-completion
+bindkey -M viins '^n' menu-complete
+bindkey -M viins '^p' reverse-menu-complete
+
 bindkey -M vicmd '^f' fzf-cd-widget
 bindkey -M viins '^f' fzf-cd-widget
 
