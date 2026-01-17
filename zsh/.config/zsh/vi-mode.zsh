@@ -3,10 +3,17 @@
 bindkey -v
 export KEYTIMEOUT=1
 
-bindkey -M viins '^e' autosuggest-execute
+bindkey -M viins '^y' autosuggest-execute
 bindkey -M menuselect '^[' undo # cancel menuselect in vim mode
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
+
+bindkey -M viins '^h' backward-char
+bindkey -M viins '^l' forward-char
+bindkey -M viins '^w' forward-word
+bindkey -M viins '^b' backward-word
+bindkey -M viins '^a' beginning-of-line
+bindkey -M viins '^e' end-of-line
 
 # default
 FZF_CTRL_R_OPTS="--layout=reverse"
