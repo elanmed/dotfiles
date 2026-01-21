@@ -17,9 +17,9 @@ gsettings set org.gnome.desktop.peripherals.touchpad click-method 'areas'
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 40
 gsettings set org.gnome.desktop.peripherals.keyboard delay 250
 gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
-gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
+gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4300
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
-gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 20.0
-gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 19.99
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 0.0
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 0.0
 gsettings set org.gnome.desktop.a11y.interface high-contrast true
 gsettings set org.gnome.desktop.interface overlay-scrolling false
