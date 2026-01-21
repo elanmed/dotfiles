@@ -12,7 +12,6 @@ gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Shift><Control>
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface enable-hot-corners false
 gsettings set org.gnome.desktop.interface scaling-factor 2
-gsettings set org.gnome.desktop.interface text-scaling-factor 0.85
 gsettings set org.gnome.desktop.interface show-battery-percentage true
 gsettings set org.gnome.desktop.peripherals.touchpad click-method 'areas'
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 40
@@ -22,3 +21,5 @@ gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 40
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 20.0
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 19.99
+gsettings set org.gnome.desktop.a11y.interface high-contrast true
+gsettings set org.gnome.desktop.interface overlay-scrolling false
