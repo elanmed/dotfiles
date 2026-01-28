@@ -5,8 +5,11 @@ source <(fzf --zsh 2>/dev/null)
 
 # plugins
 source "$HOME/.dotfiles/zsh/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$HOME/.dotfiles/zsh/.zsh/base16-shell/base16-shell.plugin.zsh"
 source "$HOME/.dotfiles/zsh/.zsh/zsh-z/zsh-z.plugin.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/supercharge.zsh"
+
+base16_tomorrow-night
 
 # Don't use a .zshenv!
 # https://github.com/christoomey/vim-tmux-navigator/issues/72#issuecomment-103566743

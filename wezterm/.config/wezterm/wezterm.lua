@@ -101,7 +101,6 @@ config.colors = {
     },
   },
 }
-config.color_scheme = "Tomorrow Night"
 config.inactive_pane_hsb = {
   saturation = 1,
   brightness = 1,
