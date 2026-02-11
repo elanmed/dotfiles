@@ -21,7 +21,7 @@ if flags["help"] then
     "",
     "Options:",
     "  --dir=<path>          Directory to recursively concatenate (required)",
-    "  --excl=<p1,p2,...>    Comma-separated patterns to exclude",
+    "  --excl=<p1,p2,...>    Comma-separated Lua patterns to exclude",
     "  --sep=<format>        Separator format (default: 'FILE: %s')",
     "  --help                Show this message",
     "",
