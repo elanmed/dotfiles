@@ -79,7 +79,7 @@ end
 
 accum_string(abs_dir)
 
-io.write(("Accumulated content is %s characters. Print to stdout [Y/n]? "):format(#accumed_string))
+io.write(("Accumulated content is %s lines. Print to stdout [Y/n]? "):format(#vim.split(accumed_string, "\n")))
 local confirm_input = io.read()
 if confirm_input == 'Y' then
   io.write(accumed_string)
