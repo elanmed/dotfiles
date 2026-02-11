@@ -1,5 +1,4 @@
--- TODO: excl
-local supported_flags = { "excl", "dir", "sep" }
+local supported_flags = { "excl", "dir", "sep", "help" }
 
 local flags = {}
 
@@ -9,11 +8,25 @@ for _, raw_arg in ipairs(arg) do
     error(("Malformed flag, supported flags are --{%s}"):format(table.concat(supported_flags, ",")))
   end
 
-  flags[flag_name] = flag_value
+  flags[flag_name] = flag_value == "" and nil or flag_value
 
   if not vim.tbl_contains(supported_flags, flag_name) then
     error(("Unsupported flag: %s, supported flags are --{%s}"):format(flag_name, table.concat(supported_flags, ",")))
   end
+end
+
+if flags["help"] then
+  io.write(table.concat({
+    "Usage: cat_dir --dir=<path> [options]",
+    "",
+    "Options:",
+    "  --dir=<path>          Directory to recursively concatenate (required)",
+    "  --excl=<p1,p2,...>    Comma-separated patterns to exclude",
+    "  --sep=<format>        Separator format (default: 'FILE: %s')",
+    "  --help                Show this message",
+    "",
+  }, "\n"))
+  os.exit(0)
 end
 
 if flags["dir"] == nil then
@@ -26,6 +39,10 @@ if vim.uv.fs_stat(abs_dir) == nil then
 end
 
 local sep = flags["sep"] or "FILE: %s"
+local excl_tbl = (function()
+  if flags["excl"] == nil then return {} end
+  return vim.split(flags['excl'], ",")
+end)()
 
 local accumed_string = ""
 
@@ -33,6 +50,14 @@ local accum_string
 --- @param dir string
 accum_string = function(dir)
   for name, type in vim.fs.dir(dir) do
+    local matches_excl_pattern = vim.iter(excl_tbl):any(function(excl_pattern)
+      return name:find(excl_pattern) ~= nil
+    end)
+
+    if matches_excl_pattern then
+      goto continue
+    end
+
     local path = vim.fs.joinpath(dir, name)
     if type == "file" then
       local content = table.concat(
@@ -47,6 +72,8 @@ accum_string = function(dir)
     elseif type == "directory" then
       accum_string(path)
     end
+
+    ::continue::
   end
 end
 
