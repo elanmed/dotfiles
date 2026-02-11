@@ -33,7 +33,7 @@ if flags["dir"] == nil then
   error("Missing required flag --dir")
 end
 
-local abs_dir = vim.fs.abspath(vim.fs.normalize(flags["dir"]))
+local abs_dir = vim.fs.normalize(vim.fs.abspath(flags["dir"]))
 if vim.uv.fs_stat(abs_dir) == nil then
   error("Invalid dir: " .. abs_dir)
 end
