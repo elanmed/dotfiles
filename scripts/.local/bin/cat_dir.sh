@@ -1,0 +1,1 @@
+nvim -i NONE -u NONE --clean --headless -l ~/.dotfiles/scripts/.local/bin/cat_dir.lua "$@"
