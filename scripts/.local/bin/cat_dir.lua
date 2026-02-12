@@ -8,7 +8,10 @@ for _, raw_arg in ipairs(arg) do
     error(("Malformed flag, supported flags are --{%s}"):format(table.concat(supported_flags, ",")))
   end
 
-  flags[flag_name] = flag_value == "" and nil or flag_value
+  flags[flag_name] = (function()
+    if flag_value == "" then return nil end
+    return flag_value
+  end)()
 
   if not vim.tbl_contains(supported_flags, flag_name) then
     error(("Unsupported flag: %s, supported flags are --{%s}"):format(flag_name, table.concat(supported_flags, ",")))
@@ -44,7 +47,7 @@ local excl_tbl = (function()
   return vim.split(flags['excl'], ",")
 end)()
 
-local accumed_string = ""
+local accumed_files = {}
 
 local accum_string
 --- @param dir string
@@ -63,12 +66,8 @@ accum_string = function(dir)
       local content = table.concat(
         vim.fn.readfile(path
         ), "\n")
-      accumed_string =
-          accumed_string ..
-          "\n" ..
-          (sep):format(path) ..
-          "\n" ..
-          content
+      table.insert(accumed_files, sep:format(path))
+      table.insert(accumed_files, content)
     elseif type == "directory" then
       accum_string(path)
     end
@@ -79,6 +78,7 @@ end
 
 accum_string(abs_dir)
 
+local accumed_string = table.concat(accumed_files, "\n")
 io.write(("Accumulated content is %s lines. Print to stdout [Y/n]? "):format(#vim.split(accumed_string, "\n")))
 local confirm_input = io.read()
 if confirm_input == 'Y' then
