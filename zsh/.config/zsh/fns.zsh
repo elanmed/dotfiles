@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # https://unix.stackexchange.com/a/310553
-setopt +o nomatch 
+setopt +o nomatch
 unalias ls 2>/dev/null
 ls() {
   if [[ "$(uname -s)" == "Linux" ]]; then
@@ -16,7 +16,7 @@ unalias z
 # https://github.com/ohmyzsh/ohmyzsh/issues/6723#issue-313463147
 function z {
   zshz "$@"
-  ls 
+  ls
 }
 
 cd() {
@@ -24,13 +24,13 @@ cd() {
   ls
 }
 
-if [[ "$(uname -s)" == "Linux" ]]; then 
+if [[ "$(uname -s)" == "Linux" ]]; then
   alias copy="xclip -selection clipboard"
 else
   alias copy="pbcopy"
 fi
 
-abspath() { 
+abspath() {
   local abs_path="$(realpath "$1")"
   echo "$abs_path" | copy
   echo "$abs_path"
@@ -43,12 +43,12 @@ cb() {
 
 # misc
 # https://gist.github.com/SheldonWangRJT/8d3f44a35c8d1386a396b9b49b43c385#solution
-gif() { 
+gif() {
   GIF_FILE="gif-$(date +%T).gif"
   ffmpeg -i "$1" -pix_fmt rgb8 -r 10 "$GIF_FILE"
   gifsicle --optimize=3 "$GIF_FILE" --output "$GIF_FILE"
 }
 
-killp() { 
-  kill -9 "$(lsof -t -i:$1)" 
+killp() {
+  kill -9 "$(lsof -t -i:$1)"
 }

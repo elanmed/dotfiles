@@ -32,13 +32,12 @@ bindkey -M viins '^f' fzf-cd-widget
 
 setopt noautopushd
 push-backwards() {
-  pushd .. > /dev/null 2>&1
+  pushd .. >/dev/null 2>&1
   zle reset-prompt
 }
 pop-forwards() {
-  popd > /dev/null 2>&1
-  if [[ $? -eq 1 ]] 
-  then 
+  popd >/dev/null 2>&1
+  if [[ $? -eq 1 ]]; then
     echo
     ls
     echo -en "${red}Can't move forwards${no_color}"
@@ -60,13 +59,13 @@ bindkey -M viins '^g' edit-command-line
 
 vi-yank-clipboard() {
   zle vi-yank
-  echo "$CUTBUFFER" | copy 
+  echo "$CUTBUFFER" | copy
 }
 zle -N vi-yank-clipboard
 bindkey -M vicmd y vi-yank-clipboard
 
 # https://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-fg-widget () {
+fg-widget() {
   if [[ $#BUFFER -eq 0 ]]; then
     BUFFER="fg"
     zle accept-line
@@ -80,23 +79,23 @@ bindkey '^z' fg-widget
 
 # https://thevaluable.dev/zsh-install-configure-mouseless/
 cursor_mode() {
-    cursor_block='\e[2 q'
-    cursor_beam='\e[6 q'
-    function zle-keymap-select {
-        if [[ ${KEYMAP} == vicmd ]] ||
-            [[ $1 = 'block' ]]; then
-            echo -ne $cursor_block
-        elif [[ ${KEYMAP} == main ]] ||
-            [[ ${KEYMAP} == viins ]] ||
-            [[ ${KEYMAP} = '' ]] ||
-            [[ $1 = 'beam' ]]; then
-            echo -ne $cursor_beam
-        fi
-    }
-    zle-line-init() {
-        echo -ne $cursor_beam
-    }
-    zle -N zle-keymap-select
-    zle -N zle-line-init
+  cursor_block='\e[2 q'
+  cursor_beam='\e[6 q'
+  function zle-keymap-select {
+    if [[ ${KEYMAP} == vicmd ]] ||
+      [[ $1 == 'block' ]]; then
+      echo -ne $cursor_block
+    elif [[ ${KEYMAP} == main ]] ||
+      [[ ${KEYMAP} == viins ]] ||
+      [[ ${KEYMAP} == '' ]] ||
+      [[ $1 == 'beam' ]]; then
+      echo -ne $cursor_beam
+    fi
+  }
+  zle-line-init() {
+    echo -ne $cursor_beam
+  }
+  zle -N zle-keymap-select
+  zle -N zle-line-init
 }
 cursor_mode

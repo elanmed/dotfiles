@@ -25,8 +25,7 @@ export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
 export BAT_THEME="ansi"
 
-if [[ "$(uname -s)" == "Linux" ]]
-then
+if [[ "$(uname -s)" == "Linux" ]]; then
   # https://superuser.com/a/613754
   export XDG_TEMPLATES_DIR="$HOME"
   export XDG_PUBLICSHARE_DIR="$HOME"
