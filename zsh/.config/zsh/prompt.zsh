@@ -10,17 +10,37 @@ is_toolbox() {
   fi
 }
 
-prompt_prefix() {
-  if [[ "$(uname -s)" == "Linux" ]] && ! is_toolbox; then
-    echo "%BHOST%b"
+is_podman() {
+  if [[ -f /run/.containerenv ]]; then
+    return 0
   else
-    echo "󰮤"
+    return 1
+  fi
+}
+
+prompt_prefix() {
+  if [[ "$(uname -s)" == "Linux" ]]; then
+    if is_toolbox; then
+      echo "%B%b"
+    elif is_podman; then
+      echo "%B%b"
+    else
+      echo "%B%b"
+    fi
+  else
+    echo ""
   fi
 }
 
 prompt_dir_color() {
-  if [[ "$(uname -s)" == "Linux" ]] && ! is_toolbox; then
-    echo "red"
+  if [[ "$(uname -s)" == "Linux" ]]; then
+    if is_toolbox; then
+      echo "yellow"
+    elif is_podman; then
+      echo "green"
+    else
+      echo "red"
+    fi
   else
     echo "yellow"
   fi
