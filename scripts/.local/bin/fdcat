@@ -1,0 +1,3 @@
+#!/bin/bash
+
+fd -a "$@" --exec sh -c 'printf "\nFILENAME: %s\n\n" "$1"; cat "$1"' _ {}
