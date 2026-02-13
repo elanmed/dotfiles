@@ -75,7 +75,7 @@ config.keys = {
   { key = "v", mods = "LEADER|CTRL", action = act.ActivateCopyMode, },
   { key = "l", mods = "LEADER|CTRL", action = smart_move("l", "Right"), },
   { key = "h", mods = "LEADER|CTRL", action = smart_move("h", "Left"), },
-  { key = "Enter", mods = "CTRL", action = act.SendString "\x16\n", },
+  { key = "Enter", mods = "SHIFT", action = act.SendString "\x16\n", },
 }
 if is_linux() then
   config.window_decorations = "NONE"
