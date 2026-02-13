@@ -1,6 +1,6 @@
 FROM fedora:41
 
-RUN dnf install -y git ruby zsh && \
+RUN dnf install -y git ruby zsh which hostname && \
     dnf clean all
 
 ENV SHELL=/usr/bin/zsh
