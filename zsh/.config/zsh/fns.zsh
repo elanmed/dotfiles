@@ -62,6 +62,5 @@ crun() {
     echo "usage: crun <directory>"
     return 1
   fi
-  local workspace="$(realpath "$1")"
-  podman run -it --rm -v "$workspace:/workspace:Z" container-env zsh
+  podman run -it --rm -v "$(realpath "$1"):/workspace:Z" container-env zsh
 }
