@@ -23,7 +23,7 @@ end.parse!
 
 raise OptionParser::MissingArgument if options['package_manager'].nil?
 
-`which zsh >/dev/null 2>&1`
+`command -v zsh >/dev/null 2>&1`
 if $CHILD_STATUS == 0
   puts 'zsh already installed'.noop
 else
@@ -36,7 +36,7 @@ shell = `echo "$SHELL"`
 unless shell.include?('zsh')
   puts 'setting the default shell to zsh'.doing
 
-  which_zsh = `which zsh`.strip
+  which_zsh = `command -v zsh`.strip
   `chsh -s #{which_zsh}`
 
   puts 'exiting early, log out and re-run the script'.noop
