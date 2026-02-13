@@ -52,3 +52,16 @@ gif() {
 killp() {
   kill -9 "$(lsof -t -i:$1)"
 }
+
+cbuild() {
+  podman build -t container-env --no-cache ~/.dotfiles/containers
+}
+
+crun() {
+  if [[ -z $1 ]]; then
+    echo "usage: crun <directory>"
+    return 1
+  fi
+  local workspace="$(realpath "$1")"
+  podman run -it --rm -v "$workspace:/workspace:Z" container-env zsh
+}
