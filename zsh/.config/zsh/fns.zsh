@@ -55,6 +55,7 @@ killp() {
 
 cbuild() {
   podman build -t container-env --no-cache ~/.dotfiles/containers
+  podman image prune -f
 }
 
 crun() {
