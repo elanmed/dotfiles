@@ -1,8 +1,7 @@
-FROM fedora:41
+FROM fedora:42
 
 RUN dnf install -y git ruby zsh which hostname 'dnf-command(copr)' && \
     dnf copr enable -y dejan/lazygit && \
-    dnf install -y lazygit && \
     dnf clean all
 
 ENV SHELL=/usr/bin/zsh
