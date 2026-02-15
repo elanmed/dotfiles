@@ -54,7 +54,7 @@ killp() {
 }
 
 cbuild() {
-  podman build -t container-env --no-cache ~/.dotfiles/containers/ubuntu
+  podman build -t "$1-container" --no-cache "~/.dotfiles/containers/.containerfiles/$1"
   podman image prune -f
 }
 
@@ -64,5 +64,5 @@ crun() {
     return 1
   fi
   local workspace="/$(basename "$(realpath "$1")")"
-  podman run -it --rm -w "$workspace" -v "$(realpath "$1"):$workspace:Z" container-env zsh
+  podman run -it --rm -w "$workspace" -v "$(realpath "$1"):$workspace:Z" "$1-container" zsh
 }
