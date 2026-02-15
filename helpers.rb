@@ -34,7 +34,7 @@ def install_package(package_manager, package)
   when 'pacman'
     `sudo pacman --sync --needed --quiet --noconfirm #{package}`
   when 'apt'
-    `sudo apt-get install -y #{package}`
+    `sudo DEBIAN_FRONTEND=noninteractive apt-get install -y #{package}`
   else
     raise ArgumentError 'package_manager must be one of {brew,pacman,dnf,apt}'
   end
