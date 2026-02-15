@@ -17,3 +17,4 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 # new copy per container since claude appends to this file
 RUN cp -r ~/.dotfiles/containers/.claude/. ~/.claude
 RUN cp ~/.dotfiles/containers/.claude.json ~/.claude.json
+

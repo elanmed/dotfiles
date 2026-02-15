@@ -1,0 +1,20 @@
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y git ruby zsh sudo curl apt-utils fd-find && \
+    apt-get clean
+
+ENV SHELL=/usr/bin/zsh
+
+RUN git clone https://github.com/elanmed/dotfiles ~/.dotfiles && \
+    cd ~/.dotfiles && \
+    sed -i 's|git@github.com:|https://github.com/|g' .gitmodules && \
+    git submodule init && \
+    git submodule update
+
+RUN cd ~/.dotfiles && ruby bootstrap.rb --package-manager=apt --server --skip-nvim
+RUN curl -fsSL https://claude.ai/install.sh | bash
+# new copy per container since claude appends to this file
+RUN cp -r ~/.dotfiles/containers/.claude/. ~/.claude
+RUN cp ~/.dotfiles/containers/.claude.json ~/.claude.json
