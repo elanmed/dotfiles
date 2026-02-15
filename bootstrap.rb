@@ -11,11 +11,15 @@ options = {}
 OptionParser.new do |opts|
   opts.banner = 'Usage: ./scratch.rb [options]'
 
-  opts.on('-s', '--server') do
+  opts.on('--server') do
     options['server'] = true
   end
 
-  opts.on('-pPACKAGE_MANAGER', '--package-manager=PACKAGE_MANAGER', '{brew,pacman,dnf,apt}') do |opt|
+  opts.on('--skip-nvim') do
+    options['skip-nvim'] = true
+  end
+
+  opts.on('--package-manager=PACKAGE_MANAGER', '{brew,pacman,dnf,apt}') do |opt|
     options['package_manager'] = opt
     raise OptionParser::InvalidArgument unless validate_package_manager opt
   end
@@ -95,6 +99,7 @@ FileUtils.ln_sf(
 
 puts 'bootstrapping neovim'.doing
 server = options['server'] or false
-bootstrap_nvim(server: server, package_manager: options['package_manager'])
+skip_nvim = options['skip-nvim'] or false
+bootstrap_nvim(server: server, package_manager: options['package_manager']) unless skip_nvim
 
 # TODO nvm doesn't install
