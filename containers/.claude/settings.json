@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": ["Bash(*)", "Read", "Edit", "Write"]
+  },
+  "spinnerVerbs": { "mode": "replace", "verbs": ["Loading"] },
+  "spinnerTipsEnabled": false,
+  "prefersReducedMotion": true
+}
