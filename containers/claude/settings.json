@@ -1,0 +1,10 @@
+{
+  "hasCompletedOnboarding": true,
+  "theme": "dark",
+  "hasTrustDialogAccepted": true,
+  "hasCompletedProjectOnboarding": true,
+  "spinnerVerbs": { "mode": "replace", "verbs": ["Loading"] },
+  "spinnerTipsEnabled": false,
+  "prefersReducedMotion": true,
+  "defaultMode": "bypassPermissions"
+}
