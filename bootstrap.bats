@@ -2,7 +2,7 @@
 # Run with: bats bootstrap.bats
 
 setup() {
-  export BOOTSTRAP_SCRIPT="/.dotfiles/bootstrap.sh"
+  export BOOTSTRAP_SCRIPT="${BATS_TEST_DIRNAME}/bootstrap.sh"
 }
 
 @test "bootstrap.sh: fails without --package-manager argument" {
