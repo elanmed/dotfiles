@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
-    apt-get install -y git zsh sudo apt-utils && \
+    apt-get install -y git zsh sudo curl apt-utils && \
     apt-get clean
 
 RUN usermod -s /usr/bin/zsh ubuntu
