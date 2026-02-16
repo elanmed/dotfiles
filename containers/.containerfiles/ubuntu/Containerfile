@@ -1,13 +1,11 @@
 FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && \
-    apt-get install -y git zsh sudo curl apt-utils && \
+    apt-get install -y git zsh sudo curl && \
     apt-get clean
 
-RUN usermod -s /usr/bin/zsh ubuntu
-RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-USER ubuntu
-
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 ENV SHELL=/usr/bin/zsh
 
 RUN git clone https://github.com/elanmed/dotfiles ~/.dotfiles && \

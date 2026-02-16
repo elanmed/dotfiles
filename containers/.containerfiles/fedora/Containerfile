@@ -6,18 +6,13 @@ RUN dnf install -y git ruby zsh which hostname 'dnf-command(copr)' && \
 
 ENV SHELL=/usr/bin/zsh
 
-# TODO: test
-RUN useradd -m -s /usr/bin/zsh -G wheel containeruser
-RUN echo 'containeruser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-USER containeruser
-
 RUN git clone https://github.com/elanmed/dotfiles ~/.dotfiles && \
     cd ~/.dotfiles && \
     sed -i 's|git@github.com:|https://github.com/|g' .gitmodules && \
     git submodule init && \
     git submodule update
 
-RUN cd ~/.dotfiles && bash bootstrap.sh --package-manager apt --server
+RUN cd ~/.dotfiles && bash bootstrap.sh --package-manager dnf --server
 RUN curl -fsSL https://claude.ai/install.sh | bash
 # new copy per container since claude appends to this file
 RUN cp -r ~/.dotfiles/containers/.claude/. ~/.claude

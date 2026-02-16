@@ -73,5 +73,20 @@ crun() {
     return 1
   fi
   local workspace="/$(basename "$(realpath "$1")")"
-  podman run -it --rm --userns=keep-id --security-opt label=disable -w "$workspace" -v "$(realpath "$1"):$workspace" "$2-container" zsh
+  podman run \
+    --interactive \ # keep stdin open to enable typing commands into the container
+    --tty \ # allocate a pseudo-terminal, enabling colors, line editing, and ctrl-c
+    --rm \ # delete the container's file system on exit (non-mounted volumes)
+    --security-opt label=disable \ # disable SELinux so the container can read/write mounted volumes
+    --workdir "$workspace" \ # cd "$workspace" on load
+    --volume "$(realpath "$1"):$workspace" \  # bind the host dir on the left of the : to the container dir on the right side of the :
+    "$2-container" \
+    zsh
+}
+
+cat_args() {
+  for arg in "$@"; do
+    echo "FILE NAME: $arg"
+    cat "$arg"
+  done
 }
