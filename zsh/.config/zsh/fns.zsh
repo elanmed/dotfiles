@@ -54,15 +54,24 @@ killp() {
 }
 
 cbuild() {
-  podman build -t "$1-container" --no-cache "~/.dotfiles/containers/.containerfiles/$1"
+  if [[ $1 != "ubuntu" ]] && [[ $1 != "fedora" ]]; then
+    echo "usage: cbuild {ubuntu,fedora}"
+    return 1
+  fi
+  podman build -t "$1-container" --no-cache "$HOME/.dotfiles/containers/.containerfiles/$1"
   podman image prune -f
 }
 
 crun() {
   if [[ -z $1 ]]; then
-    echo "usage: crun <directory>"
+    echo "usage: crun <directory> {ubuntu,fedora}"
+    return 1
+  fi
+
+  if [[ $2 != "ubuntu" ]] && [[ $2 != "fedora" ]]; then
+    echo "usage: crun <directory> {ubuntu,fedora}"
     return 1
   fi
   local workspace="/$(basename "$(realpath "$1")")"
-  podman run -it --rm -w "$workspace" -v "$(realpath "$1"):$workspace:Z" "$1-container" zsh
+  podman run -it --rm -w "$workspace" -v "$(realpath "$1"):$workspace:Z" "$2-container" zsh
 }
