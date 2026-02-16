@@ -73,13 +73,20 @@ crun() {
     return 1
   fi
   local workspace="/$(basename "$(realpath "$1")")"
+
+  # --interactive: keep stdin open to enable typing commands into the container
+  # --tty: allocate a pseudo-terminal, enabling colors, line editing, and ctrl-c
+  # --rm: delete the container's file system on exit (non-mounted volumes)
+  # --security-opt label=disable: disable SELinux so the container can read/write mounted volumes
+  # --workdir: cd "$workspace" on load
+  # --volume: bind the host dir on the left of the : to the container dir on the right side of the :
   podman run \
-    --interactive \ # keep stdin open to enable typing commands into the container
-    --tty \ # allocate a pseudo-terminal, enabling colors, line editing, and ctrl-c
-    --rm \ # delete the container's file system on exit (non-mounted volumes)
-    --security-opt label=disable \ # disable SELinux so the container can read/write mounted volumes
-    --workdir "$workspace" \ # cd "$workspace" on load
-    --volume "$(realpath "$1"):$workspace" \  # bind the host dir on the left of the : to the container dir on the right side of the :
+    --interactive \
+    --tty \
+    --rm \
+    --security-opt label=disable \
+    --workdir "$workspace" \
+    --volume "$(realpath "$1"):$workspace" \
     "$2-container" \
     zsh
 }
