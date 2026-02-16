@@ -73,5 +73,5 @@ crun() {
     return 1
   fi
   local workspace="/$(basename "$(realpath "$1")")"
-  podman run -it --rm -w "$workspace" -v "$(realpath "$1"):$workspace:Z" "$2-container" zsh
+  podman run -it --rm --userns=keep-id --security-opt label=disable -w "$workspace" -v "$(realpath "$1"):$workspace" "$2-container" zsh
 }
