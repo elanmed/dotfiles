@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
-    apt-get install -y git ruby zsh sudo curl apt-utils fd-find && \
+    apt-get install -y git zsh sudo apt-utils && \
     apt-get clean
 
 RUN usermod -s /usr/bin/zsh ubuntu
@@ -16,7 +16,7 @@ RUN git clone https://github.com/elanmed/dotfiles ~/.dotfiles && \
     git submodule init && \
     git submodule update
 
-RUN cd ~/.dotfiles && ruby bootstrap.rb --package-manager=apt --server --skip-nvim
+RUN cd ~/.dotfiles && bash bootstrap.sh --package-manager apt --server --container
 RUN curl -fsSL https://claude.ai/install.sh | bash
 # new copy per container since claude appends to this file
 RUN cp -r ~/.dotfiles/containers/.claude/. ~/.claude
