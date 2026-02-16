@@ -104,6 +104,5 @@ ln -sf ~/.dotfiles/zsh/.config/zsh/.zshrc ~/.zshrc
 
 if [[ $container == false ]]; then
   h_echo doing "bootstrapping neovim"
-  source ~/.dotfiles/neovim/.config/nvim/bootstrap.sh
-  bootstrap_nvim "$server" "$package_manager"
+  bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh --package-manager "$package_manager"
 fi
