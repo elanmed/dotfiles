@@ -101,5 +101,3 @@ puts 'bootstrapping neovim'.doing
 server = options['server'] or false
 skip_nvim = options['skip-nvim'] or false
 bootstrap_nvim(server: server, package_manager: options['package_manager']) unless skip_nvim
-
-# TODO nvm doesn't install
