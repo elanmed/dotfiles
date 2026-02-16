@@ -16,7 +16,7 @@ RUN git clone https://github.com/elanmed/dotfiles ~/.dotfiles && \
     git submodule init && \
     git submodule update
 
-RUN cd ~/.dotfiles && bash bootstrap.sh --package-manager apt --server --container
+RUN cd ~/.dotfiles && bash bootstrap.sh --package-manager apt --container
 RUN curl -fsSL https://claude.ai/install.sh | bash
 # new copy per container since claude appends to this file
 RUN cp -r ~/.dotfiles/containers/.claude/. ~/.claude
