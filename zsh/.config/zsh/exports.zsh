@@ -8,6 +8,7 @@ PATH="$HOME/.local/bin:$PATH"
 PATH="$HOME/.deno/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+PATH="$HOME/.dotfiles/zsh/.zsh/bats-core/bin:$PATH"
 PATH="$HOME/.dotfiles/neovim/.config/nvim/language_servers/node_modules/.bin:$PATH"
 export PATH="$HOME/.dotfiles/neovim/.config/nvim/language_servers/lua-language-server-release/bin:$PATH"
 
