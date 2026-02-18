@@ -102,9 +102,5 @@ config.colors = {
     },
   },
 }
-config.inactive_pane_hsb = {
-  saturation = 1,
-  brightness = 1,
-}
 
 return config
