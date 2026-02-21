@@ -1,15 +1,18 @@
 #!/bin/zsh
 
-PATH="/usr/bin:$PATH"
-PATH="/usr/sbin:$PATH"
-PATH="/usr/local/sbin:$PATH"
-PATH="$HOME/bin:$PATH"
-PATH="$HOME/.local/bin:$PATH"
-PATH="$HOME/.deno/bin:$PATH"
-PATH="$HOME/.cargo/bin:$PATH"
-PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
-PATH="$HOME/.dotfiles/zsh/.zsh/bats-core/bin:$PATH"
-PATH="$HOME/.dotfiles/neovim/.config/nvim/language_servers/node_modules/.bin:$PATH"
+export BUN_INSTALL="$HOME/.bun"
+
+export PATH="/usr/bin:$PATH"
+export PATH="/usr/sbin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.deno/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.bun/bin:$PATH"
+export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+export PATH="$HOME/.dotfiles/zsh/.zsh/bats-core/bin:$PATH"
+export PATH="$HOME/.dotfiles/neovim/.config/nvim/language_servers/node_modules/.bin:$PATH"
 export PATH="$HOME/.dotfiles/neovim/.config/nvim/language_servers/lua-language-server-release/bin:$PATH"
 
 # https://tech.serhatteker.com/post/2019-12/remove-duplicates-in-path-zsh/

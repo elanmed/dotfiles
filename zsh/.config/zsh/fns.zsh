@@ -86,6 +86,7 @@ crun() {
     --rm \
     --security-opt label=disable \
     --workdir "$workspace" \
+    --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro" \
     --volume "$(realpath "$1"):$workspace" \
     "$2-container" \
     zsh

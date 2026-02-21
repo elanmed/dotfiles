@@ -64,6 +64,7 @@ h_install_package "$package_manager" fzf
 h_install_package "$package_manager" source-highlight
 h_install_package "$package_manager" highlight
 h_install_package "$package_manager" lazygit
+h_install_package "$package_manager" unzip
 
 if [[ $server == true ]]; then
   is_server_value=0
@@ -101,6 +102,12 @@ fi
 h_echo doing "bootstrapping zsh"
 h_echo doing "symlinking zshrc"
 ln -sf ~/.dotfiles/zsh/.config/zsh/.zshrc ~/.zshrc
+
+h_echo doing "install bun"
+# bun writes to your zshrc on every install
+chmod a-w ~/.zshrc
+curl -fsSL https://bun.com/install | bash
+chmod u+w ~/.zshrc
 
 if [[ $container == false ]]; then
   h_echo doing "bootstrapping neovim"
