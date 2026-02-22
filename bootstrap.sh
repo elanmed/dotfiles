@@ -41,6 +41,9 @@ if [[ -z $package_manager ]]; then
 fi
 h_validate_package_manager "$package_manager"
 
+git submodule init
+git submodule update
+
 if command -v zsh >/dev/null 2>&1; then
   h_echo noop "zsh already installed"
 else

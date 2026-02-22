@@ -1,16 +1,13 @@
-FROM fedora:42
+FROM fedora:43
 
-RUN dnf install -y git ruby zsh which hostname libatomic 'dnf-command(copr)' && \
-    dnf copr enable -y dejan/lazygit && \
+RUN dnf install -y git ruby zsh which hostname libatomic && \
     dnf clean all
 
 ENV SHELL=/usr/bin/zsh
 
 RUN git clone https://github.com/elanmed/dotfiles ~/.dotfiles && \
     cd ~/.dotfiles && \
-    sed -i 's|git@github.com:|https://github.com/|g' .gitmodules && \
-    git submodule init && \
-    git submodule update
+    sed -i 's|git@github.com:|https://github.com/|g' .gitmodules
 
 RUN cd ~/.dotfiles && bash bootstrap.sh --package-manager dnf --server
 ENV PATH="/root/.local/bin:$PATH"
