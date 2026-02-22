@@ -10,17 +10,8 @@ properly, based on this blog [post](https://www.jakewiesler.com/blog/managing-do
 ```sh
 git clone https://github.com/elanmed/dotfiles .dotfiles
 # if necessary, update the urls in `.gitmodules` from `git@` to `https://`
-git submodule init
-git submodule update
+./bootstrap.sh --package-manager {brew,pacman,dnf,apt} {--server,--stow-only}
 ```
-
-#### Bootstrap:
-
-```sh
-ruby bootstrap.rb --p={brew,pacman,dnf,apt} {--server}
-```
-
-#### Keep submodules up-to-date:
 
 ```sh
 git submodule foreach git pull origin master
