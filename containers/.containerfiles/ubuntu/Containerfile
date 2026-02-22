@@ -12,7 +12,7 @@ RUN git clone https://github.com/elanmed/dotfiles ~/.dotfiles && \
     cd ~/.dotfiles && \
     sed -i 's|git@github.com:|https://github.com/|g' .gitmodules
 
-RUN cd ~/.dotfiles && bash bootstrap.sh --package-manager apt --container
+RUN cd ~/.dotfiles && bash bootstrap.sh --package-manager apt --server
 ENV PATH="/root/.local/bin:$PATH"
 RUN curl -fsSL https://claude.ai/install.sh | bash
 # new copy per container since claude appends to this file

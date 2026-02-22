@@ -3,16 +3,16 @@ source ~/.dotfiles/helpers.sh
 
 package_manager=""
 server=false
-container=false
+stow_only=false
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --server)
-      server=true
+    --stow-only)
+      stow_only=true
       shift
       ;;
-    --container)
-      container=true
+    --server)
+      server=true
       shift
       ;;
     --package-manager)
@@ -20,19 +20,15 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     *)
-      h_echo error "usage: ./scratch.sh --package-manager <pm> [--server] [--container]"
+      h_echo error "usage: ./scratch.sh --package-manager <pm> [--server] [--stow-only]"
       exit 1
       ;;
   esac
 done
 
-if [[ $container == true ]] && [[ $server == true ]]; then
-  h_echo error "only one of --server or --container can be passed"
+if [[ $stow_only == true ]] && [[ $server == true ]]; then
+  h_echo error "only one of --server or --stow-only can be passed"
   exit 1
-fi
-
-if [[ $container == true ]]; then
-  server=true
 fi
 
 if [[ -z $package_manager ]]; then
@@ -60,22 +56,27 @@ if ! h_string_includes "$SHELL" "zsh"; then
 fi
 
 h_install_package "$package_manager" stow
-h_install_package "$package_manager" shfmt
-h_install_package "$package_manager" tmux
-h_install_package "$package_manager" xclip
-h_install_package "$package_manager" fzf
-h_install_package "$package_manager" source-highlight
-h_install_package "$package_manager" highlight
-h_install_package "$package_manager" lazygit
-h_install_package "$package_manager" unzip
-
-if [[ $server == true ]]; then
-  is_server_value=0
-else
-  is_server_value=1
+if [[ $stow_only == false ]]; then
+  h_install_package "$package_manager" shfmt
+  h_install_package "$package_manager" tmux
+  h_install_package "$package_manager" xclip
+  h_install_package "$package_manager" fzf
+  h_install_package "$package_manager" source-highlight
+  h_install_package "$package_manager" highlight
+  h_install_package "$package_manager" lazygit
+  h_install_package "$package_manager" unzip
 fi
-h_echo doing "writing $is_server_value to .is_server"
-echo "$is_server_value" >./.is_server
+
+if [[ $stow_only == false ]]; then
+  if [[ $server == true ]]; then
+    is_server_value=0
+  else
+    is_server_value=1
+  fi
+
+  h_echo doing "writing $is_server_value to .is_server"
+  echo "$is_server_value" >./.is_server
+fi
 
 desktop_only_dirs=("fonts" "tmux" "wezterm")
 
@@ -102,17 +103,18 @@ else
   fi
 fi
 
-h_echo doing "bootstrapping zsh"
 h_echo doing "symlinking zshrc"
 ln -sf ~/.dotfiles/zsh/.config/zsh/.zshrc ~/.zshrc
 
-h_echo doing "install bun"
-# bun writes to your zshrc on every install
-chmod a-w ~/.zshrc
-curl -fsSL https://bun.com/install | bash
-chmod u+w ~/.zshrc
+if [[ $stow_only == false ]]; then
+  h_echo doing "install bun"
+  # bun writes to your zshrc on every install
+  chmod a-w ~/.zshrc
+  curl -fsSL https://bun.com/install | bash
+  chmod u+w ~/.zshrc
+fi
 
-if [[ $container == false ]]; then
+if [[ $stow_only == false ]]; then
   h_echo doing "bootstrapping neovim"
   bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh --package-manager "$package_manager"
 fi
