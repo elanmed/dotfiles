@@ -1,5 +1,4 @@
 local wezterm = require "wezterm"
-local act = wezterm.action
 
 local colors = {
   black = "#1d1f21",
@@ -58,24 +57,52 @@ local function smart_move(key, direction)
   end)
 end
 
+local function toggle_pane_height()
+  return wezterm.action_callback(function(win, pane)
+    local is_top_pane = true
+    for _, pane_info in ipairs(win:active_tab():panes_with_info()) do
+      if pane_info.pane:pane_id() == pane:pane_id() then
+        is_top_pane = pane_info.top == 0
+        break
+      end
+    end
+
+    local grow_direction = is_top_pane and "Down" or "Up"
+    local shrink_direction = is_top_pane and "Up" or "Down"
+
+    local curr_height = pane:get_dimensions().viewport_rows
+    local max_height = win:active_tab():get_size().rows
+
+    local half_max_height = math.floor(max_height / 2)
+
+    if curr_height > half_max_height then
+      -- shrinks by this amount
+      win:perform_action(wezterm.action.AdjustPaneSize { shrink_direction, curr_height - half_max_height, }, pane)
+    else
+      win:perform_action(wezterm.action.AdjustPaneSize { grow_direction, max_height - curr_height, }, pane)
+    end
+  end)
+end
+
 config.leader = { key = "Space", mods = "CTRL", }
 config.keys = {
-  { key = "v", mods = cmd_or_ctrl(), action = act.PasteFrom "Clipboard", },
-  { key = "p", mods = "LEADER|CTRL", action = act.ActivateTabRelative(-1), },
-  { key = "n", mods = "LEADER|CTRL", action = act.ActivateTabRelative(1), },
-  { key = "q", mods = "LEADER|CTRL", action = act.QuitApplication, },
-  { key = "x", mods = "LEADER|CTRL", action = act.CloseCurrentTab { confirm = true, }, },
-  { key = "d", mods = "LEADER|CTRL", action = act.CloseCurrentPane { confirm = true, }, },
-  { key = "c", mods = "LEADER|CTRL", action = act.SpawnTab "CurrentPaneDomain", },
-  { key = "u", mods = "LEADER|CTRL", action = act.SplitHorizontal { domain = "CurrentPaneDomain", }, },
-  { key = "i", mods = "LEADER|CTRL", action = act.SplitVertical { domain = "CurrentPaneDomain", }, },
-  { key = "k", mods = "LEADER|CTRL", action = act.ActivatePaneDirection "Up", },
-  { key = "j", mods = "LEADER|CTRL", action = act.ActivatePaneDirection "Down", },
-  { key = "e", mods = "LEADER|CTRL", action = act.TogglePaneZoomState, },
-  { key = "v", mods = "LEADER|CTRL", action = act.ActivateCopyMode, },
+  { key = "v", mods = cmd_or_ctrl(), action = wezterm.action.PasteFrom "Clipboard", },
+  { key = "p", mods = "LEADER|CTRL", action = wezterm.action.ActivateTabRelative(-1), },
+  { key = "n", mods = "LEADER|CTRL", action = wezterm.action.ActivateTabRelative(1), },
+  { key = "q", mods = "LEADER|CTRL", action = wezterm.action.QuitApplication, },
+  { key = "x", mods = "LEADER|CTRL", action = wezterm.action.CloseCurrentTab { confirm = true, }, },
+  { key = "d", mods = "LEADER|CTRL", action = wezterm.action.CloseCurrentPane { confirm = true, }, },
+  { key = "c", mods = "LEADER|CTRL", action = wezterm.action.SpawnTab "CurrentPaneDomain", },
+  { key = "u", mods = "LEADER|CTRL", action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain", }, },
+  { key = "i", mods = "LEADER|CTRL", action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain", }, },
+  { key = "k", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Up", },
+  { key = "j", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Down", },
+  { key = "v", mods = "LEADER|CTRL", action = wezterm.action.ActivateCopyMode, },
+  { key = "e", mods = "LEADER|CTRL", action = wezterm.action.TogglePaneZoomState, },
+  { key = "t", mods = "LEADER|CTRL", action = toggle_pane_height(), },
   { key = "l", mods = "LEADER|CTRL", action = smart_move("l", "Right"), },
   { key = "h", mods = "LEADER|CTRL", action = smart_move("h", "Left"), },
-  { key = "Enter", mods = "SHIFT", action = act.SendString "\x16\n", },
+  { key = "Enter", mods = "SHIFT", action = wezterm.action.SendString "\x16\n", },
 }
 if is_linux() then
   config.window_decorations = "NONE"
