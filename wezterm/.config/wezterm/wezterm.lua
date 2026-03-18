@@ -130,4 +130,17 @@ config.colors = {
   },
 }
 
+wezterm.on("format-tab-title", function(tab)
+  local cwd = tab.active_pane.current_working_dir
+  if not cwd then return "[no cwd]" end
+
+  local path = cwd.file_path
+  local basename = path:match "([^/]+)/?$"
+  local min_width = 16
+  local padding = math.max(2, min_width - #basename)
+  local left_pad = math.floor(padding / 2)
+  local right_pad = padding - left_pad
+  return string.rep(" ", left_pad) .. basename .. string.rep(" ", right_pad)
+end)
+
 return config
