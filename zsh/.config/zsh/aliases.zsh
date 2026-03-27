@@ -23,6 +23,3 @@ alias lsa="$lsa_cmd"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 [[ "$(uname -s)" == "Linux" ]] && alias open="flatpak-xdg-open"
-alias cp="cp -i"
-alias mv='mv -i'
-alias rm='rm -i'
