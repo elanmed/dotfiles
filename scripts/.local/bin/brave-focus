@@ -1,0 +1,2 @@
+#!/bin/bash
+wmctrl -a Brave || flatpak run com.brave.Browser
