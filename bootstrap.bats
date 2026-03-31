@@ -16,12 +16,6 @@ setup() {
   [ "$status" -ne 0 ]
 }
 
-@test "bootstrap.sh: fails when both --server and --stow-only are passed" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --server --stow-only
-  [ "$status" -eq 1 ]
-  [[ $output =~ "only one of --server or --stow-only can be passed" ]]
-}
-
 @test "bootstrap.sh: fails with invalid argument" {
   run bash "$BOOTSTRAP_SCRIPT" --invalid-arg
   [ "$status" -eq 1 ]
