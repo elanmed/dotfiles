@@ -10,8 +10,5 @@ gsettings set org.mate.peripherals-keyboard delay 250
 gsettings set org.mate.peripherals-touchpad tap-to-click true
 gsettings set org.mate.interface accessibility true
 
-alias vert='xrandr --output eDP-1 --rotate left'
-alias hor='xrandr --output eDP-1 --rotate normal'
-
 gsettings set org.mate.Marco.keybinding-commands command-2 'rofi -show drun -dpi 192'
 gsettings set org.mate.Marco.global-keybindings run-command-2 '<Alt>space'
