@@ -100,8 +100,8 @@ config.keys = {
   { key = "v", mods = "LEADER|CTRL", action = wezterm.action.ActivateCopyMode, },
   { key = "e", mods = "LEADER|CTRL", action = wezterm.action.TogglePaneZoomState, },
   { key = "t", mods = "LEADER|CTRL", action = toggle_pane_height(), },
-  { key = "l", mods = "LEADER|CTRL", action = smart_move("l", "Right"), },
-  { key = "h", mods = "LEADER|CTRL", action = smart_move("h", "Left"), },
+  { key = "l", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Right", },
+  { key = "h", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Left", },
   { key = "Enter", mods = "SHIFT", action = wezterm.action.SendString "\x16\n", },
 }
 if is_linux() then
