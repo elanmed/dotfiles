@@ -83,6 +83,10 @@ else
   fi
 fi
 
+h_echo doing "initializing nvm"
+source ~/.nvm/nvm.sh
+nvm install --lts
+
 h_echo doing "install bun"
 # bun writes to your zshrc on every install
 chmod a-w ~/.zshrc
