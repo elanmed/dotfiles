@@ -28,6 +28,7 @@ export EDITOR="$NVIM_CMD"
 export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
 export BAT_THEME="ansi"
+export AGENT_JS_EDITOR='nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" -c startinsert'
 
 if [[ "$(uname -s)" == "Linux" ]]; then
   # https://superuser.com/a/613754
