@@ -93,5 +93,8 @@ chmod a-w ~/.zshrc
 curl -fsSL https://bun.com/install | bash
 chmod u+w ~/.zshrc
 
+h_echo doing "updating agent-js"
+h_update_agent
+
 h_echo doing "bootstrapping neovim"
 bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh --package-manager "$package_manager"

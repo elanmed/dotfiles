@@ -1,4 +1,5 @@
 #!/bin/zsh
+source ~/.dotfiles/helpers.sh
 
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch
@@ -97,4 +98,22 @@ cat_args() {
     echo "FILE NAME: $arg"
     cat "$arg"
   done
+}
+
+sub_remove() {
+  git submodule deinit -f "$1"
+  git rm -f "$1"
+  rm -rf ".git/modules/$1"
+}
+
+agent() {
+  if [[ "$(uname -s)" == "Linux" ]]; then
+    "$HOME/.dotfiles/containers/.local/lib/agent-js/dist/agent-linux-x64"
+  else
+    "$HOME/.dotfiles/containers/.local/lib/agent-js/dist/agent-darwin-arm64"
+  fi
+}
+
+update_agent() {
+  h_update_agent
 }

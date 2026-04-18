@@ -98,3 +98,11 @@ h_string_includes() {
     return 1
   fi
 }
+
+h_update_agent() {
+  (cd ~/.dotfiles/containers/.local/lib/agent-js && git pull origin master)
+  npm --prefix ~/.dotfiles/containers/.local/lib/agent-js install
+  npm --prefix ~/.dotfiles/containers/.local/lib/agent-js run build:linux-x64
+  npm --prefix ~/.dotfiles/containers/.local/lib/agent-js run build:darwin-arm64
+}
+
