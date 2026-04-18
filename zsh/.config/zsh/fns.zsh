@@ -101,9 +101,15 @@ cat_args() {
 }
 
 sub_remove() {
-  git submodule deinit -f "$1"
-  git rm -f "$1"
-  rm -rf ".git/modules/$1"
+  local name="$1"
+  [[ -z "$name" ]] && { echo "usage: sub_remove <path>"; return 1; }
+
+  [[ -d ".git/modules/$name" ]] || { echo "module data not found: .git/modules/$name"; return 1; }
+
+  git submodule deinit -f "$name" || return 1
+  git rm -f "$name" || return 1
+  rm -rf ".git/modules/$name"
+  git config --remove-section "submodule.$name" 2>/dev/null
 }
 
 agent() {
