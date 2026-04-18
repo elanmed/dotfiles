@@ -100,9 +100,23 @@ h_string_includes() {
 }
 
 h_update_agent() {
-  (cd ~/.dotfiles/containers/.local/lib/agent-js && git pull origin master)
+  (command cd ~/.dotfiles/containers/.local/lib/agent-js && git pull origin master)
   npm --prefix ~/.dotfiles/containers/.local/lib/agent-js install
   npm --prefix ~/.dotfiles/containers/.local/lib/agent-js run build:linux-x64
-  npm --prefix ~/.dotfiles/containers/.local/lib/agent-js run build:darwin-arm64
 }
 
+h_is_toolbox() {
+  if [[ "$(hostname)" == "toolbx" ]] || [[ "$(hostname)" == "toolbox" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+h_is_podman() {
+  if [[ -f /run/.containerenv ]]; then
+    return 0
+  else
+    return 1
+  fi
+}

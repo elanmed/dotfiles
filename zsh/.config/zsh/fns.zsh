@@ -56,8 +56,11 @@ killp() {
 
 cbuild() {
   if [[ $1 != "ubuntu" ]] && [[ $1 != "fedora" ]]; then
-    echo "usage: cbuild {ubuntu,fedora}"
-    return 1
+    h_format_error "usage: cbuild {ubuntu,fedora}"
+  fi
+
+  if h_is_toolbox || h_is_podman; then
+    h_format_error "cbuild should only be used in a root environment"
   fi
   podman build -t "$1-container" --no-cache "$HOME/.dotfiles/containers/.containerfiles/$1"
   podman image prune -f
@@ -65,13 +68,11 @@ cbuild() {
 
 crun() {
   if [[ -z $1 ]]; then
-    echo "usage: crun <directory> {ubuntu,fedora}"
-    return 1
+    h_format_error "usage: crun <directory> {ubuntu,fedora}"
   fi
 
   if [[ $2 != "ubuntu" ]] && [[ $2 != "fedora" ]]; then
-    echo "usage: crun <directory> {ubuntu,fedora}"
-    return 1
+    h_format_error "usage: crun <directory> {ubuntu,fedora}"
   fi
   local workspace="/$(basename "$(realpath "$1")")"
 
@@ -102,9 +103,13 @@ cat_args() {
 
 sub_remove() {
   local name="$1"
-  [[ -z "$name" ]] && { echo "usage: sub_remove <path>"; return 1; }
+  [[ -z $name ]] && {
+    h_format_error "usage: sub_remove <path>"
+  }
 
-  [[ -d ".git/modules/$name" ]] || { echo "module data not found: .git/modules/$name"; return 1; }
+  [[ -d ".git/modules/$name" ]] || {
+    h_format_error "module data not found: .git/modules/$name"
+  }
 
   git submodule deinit -f "$name" || return 1
   git rm -f "$name" || return 1
@@ -113,10 +118,12 @@ sub_remove() {
 }
 
 agent() {
-  if [[ "$(uname -s)" == "Linux" ]]; then
+  if h_is_toolbox; then
+    h_format_error "agent should only be used in a (non-toolbox) podman container"
+  elif h_is_podman; then
     "$HOME/.dotfiles/containers/.local/lib/agent-js/dist/agent-linux-x64"
   else
-    "$HOME/.dotfiles/containers/.local/lib/agent-js/dist/agent-darwin-arm64"
+    h_format_error "agent should only be used in a podman container"
   fi
 }
 
