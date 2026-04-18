@@ -92,6 +92,7 @@ h_echo doing "install bun"
 chmod a-w ~/.zshrc
 curl -fsSL https://bun.com/install | bash
 chmod u+w ~/.zshrc
+export PATH="$HOME/.bun/bin:$PATH"
 
 h_echo doing "updating agent-js"
 h_update_agent
