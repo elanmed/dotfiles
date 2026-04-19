@@ -100,7 +100,7 @@ h_string_includes() {
 }
 
 h_update_agent() {
-  (command cd ~/.dotfiles/containers/.local/lib/agent-js && git pull origin master)
+  (command cd ~/.dotfiles/containers/.local/lib/agent-js && git fetch origin master && git reset --hard origin/master)
   npm --prefix ~/.dotfiles/containers/.local/lib/agent-js install
   npm --prefix ~/.dotfiles/containers/.local/lib/agent-js run build:linux-x64
 }
