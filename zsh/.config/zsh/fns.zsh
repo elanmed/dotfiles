@@ -121,7 +121,7 @@ agent() {
   if h_is_toolbox; then
     h_format_error "agent should only be used in a (non-toolbox) podman container"
   elif h_is_podman; then
-    "$HOME/.dotfiles/containers/.local/lib/agent-js/dist/agent-linux-x64"
+    npm --prefix ~/.dotfiles/containers/.local/lib/agent-js run start --silent
   else
     h_format_error "agent should only be used in a podman container"
   fi
