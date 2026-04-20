@@ -208,3 +208,35 @@ setup() {
   [ "$status" -ne 0 ]
   [[ $output =~ "usage: h_format_error" ]]
 }
+@test "h_validate_desktop_env: accepts gnome" {
+  run h_validate_desktop_env "gnome"
+  [ "$status" -eq 0 ]
+}
+
+@test "h_validate_desktop_env: accepts mate" {
+  run h_validate_desktop_env "mate"
+  [ "$status" -eq 0 ]
+}
+
+@test "h_validate_desktop_env: accepts empty string" {
+  run h_validate_desktop_env ""
+  [ "$status" -eq 0 ]
+}
+
+@test "h_validate_desktop_env: rejects invalid desktop env" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_validate_desktop_env 'kde' 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage: h_validate_desktop_env" ]]
+}
+
+@test "h_validate_desktop_env: exits early with 0 arguments" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_validate_desktop_env 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage: h_validate_desktop_env" ]]
+}
+
+@test "h_validate_desktop_env: exits early with 2 arguments" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_validate_desktop_env 'gnome' 'extra' 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage: h_validate_desktop_env" ]]
+}

@@ -2,6 +2,7 @@
 source ~/.dotfiles/helpers.sh
 
 package_manager=""
+desktop_env=""
 server=false
 
 while [[ $# -gt 0 ]]; do
@@ -14,8 +15,12 @@ while [[ $# -gt 0 ]]; do
       package_manager="$2"
       shift 2
       ;;
+    --desktop-env)
+      desktop_env="$2"
+      shift 2
+      ;;
     *)
-      h_echo error "usage: ./scratch.sh --package-manager <pm> [--server]"
+      h_echo error "usage: ./bootstrap.sh --package-manager brew|pacman|dnf|apt [--server] [--desktop-env gnome|mate]"
       exit 1
       ;;
   esac
@@ -26,6 +31,12 @@ if [[ -z $package_manager ]]; then
   exit 1
 fi
 h_validate_package_manager "$package_manager"
+h_validate_desktop_env "$desktop_env"
+
+if [[ $server == true ]] && [[ -n $desktop_env ]]; then
+  h_echo error "--server and --desktop-env are mutually exclusive"
+  exit 1
+fi
 
 git submodule init
 git submodule update
@@ -64,11 +75,14 @@ fi
 h_echo doing "writing $is_server_value to .is_server"
 echo "$is_server_value" >./.is_server
 
+stow_args=()
 if [[ $server == true ]]; then
-  source "$HOME/.dotfiles/stow.sh" --server
-else
-  source "$HOME/.dotfiles/stow.sh"
+  stow_args+=(--server)
 fi
+if [[ -n $desktop_env ]]; then
+  stow_args+=(--desktop-env "$desktop_env")
+fi
+source "$HOME/.dotfiles/stow.sh" "${stow_args[@]}"
 
 if [[ $server == true ]]; then
   h_echo noop "SKIPPING: bootstrapping fonts"

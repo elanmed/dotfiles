@@ -61,6 +61,20 @@ h_validate_package_manager() {
   fi
 }
 
+# usage: h_validate_desktop_env <desktop_env>
+# valid desktop_env: gnome, mate
+h_validate_desktop_env() {
+  [[ $# -ne 1 ]] && h_format_error "usage: h_validate_desktop_env <gnome|mate>"
+
+  if [[ $1 == "" ]]; then
+    return 0
+  fi
+
+  if ! h_array_includes "$1" "gnome" "mate"; then
+    h_format_error "usage: h_validate_desktop_env <gnome|mate>"
+  fi
+}
+
 # usage: h_format_error <error_message>
 h_format_error() {
   [[ $# -ne 1 ]] && {
