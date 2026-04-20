@@ -17,6 +17,12 @@ setup() {
   [[ $output =~ "h_validate_desktop_env" ]]
 }
 
+@test "stow.sh: fails when --desktop-env has no value" {
+  run bash "$STOW_SCRIPT" --desktop-env
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage:" ]]
+}
+
 @test "stow.sh: rejects --server and --desktop-env together" {
   run bash "$STOW_SCRIPT" --server --desktop-env gnome
   [ "$status" -ne 0 ]

@@ -8,7 +8,7 @@ setup() {
 @test "bootstrap.sh: fails without --package-manager argument" {
   run bash "$BOOTSTRAP_SCRIPT"
   [ "$status" -ne 0 ]
-  [[ $output =~ "missing required argument: --package-manager" ]]
+  [[ $output =~ "usage:" ]]
 }
 
 @test "bootstrap.sh: fails with invalid package manager" {
@@ -17,10 +17,22 @@ setup() {
   [[ $output =~ "h_validate_package_manager" ]]
 }
 
+@test "bootstrap.sh: fails when --package-manager has no value" {
+  run bash "$BOOTSTRAP_SCRIPT" --package-manager
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage:" ]]
+}
+
 @test "bootstrap.sh: fails with invalid desktop env" {
   run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env "kde"
   [ "$status" -ne 0 ]
   [[ $output =~ "h_validate_desktop_env" ]]
+}
+
+@test "bootstrap.sh: fails when --desktop-env has no value" {
+  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage:" ]]
 }
 
 @test "bootstrap.sh: fails with invalid argument" {

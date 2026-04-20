@@ -1,6 +1,8 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
+usage="usage: ./bootstrap.sh --package-manager brew|pacman|dnf|apt [--server] [--desktop-env gnome|mate]"
+
 package_manager=""
 desktop_env=""
 server=false
@@ -12,22 +14,30 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --package-manager)
+      if [[ -z "${2:-}" ]]; then
+        h_echo error "$usage"
+        exit 1
+      fi
       package_manager="$2"
       shift 2
       ;;
     --desktop-env)
+      if [[ -z "${2:-}" ]]; then
+        h_echo error "$usage"
+        exit 1
+      fi
       desktop_env="$2"
       shift 2
       ;;
     *)
-      h_echo error "usage: ./bootstrap.sh --package-manager brew|pacman|dnf|apt [--server] [--desktop-env gnome|mate]"
+      h_echo error "$usage"
       exit 1
       ;;
   esac
 done
 
 if [[ -z $package_manager ]]; then
-  h_echo error "missing required argument: --package-manager"
+  h_echo error "$usage"
   exit 1
 fi
 h_validate_package_manager "$package_manager"
