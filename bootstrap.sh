@@ -14,7 +14,7 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --package-manager)
-      if [[ -z "${2:-}" ]]; then
+      if [[ -z ${2:-} ]]; then
         h_echo error "$usage"
         exit 1
       fi
@@ -22,7 +22,7 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --desktop-env)
-      if [[ -z "${2:-}" ]]; then
+      if [[ -z ${2:-} ]]; then
         h_echo error "$usage"
         exit 1
       fi
