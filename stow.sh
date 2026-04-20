@@ -43,12 +43,19 @@ run_stow() {
   done
 }
 
+link_keyd() {
+  h_echo doing "symlinking keyd conf"
+  sudo mkdir -p /etc/keyd
+  sudo ln -sf ~/.dotfiles/keyd/etc/keyd/default.conf /etc/keyd/default.conf
+}
+
 case "$desktop_env" in
   "gnome")
     run_stow "${gnome_dirs[@]}"
     ;;
   "mate")
     run_stow "${mate_dirs[@]}"
+    link_keyd
     ;;
   "server")
     run_stow "${server_dirs[@]}"
