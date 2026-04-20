@@ -11,14 +11,20 @@ setup() {
   [[ $output =~ "usage:" ]]
 }
 
+@test "bootstrap.sh: fails without --desktop-env argument" {
+  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage:" ]]
+}
+
 @test "bootstrap.sh: fails with invalid package manager" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager "invalid-pm"
+  run bash "$BOOTSTRAP_SCRIPT" --package-manager "invalid-pm" --desktop-env server
   [ "$status" -ne 0 ]
   [[ $output =~ "h_validate_package_manager" ]]
 }
 
 @test "bootstrap.sh: fails when --package-manager has no value" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager
+  run bash "$BOOTSTRAP_SCRIPT" --package-manager --desktop-env server
   [ "$status" -ne 0 ]
   [[ $output =~ "usage:" ]]
 }
@@ -41,11 +47,22 @@ setup() {
   [[ $output =~ "usage:" ]]
 }
 
-@test "bootstrap.sh: rejects --server and --desktop-env together" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --server --desktop-env gnome
-  [ "$status" -ne 0 ]
-  [[ $output =~ "mutually exclusive" ]]
-  run bash "$BOOTSTRAP_SCRIPT" --desktop-env mate --package-manager apt --server
-  [ "$status" -ne 0 ]
-  [[ $output =~ "mutually exclusive" ]]
+@test "bootstrap.sh: accepts --desktop-env server" {
+  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env server
+  [[ $output =~ "writing server to .desktop_env" ]] || [ "$status" -eq 0 ]
+}
+
+@test "bootstrap.sh: accepts --desktop-env mate" {
+  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env mate
+  [[ $output =~ "writing mate to .desktop_env" ]] || [ "$status" -eq 0 ]
+}
+
+@test "bootstrap.sh: accepts --desktop-env gnome" {
+  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env gnome
+  [[ $output =~ "writing gnome to .desktop_env" ]] || [ "$status" -eq 0 ]
+}
+
+@test "bootstrap.sh: accepts --desktop-env macos" {
+  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env macos
+  [[ $output =~ "writing macos to .desktop_env" ]] || [ "$status" -eq 0 ]
 }

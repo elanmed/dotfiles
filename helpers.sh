@@ -43,9 +43,6 @@ h_install_package() {
     dnf)
       sudo dnf install "$2" -y
       ;;
-    pacman)
-      sudo pacman --sync --quiet --noconfirm "$2"
-      ;;
     apt)
       sudo apt-get install "$2" -y
       ;;
@@ -56,22 +53,18 @@ h_install_package() {
 h_validate_package_manager() {
   [[ $# -ne 1 ]] && h_format_error "usage: h_validate_package_manager <package_manager>"
 
-  if ! h_array_includes "$1" "brew" "pacman" "dnf" "apt"; then
+  if ! h_array_includes "$1" "brew" "dnf" "apt"; then
     h_format_error "usage: h_validate_package_manager <package_manager>"
   fi
 }
 
 # usage: h_validate_desktop_env <desktop_env>
-# valid desktop_env: gnome, mate
+# valid desktop_env: mate, gnome, macos, server
 h_validate_desktop_env() {
-  [[ $# -ne 1 ]] && h_format_error "usage: h_validate_desktop_env <gnome|mate>"
+  [[ $# -ne 1 ]] && h_format_error "usage: h_validate_desktop_env <mate|gnome|macos|server>"
 
-  if [[ $1 == "" ]]; then
-    return 0
-  fi
-
-  if ! h_array_includes "$1" "gnome" "mate"; then
-    h_format_error "usage: h_validate_desktop_env <gnome|mate>"
+  if ! h_array_includes "$1" "mate" "gnome" "macos" "server"; then
+    h_format_error "usage: h_validate_desktop_env <mate|gnome|macos|server>"
   fi
 }
 

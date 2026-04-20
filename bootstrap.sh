@@ -1,18 +1,13 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
-usage="usage: ./bootstrap.sh --package-manager brew|pacman|dnf|apt [--server] [--desktop-env gnome|mate]"
+usage="usage: ./bootstrap.sh --package-manager brew|dnf|apt --desktop-env mate|gnome|macos|server"
 
 package_manager=""
 desktop_env=""
-server=false
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --server)
-      server=true
-      shift
-      ;;
     --package-manager)
       if [[ -z ${2:-} ]]; then
         h_echo error "$usage"
@@ -40,13 +35,12 @@ if [[ -z $package_manager ]]; then
   h_echo error "$usage"
   exit 1
 fi
-h_validate_package_manager "$package_manager"
-h_validate_desktop_env "$desktop_env"
-
-if [[ $server == true ]] && [[ -n $desktop_env ]]; then
-  h_echo error "--server and --desktop-env are mutually exclusive"
+if [[ -z $desktop_env ]]; then
+  h_echo error "$usage"
   exit 1
 fi
+h_validate_package_manager "$package_manager"
+h_validate_desktop_env "$desktop_env"
 
 git submodule init
 git submodule update
@@ -76,25 +70,12 @@ h_install_package "$package_manager" highlight
 h_install_package "$package_manager" lazygit
 h_install_package "$package_manager" unzip
 
-if [[ $server == true ]]; then
-  is_server_value=0
-else
-  is_server_value=1
-fi
+h_echo doing "writing $desktop_env to .desktop_env"
+echo "$desktop_env" >./.desktop_env
 
-h_echo doing "writing $is_server_value to .is_server"
-echo "$is_server_value" >./.is_server
+source "$HOME/.dotfiles/stow.sh" --desktop-env "$desktop_env"
 
-stow_args=()
-if [[ $server == true ]]; then
-  stow_args+=(--server)
-fi
-if [[ -n $desktop_env ]]; then
-  stow_args+=(--desktop-env "$desktop_env")
-fi
-source "$HOME/.dotfiles/stow.sh" "${stow_args[@]}"
-
-if [[ $server == true ]]; then
+if [[ $desktop_env == "server" ]]; then
   h_echo noop "SKIPPING: bootstrapping fonts"
 else
   h_echo doing "bootstrapping fonts"

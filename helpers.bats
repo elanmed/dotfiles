@@ -90,11 +90,6 @@ setup() {
   [ "$status" -eq 0 ]
 }
 
-@test "h_validate_package_manager: accepts pacman" {
-  run h_validate_package_manager "pacman"
-  [ "$status" -eq 0 ]
-}
-
 @test "h_validate_package_manager: accepts dnf" {
   run h_validate_package_manager "dnf"
   [ "$status" -eq 0 ]
@@ -107,6 +102,11 @@ setup() {
 
 @test "h_validate_package_manager: rejects invalid package manager" {
   run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_validate_package_manager 'invalid'"
+  [ "$status" -ne 0 ]
+}
+
+@test "h_validate_package_manager: rejects pacman" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_validate_package_manager 'pacman'"
   [ "$status" -ne 0 ]
 }
 
@@ -208,23 +208,34 @@ setup() {
   [ "$status" -ne 0 ]
   [[ $output =~ "usage: h_format_error" ]]
 }
-@test "h_validate_desktop_env: accepts gnome" {
-  run h_validate_desktop_env "gnome"
-  [ "$status" -eq 0 ]
-}
-
 @test "h_validate_desktop_env: accepts mate" {
   run h_validate_desktop_env "mate"
   [ "$status" -eq 0 ]
 }
 
-@test "h_validate_desktop_env: accepts empty string" {
-  run h_validate_desktop_env ""
+@test "h_validate_desktop_env: accepts gnome" {
+  run h_validate_desktop_env "gnome"
+  [ "$status" -eq 0 ]
+}
+
+@test "h_validate_desktop_env: accepts macos" {
+  run h_validate_desktop_env "macos"
+  [ "$status" -eq 0 ]
+}
+
+@test "h_validate_desktop_env: accepts server" {
+  run h_validate_desktop_env "server"
   [ "$status" -eq 0 ]
 }
 
 @test "h_validate_desktop_env: rejects invalid desktop env" {
   run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_validate_desktop_env 'kde' 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage: h_validate_desktop_env" ]]
+}
+
+@test "h_validate_desktop_env: rejects empty string" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_validate_desktop_env '' 2>&1"
   [ "$status" -ne 0 ]
   [[ $output =~ "usage: h_validate_desktop_env" ]]
 }
@@ -236,7 +247,7 @@ setup() {
 }
 
 @test "h_validate_desktop_env: exits early with 2 arguments" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_validate_desktop_env 'gnome' 'extra' 2>&1"
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_validate_desktop_env 'mate' 'extra' 2>&1"
   [ "$status" -ne 0 ]
   [[ $output =~ "usage: h_validate_desktop_env" ]]
 }

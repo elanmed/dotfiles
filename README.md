@@ -10,7 +10,7 @@ properly, based on this blog [post](https://www.jakewiesler.com/blog/managing-do
 ```sh
 git clone https://github.com/elanmed/dotfiles .dotfiles
 # if necessary, update the urls in `.gitmodules` from `git@` to `https://`
-./bootstrap.sh --package-manager {brew,pacman,dnf,apt} {--server,--stow-only}
+./bootstrap.sh --package-manager {brew,dnf,apt} --desktop-env {mate,gnome,macos,server}
 ```
 
 ```sh

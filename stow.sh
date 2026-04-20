@@ -1,19 +1,14 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
-usage="usage: ./stow.sh [--server] [--desktop-env gnome|mate]"
+usage="usage: ./stow.sh --desktop-env mate|gnome|macos|server"
 
-server=false
 desktop_env=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --server)
-      server=true
-      shift
-      ;;
     --desktop-env)
-      if [[ -z "${2:-}" ]]; then
+      if [[ -z ${2:-} ]]; then
         h_echo error "$usage"
         exit 1
       fi
@@ -27,17 +22,16 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-h_validate_desktop_env "$desktop_env"
-
-if [[ $server == true ]] && [[ -n $desktop_env ]]; then
-  h_echo error "--server and --desktop-env are mutually exclusive"
+if [[ -z $desktop_env ]]; then
+  h_echo error "$usage"
   exit 1
 fi
+h_validate_desktop_env "$desktop_env"
 
 desktop_only_dirs=("fonts" "tmux" "wezterm")
 for dir in "$HOME/.dotfiles/"*/; do
   dir_name=$(basename "$dir")
-  if [[ $server == true ]] && h_array_includes "$dir_name" "${desktop_only_dirs[@]}"; then
+  if [[ $desktop_env == "server" ]] && h_array_includes "$dir_name" "${desktop_only_dirs[@]}"; then
     h_echo noop "SKIPPING: running 'stow $dir_name'"
   else
     h_echo doing "running 'stow $dir_name'"
@@ -45,7 +39,7 @@ for dir in "$HOME/.dotfiles/"*/; do
   fi
 done
 
-if [[ -n $desktop_env ]]; then
+if [[ $desktop_env == "mate" ]] || [[ $desktop_env == "gnome" ]]; then
   h_echo doing "running 'stow $desktop_env'"
   stow --dir "$HOME/.dotfiles" "$desktop_env"
 fi
