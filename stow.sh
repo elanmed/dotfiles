@@ -28,18 +28,35 @@ if [[ -z $desktop_env ]]; then
 fi
 h_validate_desktop_env "$desktop_env"
 
-desktop_only_dirs=("fonts" "tmux" "wezterm")
-for dir in "$HOME/.dotfiles/"*/; do
-  dir_name=$(basename "$dir")
-  if [[ $desktop_env == "server" ]] && h_array_includes "$dir_name" "${desktop_only_dirs[@]}"; then
-    h_echo noop "SKIPPING: running 'stow $dir_name'"
-  else
-    h_echo doing "running 'stow $dir_name'"
-    stow --dir "$HOME/.dotfiles" "$dir_name"
-  fi
-done
+desktop_dirs=("fonts" "tmux" "wezterm")
+base_dirs=("containers" "git" "neovim" "nvm" "scripts" "zsh")
 
-if [[ $desktop_env == "mate" ]] || [[ $desktop_env == "gnome" ]]; then
-  h_echo doing "running 'stow $desktop_env'"
-  stow --dir "$HOME/.dotfiles" "$desktop_env"
-fi
+server_dirs=("${base_dirs[@]}")
+mate_dirs=("${base_dirs[@]}" "${desktop_dirs[@]}" "mate")
+gnome_dirs=("${base_dirs[@]}" "${desktop_dirs[@]}" "gnome")
+macos_dirs=("${base_dirs[@]}" "${desktop_dirs[@]}")
+
+run_stow() {
+  for dir in "$@"; do
+    h_echo doing "running 'stow $dir'"
+    stow --dir "$HOME/.dotfiles" "$dir"
+  done
+}
+
+case "$desktop_env" in
+  "gnome")
+    run_stow "${gnome_dirs[@]}"
+    ;;
+  "mate")
+    run_stow "${mate_dirs[@]}"
+    ;;
+  "server")
+    run_stow "${server_dirs[@]}"
+    ;;
+  "macos")
+    run_stow "${macos_dirs[@]}"
+    ;;
+  *)
+    h_format_error "$usage"
+    ;;
+esac
