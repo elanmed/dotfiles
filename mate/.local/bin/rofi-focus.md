@@ -39,16 +39,6 @@ Make it executable and update the Exec line in the local desktop file:
 | Brave   | com.brave.Browser.desktop      | brave-focus    |
 | WezTerm | org.wezfurlong.wezterm.desktop | wezterm-focus  |
 
-## Custom desktop entries
-
-These don't override anything -- they add actions to rofi that MATE doesn't expose by default.
-
-| Name     | Desktop file     | Command            |
-| -------- | ---------------- | ------------------ |
-| Suspend  | suspend.desktop  | systemctl suspend  |
-| Shutdown | shutdown.desktop | systemctl poweroff |
-| Restart  | restart.desktop  | systemctl reboot   |
-
 ## Flatpak note
 
 Flatpak apps export their desktop files to `/var/lib/flatpak/exports/share/applications/`.
