@@ -3,4 +3,3 @@ Name=Restart
 Exec=systemctl reboot
 Type=Application
 Terminal=false
-NoDisplay=true

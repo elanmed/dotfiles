@@ -2,4 +2,3 @@ Name=Lock
 Exec=mate-screensaver-command -l
 Type=Application
 Terminal=false
-NoDisplay=true

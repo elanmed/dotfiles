@@ -3,4 +3,3 @@ Name=Log Out
 Exec=mate-session-save --logout
 Type=Application
 Terminal=false
-NoDisplay=true

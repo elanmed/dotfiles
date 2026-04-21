@@ -3,4 +3,3 @@ Name=Hibernate
 Exec=systemctl hibernate
 Type=Application
 Terminal=false
-NoDisplay=true

@@ -3,4 +3,3 @@ Name=Shutdown
 Exec=systemctl poweroff
 Type=Application
 Terminal=false
-NoDisplay=true
