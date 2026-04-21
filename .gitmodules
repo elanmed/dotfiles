@@ -22,4 +22,5 @@
 	url = https://github.com/bats-core/bats-core
 [submodule "containers/.local/lib/agent-js"]
 	path = containers/.local/lib/agent-js
-	url = https://github.com/elanmed/agent-js
+	url = git@github.com/elanmed/agent-js.git
+	; url = https://github.com/elanmed/agent-js
