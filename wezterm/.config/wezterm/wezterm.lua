@@ -39,7 +39,7 @@ local function cmd_or_ctrl()
 end
 
 local config = wezterm.config_builder()
-config.font = wezterm.font "ComicCodeLigatures Nerd Font"
+-- config.font = wezterm.font "ComicCodeLigatures Nerd Font"
 config.font_size = 12.0
 
 local function is_nvim(pane)
