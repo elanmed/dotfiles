@@ -26,3 +26,14 @@ alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 # x11
 alias vert='xrandr --output eDP-1 --rotate left'
 alias hor='xrandr --output eDP-1 --rotate normal'
+
+alias wifi="nmcli radio wifi"
+alias wifion="nmcli radio wifi on"
+alias wifioff="nmcli radio wifi off"
+alias wifils="nmcli dev wifi list"
+function wificon() {
+  [[ -z $1 ]] && {
+    h_format_error "usage: wificon <name>"
+  }
+  nmcli dev wifi connect "$1" --ask
+}
