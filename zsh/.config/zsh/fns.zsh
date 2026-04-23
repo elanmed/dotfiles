@@ -121,12 +121,8 @@ agent() {
   if h_is_toolbox; then
     h_format_error "agent should only be used in a (non-toolbox) podman container"
   elif h_is_podman; then
-    npm --prefix ~/.dotfiles/containers/.local/lib/agent-js run start --silent
+    node ~/.dotfiles/containers/.local/lib/agent-js/src/index.ts
   else
     h_format_error "agent should only be used in a podman container"
   fi
-}
-
-update_agent() {
-  h_update_agent
 }
