@@ -99,5 +99,8 @@ curl -fsSL https://bun.com/install | bash
 chmod u+w ~/.zshrc
 export PATH="$HOME/.bun/bin:$PATH"
 
+h_echo doing "installing agent-js"
+npm --prefix ~/.dotfiles/containers/.local/lib/agent-js install
+
 h_echo doing "bootstrapping neovim"
 bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh --package-manager "$package_manager"
