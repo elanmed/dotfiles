@@ -106,12 +106,6 @@ h_string_includes() {
   fi
 }
 
-h_update_agent() {
-  (builtin cd ~/.dotfiles/containers/.local/lib/agent-js && git fetch origin master && git reset --hard origin/master)
-  npm --prefix ~/.dotfiles/containers/.local/lib/agent-js install
-  npm --prefix ~/.dotfiles/containers/.local/lib/agent-js run build:linux-x64
-}
-
 h_is_toolbox() {
   if [[ "$(hostname)" == "toolbx" ]] || [[ "$(hostname)" == "toolbox" ]]; then
     return 0

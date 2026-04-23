@@ -99,8 +99,5 @@ curl -fsSL https://bun.com/install | bash
 chmod u+w ~/.zshrc
 export PATH="$HOME/.bun/bin:$PATH"
 
-h_echo doing "updating agent-js"
-h_update_agent
-
 h_echo doing "bootstrapping neovim"
 bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh --package-manager "$package_manager"
