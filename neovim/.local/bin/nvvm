@@ -34,10 +34,10 @@ if [[ $expected_hash != "$actual_hash" ]]; then
 fi
 
 if [[ "$(uname -s)" == "Linux" ]]; then
-  tar xzf "$tar_path"
+  tar xzf "$tar_path" -C "$HOME/.local/share/nvvm/"
   ln -sf "$HOME/.local/share/nvvm/nvim-linux-x86_64/bin/nvim" "$HOME/.local/bin/nvim"
 else
   xattr -c "$tar_path"
-  tar xzf "$tar_path"
+  tar xzf "$tar_path" -C "$HOME/.local/share/nvvm/"
   ln -sf "$HOME/.local/share/nvvm/nvim-macos-arm64/bin/nvim" "$HOME/.local/bin/nvim"
 fi
