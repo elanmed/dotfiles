@@ -45,8 +45,8 @@ run_stow() {
 
 link_keyd() {
   h_echo doing "symlinking keyd conf"
-  sudo mkdir -p /etc/keyd
-  sudo ln -sf ~/.dotfiles/keyd/etc/keyd/default.conf /etc/keyd/default.conf
+  sudo mkdir --parents /etc/keyd
+  sudo ln --symbolic --force ~/.dotfiles/keyd/etc/keyd/default.conf /etc/keyd/default.conf
 }
 
 case "$desktop_env" in

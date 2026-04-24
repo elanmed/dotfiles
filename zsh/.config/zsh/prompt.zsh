@@ -6,7 +6,7 @@ source ~/.dotfiles/helpers.sh
 setopt PROMPT_SUBST
 
 prompt_prefix() {
-  if [[ "$(uname -s)" == "Linux" ]]; then
+  if [[ "$(uname --kernel-name)" == "Linux" ]]; then
     if h_is_toolbox; then
       echo "%B%b"
     elif h_is_podman; then
@@ -20,7 +20,7 @@ prompt_prefix() {
 }
 
 prompt_dir_color() {
-  if [[ "$(uname -s)" == "Linux" ]]; then
+  if [[ "$(uname --kernel-name)" == "Linux" ]]; then
     if h_is_toolbox; then
       echo "yellow"
     elif h_is_podman; then
@@ -35,7 +35,7 @@ prompt_dir_color() {
 
 prompt_git_branch() {
   local branch
-  branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d'/' -f3)
+  branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d '/' -f 3)
   if [[ -n $branch ]]; then
     echo "on %F{magenta} $branch%f"
   fi

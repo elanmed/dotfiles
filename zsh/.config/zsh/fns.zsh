@@ -8,7 +8,7 @@ ls() {
   if [[ "$(uname -s)" == "Linux" ]]; then
     command ls --color=auto "$@"
   else
-    command ls -G "$@"
+    command ls --no-group "$@"
   fi
 }
 
@@ -25,7 +25,7 @@ cd() {
   ls
 }
 
-if [[ "$(uname -s)" == "Linux" ]]; then
+if [[ "$(uname --kernel-name)" == "Linux" ]]; then
   alias copy="xclip -selection clipboard"
 else
   alias copy="pbcopy"
@@ -38,7 +38,7 @@ abspath() {
 }
 
 cb() {
-  local branch="$(git symbolic-ref HEAD | cut -d'/' -f3)"
+  local branch="$(git symbolic-ref HEAD | cut -d '/' -f 3)"
   echo "$branch" | copy
 }
 
@@ -62,8 +62,8 @@ cbuild() {
   if h_is_toolbox || h_is_podman; then
     h_format_error "cbuild should only be used in a root environment"
   fi
-  podman build -t "$1-container" --no-cache "$HOME/.dotfiles/containers/.containerfiles/$1"
-  podman image prune -f
+  podman build --tag "$1-container" --no-cache "$HOME/.dotfiles/containers/.containerfiles/$1"
+  podman image prune --force
 }
 
 crun() {
@@ -111,9 +111,9 @@ sub_remove() {
     h_format_error "module data not found: .git/modules/$name"
   }
 
-  git submodule deinit -f "$name" || return 1
-  git rm -f "$name" || return 1
-  rm -rf ".git/modules/$name"
+  git submodule deinit --force "$name" || return 1
+  git rm --force "$name" || return 1
+  rm --recursive --force ".git/modules/$name"
   git config --remove-section "submodule.$name" 2>/dev/null
 }
 

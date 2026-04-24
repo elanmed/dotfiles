@@ -6,7 +6,7 @@ alias eterm="builtin cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/wezterm/.config/wez
 alias etmux="builtin cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/tmux/.config/tmux/tmux.conf"
 alias edot="builtin cd ~/.dotfiles && $NVIM_CMD"
 alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && $NVIM_CMD"
-alias resetnvim="rm -rf ~/.cache/nvim ~/.local/share/nvim"
+alias resetnvim="rm --recursive --force ~/.cache/nvim ~/.local/share/nvim"
 # git
 alias gs="git status"
 alias lg="lazygit"
@@ -17,12 +17,12 @@ alias v="$NVIM_CMD"
 alias f="toolbox enter fedora-toolbox-43"
 alias tm="tmux"
 alias tsrc="tmux source ~/.config/tmux/tmux.conf"
-lsa_cmd="command ls -a --color=tty"
-[[ "$(uname -s)" == "Linux" ]] && lsa_cmd+=" --group-directories-first"
+lsa_cmd="command ls --all --color=tty"
+[[ "$(uname --kernel-name)" == "Linux" ]] && lsa_cmd+=" --group-directories-first"
 alias lsa="$lsa_cmd"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
-[[ "$(uname -s)" == "Linux" ]] && alias open="flatpak-xdg-open"
+[[ "$(uname --kernel-name)" == "Linux" ]] && alias open="flatpak-xdg-open"
 # x11
 alias vert='xrandr --output eDP-1 --rotate left'
 alias hor='xrandr --output eDP-1 --rotate normal'

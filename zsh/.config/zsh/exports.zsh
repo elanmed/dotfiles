@@ -28,7 +28,7 @@ export MANPAGER="$NVIM_CMD +Man!"
 export BAT_THEME="ansi"
 export AGENT_JS_EDITOR='nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" -c startinsert!'
 
-if [[ "$(uname -s)" == "Linux" ]]; then
+if [[ "$(uname --kernel-name)" == "Linux" ]]; then
   # https://superuser.com/a/613754
   export XDG_TEMPLATES_DIR="$HOME"
   export XDG_PUBLICSHARE_DIR="$HOME"
