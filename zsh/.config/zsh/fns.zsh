@@ -126,3 +126,17 @@ agent() {
     h_format_error "agent should only be used in a podman container"
   fi
 }
+
+hor() {
+  xrandr --output eDP-1 --rotate normal
+  xinput list --name-only | grep '^IPTSD Virtual' | while read dev; do
+    xinput set-prop "$dev" "Coordinate Transformation Matrix" 1 0 0 0 1 0 0 0 1
+  done
+}
+
+ver() {
+  xrandr --output eDP-1 --rotate left
+  xinput list --name-only | grep '^IPTSD Virtual' | while read dev; do
+    xinput set-prop "$dev" "Coordinate Transformation Matrix" 0 -1 1 1 0 0 0 0 1
+  done
+}

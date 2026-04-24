@@ -23,9 +23,6 @@ alias lsa="$lsa_cmd"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 [[ "$(uname --kernel-name)" == "Linux" ]] && alias open="flatpak-xdg-open"
-# x11
-alias vert='xrandr --output eDP-1 --rotate left'
-alias hor='xrandr --output eDP-1 --rotate normal'
 
 alias wifi="nmcli radio wifi"
 alias wifion="nmcli radio wifi on"
