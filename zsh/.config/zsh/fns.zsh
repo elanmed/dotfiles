@@ -97,7 +97,7 @@ crun() {
     --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro" \
     --volume "$(realpath "$dir"):$workspace" \
     "$distro-container" \
-    "${cmd[@]}"
+    zsh -ic 'exec "$@"' zsh "${cmd[@]}"
 }
 
 cat_args() {
