@@ -68,13 +68,19 @@ cbuild() {
 
 crun() {
   if [[ -z $1 ]]; then
-    h_format_error "usage: crun <directory> {ubuntu,fedora}"
+    h_format_error "usage: crun <directory> {ubuntu,fedora} [command...]"
   fi
 
   if [[ $2 != "ubuntu" ]] && [[ $2 != "fedora" ]]; then
-    h_format_error "usage: crun <directory> {ubuntu,fedora}"
+    h_format_error "usage: crun <directory> {ubuntu,fedora} [command...]"
   fi
+
   local workspace="/$(basename "$(realpath "$1")")"
+  local dir="$1"
+  local distro="$2"
+  shift 2
+  local cmd=("$@")
+  [[ ${#cmd[@]} -eq 0 ]] && cmd=("zsh")
 
   # --interactive: keep stdin open to enable typing commands into the container
   # --tty: allocate a pseudo-terminal, enabling colors, line editing, and ctrl-c
@@ -89,9 +95,9 @@ crun() {
     --security-opt label=disable \
     --workdir "$workspace" \
     --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro" \
-    --volume "$(realpath "$1"):$workspace" \
-    "$2-container" \
-    zsh
+    --volume "$(realpath "$dir"):$workspace" \
+    "$distro-container" \
+    "${cmd[@]}"
 }
 
 cat_args() {
@@ -118,12 +124,12 @@ sub_remove() {
 }
 
 agent() {
-  if h_is_toolbox; then
-    h_format_error "agent should only be used in a (non-toolbox) podman container"
-  elif h_is_podman; then
-    node ~/.dotfiles/containers/.local/lib/agent-js/src/index.ts
+  if h_is_toolbox || h_is_podman; then
+    h_format_error "agent should only be used in a root env"
   else
-    h_format_error "agent should only be used in a podman container"
+    crun . fedora \
+      /root/.nvm/versions/node/v24.15.0/bin/node \
+      "/root/.dotfiles/containers/.local/lib/agent-js/src/index.ts"
   fi
 }
 
