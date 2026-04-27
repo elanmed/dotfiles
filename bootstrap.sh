@@ -55,7 +55,7 @@ fi
 
 if ! h_string_includes "$SHELL" "zsh"; then
   h_echo doing "setting the default shell to zsh"
-  chsh --shell "$(command -v zsh)"
+  chsh -s "$(command -v zsh)"
   h_echo noop "exiting early, log out and re-run the script"
   exit 0
 fi
@@ -83,7 +83,7 @@ else
     h_echo noop "fonts already in the correct directory"
   else
     for font_dir in ~/.dotfiles/fonts/.local/share/fonts/*; do
-      cp --recursive "$font_dir" ~/Library/Fonts/
+      cp -r "$font_dir" ~/Library/Fonts/
     done
   fi
 fi

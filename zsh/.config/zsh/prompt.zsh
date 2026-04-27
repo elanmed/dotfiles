@@ -6,7 +6,7 @@ source ~/.dotfiles/helpers.sh
 setopt PROMPT_SUBST
 
 prompt_prefix() {
-  if [[ "$(uname --kernel-name)" == "Linux" ]]; then
+  if [[ "$(uname -s)" == "Linux" ]]; then
     if h_is_toolbox; then
       echo "%B%b"
     elif h_is_podman; then
@@ -20,7 +20,7 @@ prompt_prefix() {
 }
 
 prompt_dir_color() {
-  if [[ "$(uname --kernel-name)" == "Linux" ]]; then
+  if [[ "$(uname -s)" == "Linux" ]]; then
     if h_is_toolbox; then
       echo "yellow"
     elif h_is_podman; then

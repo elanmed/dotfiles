@@ -8,7 +8,7 @@ ls() {
   if [[ "$(uname -s)" == "Linux" ]]; then
     command ls --color=auto "$@"
   else
-    command ls --no-group "$@"
+    command ls -G "$@"
   fi
 }
 
@@ -25,7 +25,7 @@ cd() {
   ls
 }
 
-if [[ "$(uname --kernel-name)" == "Linux" ]]; then
+if [[ "$(uname -s)" == "Linux" ]]; then
   alias copy="xclip -selection clipboard"
 else
   alias copy="pbcopy"
@@ -119,7 +119,7 @@ sub_remove() {
 
   git submodule deinit --force "$name" || return 1
   git rm --force "$name" || return 1
-  rm --recursive --force ".git/modules/$name"
+  rm -rf ".git/modules/$name"
   git config --remove-section "submodule.$name" 2>/dev/null
 }
 

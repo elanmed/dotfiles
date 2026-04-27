@@ -8,10 +8,10 @@ if [[ $1 != "update" ]]; then
   exit 1
 fi
 
-mkdir --parents "$HOME/.local/share/nvvm/"
+mkdir -p "$HOME/.local/share/nvvm/"
 tar_path="$HOME/.local/share/nvvm/neovim.tar.gz"
 
-if [[ "$(uname --kernel-name)" == "Linux" ]]; then
+if [[ "$(uname -s)" == "Linux" ]]; then
   asset_name="nvim-linux-x86_64.tar.gz"
   download_url="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz"
 else
