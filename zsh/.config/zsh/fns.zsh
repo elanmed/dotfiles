@@ -138,6 +138,7 @@ chat() {
     h_format_error "chat should only be used in a root env"
   else
     cd "$(mktemp -d)" && cagent
+    exit
   fi
 }
 
