@@ -123,7 +123,7 @@ sub_remove() {
   git config --remove-section "submodule.$name" 2>/dev/null
 }
 
-agent() {
+cagent() {
   if h_is_toolbox || h_is_podman; then
     h_format_error "agent should only be used in a root env"
   else
@@ -133,7 +133,7 @@ agent() {
   fi
 }
 
-chat() {
+cchat() {
   if h_is_toolbox || h_is_podman; then
     h_format_error "chat should only be used in a root env"
   else
