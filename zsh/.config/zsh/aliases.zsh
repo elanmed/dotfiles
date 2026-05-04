@@ -9,12 +9,10 @@ alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && $NVIM_CMD"
 alias resetnvim="rm -rf ~/.cache/nvim ~/.local/share/nvim"
 # git
 alias gs="git status"
-alias lg="lazygit"
+alias gc="git checkout"
 # shorter commands
 alias e="exit"
 alias c="clear"
-alias v="$NVIM_CMD"
-alias f="toolbox enter fedora-toolbox-43"
 alias tm="tmux"
 alias tsrc="tmux source ~/.config/tmux/tmux.conf"
 lsa_cmd="command ls -a --color=tty"

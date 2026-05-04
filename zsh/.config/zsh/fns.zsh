@@ -154,3 +154,35 @@ ver() {
     xinput set-prop "$dev" "Coordinate Transformation Matrix" 0 -1 1 1 0 0 0 0 1
   done
 }
+
+f() {
+  if h_is_toolbox || h_is_podman; then
+    h_format_error "f should only be used in a root env"
+  else
+    toolbox enter fedora-toolbox-43
+  fi
+}
+
+v() {
+  if [[ $(uname -s) == "Linux" ]]; then
+    if h_is_toolbox || h_is_podman; then
+      "$NVIM_CMD" "$@"
+    else
+      h_format_error "v should only be used in a container"
+    fi
+  else
+    "$NVIM_CMD" "$@"
+  fi
+}
+
+lg() {
+  if [[ $(uname -s) == "Linux" ]]; then
+    if h_is_toolbox || h_is_podman; then
+      lazygit "$@"
+    else
+      h_format_error "lg should only be used in a container"
+    fi
+  else
+    lazygit "$@"
+  fi
+}
