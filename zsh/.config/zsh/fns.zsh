@@ -137,7 +137,7 @@ cchat() {
   if h_is_toolbox || h_is_podman; then
     h_format_error "chat should only be used in a root env"
   else
-    cd ~/Desktop/empty && agent
+    cd ~/Desktop/empty && cagent
   fi
 }
 
