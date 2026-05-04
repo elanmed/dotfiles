@@ -133,6 +133,14 @@ agent() {
   fi
 }
 
+chat() {
+  if h_is_toolbox || h_is_podman; then
+    h_format_error "chat should only be used in a root env"
+  else
+    cd ~/Desktop/empty && agent
+  fi
+}
+
 hor() {
   xrandr --output eDP-1 --rotate normal
   xinput list --name-only | grep '^IPTSD Virtual' | while read dev; do
