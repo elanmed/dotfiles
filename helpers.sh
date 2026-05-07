@@ -121,3 +121,38 @@ h_is_podman() {
     return 1
   fi
 }
+
+h_is_macos() {
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+# usage: h_require_root_env <command_name>
+h_require_root_env() {
+  [[ $# -ne 1 ]] && h_format_error "usage: h_require_root_env <command_name>"
+
+  if h_is_toolbox || h_is_podman; then
+    h_format_error "$1 should only be used in a root environment"
+  fi
+
+  if h_is_macos; then
+    h_format_error "$1 is not supported on macOS"
+  fi
+}
+
+# usage: h_run_in_container_or_mac <command> [args...]
+# Runs command directly on macOS or inside toolbox/podman;
+# otherwise runs it via toolbox on the host.
+h_run_in_container_or_mac() {
+  [[ $# -lt 1 ]] && h_format_error "usage: h_run_in_container_or_mac <command> [args...]"
+
+  if [[ $(uname -s) == "Linux" ]] && ! h_is_toolbox && ! h_is_podman; then
+    h_echo doing "starting toolbox for $1"
+    toolbox run -c fedora-toolbox-43 "$@"
+  else
+    "$@"
+  fi
+}

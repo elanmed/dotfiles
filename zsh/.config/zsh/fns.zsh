@@ -59,9 +59,7 @@ cbuild() {
     h_format_error "usage: cbuild {ubuntu,fedora}"
   fi
 
-  if h_is_toolbox || h_is_podman; then
-    h_format_error "cbuild should only be used in a root environment"
-  fi
+  h_require_root_env "cbuild"
   podman build --tag "$1-container" --no-cache "$HOME/.dotfiles/containers/.containerfiles/$1"
   podman image prune --force
 }
@@ -74,6 +72,8 @@ crun() {
   if [[ $2 != "ubuntu" ]] && [[ $2 != "fedora" ]]; then
     h_format_error "usage: crun <directory> {ubuntu,fedora} [command...]"
   fi
+
+  h_require_root_env "crun"
 
   local workspace="/$(basename "$(realpath "$1")")"
   local dir="$1"
@@ -124,22 +124,16 @@ sub_remove() {
 }
 
 cagent() {
-  if h_is_toolbox || h_is_podman; then
-    h_format_error "agent should only be used in a root env"
-  else
-    crun . fedora \
-      /root/.nvm/versions/node/v24.15.0/bin/node \
-      "/root/.dotfiles/containers/.local/lib/agent-js/src/index.ts"
-  fi
+  h_require_root_env "cagent"
+  crun . fedora \
+    /root/.nvm/versions/node/v24.15.0/bin/node \
+    "/root/.dotfiles/containers/.local/lib/agent-js/src/index.ts"
 }
 
 chat() {
-  if h_is_toolbox || h_is_podman; then
-    h_format_error "chat should only be used in a root env"
-  else
-    cd "$(mktemp -d)" && cagent
-    exit
-  fi
+  h_require_root_env "chat"
+  cd "$(mktemp -d)" && cagent
+  exit
 }
 
 hor() {
@@ -157,35 +151,14 @@ ver() {
 }
 
 f() {
-  if h_is_toolbox || h_is_podman; then
-    h_format_error "f should only be used in a root env"
-  else
-    toolbox enter fedora-toolbox-43
-  fi
+  h_require_root_env "f"
+  toolbox enter fedora-toolbox-43
 }
 
 v() {
-  if [[ $(uname -s) == "Linux" ]]; then
-    if h_is_toolbox || h_is_podman; then
-      "$NVIM_CMD" "$@"
-    else
-      h_echo doing "starting a container for v"
-      toolbox run -c fedora-toolbox-43 "$NVIM_CMD" "$@"
-    fi
-  else
-    "$NVIM_CMD" "$@"
-  fi
+  h_run_in_container_or_mac "$NVIM_CMD" "$@"
 }
 
 lg() {
-  if [[ $(uname -s) == "Linux" ]]; then
-    if h_is_toolbox || h_is_podman; then
-      lazygit "$@"
-    else
-      h_echo doing "starting a container for lg"
-      toolbox run -c fedora-toolbox-43 lazygit "$@"
-    fi
-  else
-    lazygit "$@"
-  fi
+  h_run_in_container_or_mac lazygit "$@"
 }
