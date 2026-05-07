@@ -24,4 +24,4 @@ source "$HOME/.dotfiles/.env"
 source "$HOME/.dotfiles/zsh/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # bun completions
-[ -s "/home/elan/.bun/_bun" ] && source "/home/elan/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
