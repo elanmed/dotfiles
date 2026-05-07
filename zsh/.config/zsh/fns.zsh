@@ -170,7 +170,7 @@ v() {
       "$NVIM_CMD" "$@"
     else
       h_echo doing "starting a container for v"
-      toolbox enter fedora-toolbox-43
+      toolbox run -c fedora-toolbox-43 "$NVIM_CMD" "$@"
     fi
   else
     "$NVIM_CMD" "$@"
@@ -183,7 +183,7 @@ lg() {
       lazygit "$@"
     else
       h_echo doing "starting a container for lg"
-      toolbox enter fedora-toolbox-43
+      toolbox run -c fedora-toolbox-43 lazygit "$@"
     fi
   else
     lazygit "$@"
