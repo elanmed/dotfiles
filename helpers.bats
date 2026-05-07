@@ -251,3 +251,43 @@ setup() {
   [ "$status" -ne 0 ]
   [[ $output =~ "usage: h_validate_desktop_env" ]]
 }
+
+@test "h_is_macos: returns 1 on Linux" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_is_macos"
+  [ "$status" -eq 1 ]
+}
+
+@test "h_require_root_env: returns 0 on Linux root env" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; h_is_podman() { return 1; }; h_is_toolbox() { return 1; }; h_require_root_env 'testcmd'"
+  [ "$status" -eq 0 ]
+}
+
+@test "h_require_root_env: returns error when in container" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_require_root_env 'testcmd' 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "testcmd should only be used in a root environment" ]]
+}
+
+@test "h_require_root_env: exits early with 0 arguments" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_require_root_env 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage: h_require_root_env" ]]
+}
+
+@test "h_require_root_env: exits early with 2 arguments" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_require_root_env 'cmd1' 'cmd2' 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage: h_require_root_env" ]]
+}
+
+@test "h_run_in_container_or_mac: runs command on Linux root env" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_run_in_container_or_mac echo 'hello'"
+  [ "$status" -eq 0 ]
+  [[ $output =~ "hello" ]]
+}
+
+@test "h_run_in_container_or_mac: exits early with 0 arguments" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_run_in_container_or_mac 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage: h_run_in_container_or_mac" ]]
+}
