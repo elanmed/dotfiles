@@ -169,7 +169,8 @@ v() {
     if h_is_toolbox || h_is_podman; then
       "$NVIM_CMD" "$@"
     else
-      h_format_error "v should only be used in a container"
+      h_echo doing "starting a container for v"
+      toolbox enter fedora-toolbox-43
     fi
   else
     "$NVIM_CMD" "$@"
@@ -181,7 +182,8 @@ lg() {
     if h_is_toolbox || h_is_podman; then
       lazygit "$@"
     else
-      h_format_error "lg should only be used in a container"
+      h_echo doing "starting a container for lg"
+      toolbox enter fedora-toolbox-43
     fi
   else
     lazygit "$@"
