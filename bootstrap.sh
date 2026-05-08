@@ -35,7 +35,6 @@ if [[ $(uname -s) == "Linux" ]] && ! h_is_toolbox && ! h_is_podman; then
   h_echo error "bootstrap.sh must be run in a container or macos"
   exit 1
 fi
-
 if [[ -z $package_manager ]]; then
   h_echo error "$usage"
   exit 1
@@ -44,6 +43,7 @@ if [[ -z $desktop_env ]]; then
   h_echo error "$usage"
   exit 1
 fi
+
 h_validate_package_manager "$package_manager"
 h_validate_desktop_env "$desktop_env"
 
