@@ -109,4 +109,4 @@ h_echo doing "generating vim-js manifest"
 npm --prefix ~/.dotfiles/neovim/.local/lib/vim-js run gen-manifest chrome
 
 h_echo doing "bootstrapping neovim"
-bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh --package-manager "$package_manager"
+bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh --package-manager "$package_manager" --desktop-env "$desktop_env"
