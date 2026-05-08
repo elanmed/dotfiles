@@ -151,7 +151,7 @@ h_run_in_container_or_mac() {
 
   if [[ $(uname -s) == "Linux" ]] && ! h_is_toolbox && ! h_is_podman; then
     h_echo doing "starting toolbox for $1"
-    toolbox run -c fedora-toolbox-43 "$@"
+    toolbox run -c fedora-toolbox-43 zsh -ic 'exec "$@"' zsh "$@"
   else
     "$@"
   fi
