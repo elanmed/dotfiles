@@ -1,12 +1,5 @@
 #!/bin/zsh
 
-# editing
-alias ezsh="builtin cd ~/.dotfiles/zsh/.config/zsh && $NVIM_CMD"
-alias eterm="builtin cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
-alias etmux="builtin cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/tmux/.config/tmux/tmux.conf"
-alias edot="builtin cd ~/.dotfiles && $NVIM_CMD"
-alias evim="builtin cd ~/.dotfiles/neovim/.config/nvim && $NVIM_CMD"
-alias resetnvim="rm -rf ~/.cache/nvim ~/.local/share/nvim"
 # git
 alias gs="git status"
 alias gc="git checkout"

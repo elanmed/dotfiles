@@ -143,16 +143,16 @@ h_require_root_env() {
   fi
 }
 
-# usage: h_run_in_container_or_mac <command> [args...]
-# Runs command directly on macOS or inside toolbox/podman;
-# otherwise runs it via toolbox on the host.
-h_run_in_container_or_mac() {
-  [[ $# -lt 1 ]] && h_format_error "usage: h_run_in_container_or_mac <command> [args...]"
+# usage: h_run_shell_in_container <shell-command>
+# Runs a shell command string (e.g. "cd dir && cmd") inside toolbox on Linux,
+# keeping the container alive after the command exits.
+h_run_shell_in_container() {
+  [[ $# -ne 1 ]] && h_format_error "usage: h_run_shell_in_container <shell-command>"
 
   if [[ $(uname -s) == "Linux" ]] && ! h_is_toolbox && ! h_is_podman; then
-    h_echo doing "starting toolbox for $1"
-    toolbox run -c fedora-toolbox-43 zsh -ic 'exec "$@"' zsh "$@"
+    h_echo doing "starting toolbox"
+    toolbox run -c fedora-toolbox-43 zsh -ic "$1; exec zsh"
   else
-    "$@"
+    zsh -c "$1"
   fi
 }

@@ -156,9 +156,29 @@ f() {
 }
 
 v() {
-  h_run_in_container_or_mac "$NVIM_CMD" "$@"
+  h_run_shell_in_container "\$NVIM_CMD $@"
 }
 
 lg() {
-  h_run_in_container_or_mac lazygit "$@"
+  h_run_shell_in_container "lazygit $@"
+}
+
+ezsh() {
+  h_run_shell_in_container 'cd ~/.dotfiles/zsh/.config/zsh && $NVIM_CMD'
+}
+
+eterm() {
+  h_run_shell_in_container 'cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua'
+}
+
+etmux() {
+  h_run_shell_in_container 'cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/tmux/.config/tmux/tmux.conf'
+}
+
+edot() {
+  h_run_shell_in_container 'cd ~/.dotfiles && $NVIM_CMD'
+}
+
+evim() {
+  h_run_shell_in_container 'cd ~/.dotfiles/neovim/.config/nvim && $NVIM_CMD'
 }
