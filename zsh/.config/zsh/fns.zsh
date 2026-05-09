@@ -182,3 +182,7 @@ edot() {
 evim() {
   h_run_shell_in_container 'cd ~/.dotfiles/neovim/.config/nvim && $NVIM_CMD'
 }
+
+firmware-upgrade() {
+  sudo fwupdmgr update
+}
