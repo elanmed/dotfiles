@@ -280,14 +280,43 @@ setup() {
   [[ $output =~ "usage: h_require_root_env" ]]
 }
 
-@test "h_run_in_container_or_mac: runs command on Linux root env" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_run_in_container_or_mac echo 'hello'"
+@test "h_run_shell_in_container: runs command" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_run_shell_in_container 'echo hello'"
   [ "$status" -eq 0 ]
   [[ $output =~ "hello" ]]
 }
 
-@test "h_run_in_container_or_mac: exits early with 0 arguments" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_run_in_container_or_mac 2>&1"
+@test "h_run_shell_in_container: exits early with 0 arguments" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_run_shell_in_container 2>&1"
   [ "$status" -ne 0 ]
-  [[ $output =~ "usage: h_run_in_container_or_mac" ]]
+  [[ $output =~ "usage: h_run_shell_in_container" ]]
+}
+
+
+@test "h_is_toolbox: returns 0 when hostname is toolbox" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; hostname() { echo 'toolbox'; }; h_is_toolbox"
+  [ "$status" -eq 0 ]
+}
+
+@test "h_is_toolbox: returns 0 when hostname is toolbx" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; hostname() { echo 'toolbx'; }; h_is_toolbox"
+  [ "$status" -eq 0 ]
+}
+
+@test "h_is_toolbox: returns 1 when hostname is not toolbox" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; hostname() { echo 'myhost'; }; h_is_toolbox"
+  [ "$status" -eq 1 ]
+}
+
+@test "h_is_podman: returns 0 when /run/.containerenv exists" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; h_is_podman"
+  [ "$status" -eq 0 ]
+}
+
+@test "h_is_podman: returns 1 when /run/.containerenv does not exist" {
+  if [[ -f /run/.containerenv ]]; then
+    skip "running inside a container"
+  fi
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_is_podman"
+  [ "$status" -eq 1 ]
 }
