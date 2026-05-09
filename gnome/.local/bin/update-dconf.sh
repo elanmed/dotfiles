@@ -1,12 +1,10 @@
 gsettings set org.gnome.desktop.wm.keybindings close "['<Control>q']"
-gsettings set org.gnome.desktop.wm.keybindings maximize "['<Shift><Control>e']"
+gsettings set org.gnome.desktop.wm.keybindings maximize "['<Shift><Control>o']"
 gsettings set org.gnome.desktop.wm.keybindings minimize "['<Control>m']"
-gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-left "['<Shift><Control>j']"
-gsettings set org.gnome.desktop.wm.keybindings move-to-monitor-right "['<Shift><Control>k']"
 gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Control>Tab']"
 gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Control>Tab']"
-gsettings set org.gnome.mutter.keybindings toggle-tiled-left "['<Shift><Control>h']"
-gsettings set org.gnome.mutter.keybindings toggle-tiled-right "['<Shift><Control>l']"
+gsettings set org.gnome.mutter.keybindings toggle-tiled-left "['<Shift><Control>comma']"
+gsettings set org.gnome.mutter.keybindings toggle-tiled-right "['<Shift><Control>period']"
 gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Shift><Control>4']"
 
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
