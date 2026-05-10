@@ -98,7 +98,7 @@ config.keys = {
   { key = "k", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Up", },
   { key = "j", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Down", },
   { key = "v", mods = "LEADER|CTRL", action = wezterm.action.ActivateCopyMode, },
-  { key = "e", mods = "LEADER|CTRL", action = wezterm.action.TogglePaneZoomState, },
+  { key = "o", mods = "LEADER|CTRL", action = wezterm.action.TogglePaneZoomState, },
   { key = "t", mods = "LEADER|CTRL", action = toggle_pane_height(), },
   { key = "l", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Right", },
   { key = "h", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Left", },
