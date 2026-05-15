@@ -108,7 +108,7 @@ chmod u+w ~/.zshrc
 export PATH="$HOME/.bun/bin:$PATH"
 
 h_echo doing "installing agent-js deps"
-npm --prefix ~/.dotfiles/containers/.local/lib/agent-js install
+pnpm --prefix ~/.dotfiles/containers/.local/lib/agent-js install
 
 h_echo doing "generating vim-js manifest"
 npm --prefix ~/.dotfiles/neovim/.local/lib/vim-js run gen-manifest chrome
