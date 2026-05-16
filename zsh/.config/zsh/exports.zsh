@@ -22,6 +22,7 @@ else
   export NVIM_CMD="nvim"
 fi
 
+export TERM="wezterm"
 export EDITOR="$NVIM_CMD"
 export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
