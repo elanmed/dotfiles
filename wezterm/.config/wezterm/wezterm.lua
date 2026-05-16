@@ -42,21 +42,6 @@ local config = wezterm.config_builder()
 config.font = wezterm.font "ComicCodeLigatures Nerd Font"
 config.font_size = 12.0
 
-local function is_nvim(pane)
-  return pane:get_user_vars().IS_NVIM == "true"
-end
-
-local function smart_move(key, direction)
-  return wezterm.action_callback(function(win, pane)
-    if is_nvim(pane) then
-      win:perform_action(wezterm.action.SendKey { key = " ", mods = "CTRL", }, pane)
-      win:perform_action(wezterm.action.SendKey { key = key, mods = "CTRL", }, pane)
-    else
-      win:perform_action({ ActivatePaneDirection = direction, }, pane)
-    end
-  end)
-end
-
 local function toggle_pane_height()
   return wezterm.action_callback(function(win, pane)
     local is_top_pane = true
