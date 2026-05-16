@@ -126,8 +126,8 @@ sub_remove() {
 cagent() {
   h_require_root_env "cagent"
   crun . fedora \
-    /root/.bun/bin/bun \
-    "/root/.dotfiles/containers/.local/lib/agent-js/src/index.ts"
+    /root/.nvm/versions/node/v24.15.0/bin/node \
+    /root/.dotfiles/containers/.local/lib/agent-js/src/index.ts
 }
 
 chat() {
