@@ -14,14 +14,3 @@ alias lsa="$lsa_cmd"
 # overrides
 alias vim="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 [[ "$(uname -s)" == "Linux" ]] && alias open="flatpak-xdg-open"
-
-alias wifi="nmcli radio wifi"
-alias wifion="nmcli radio wifi on"
-alias wifioff="nmcli radio wifi off"
-alias wifils="nmcli dev wifi list"
-function wificon() {
-  [[ -z $1 ]] && {
-    h_format_error "usage: wificon <name>"
-  }
-  nmcli dev wifi connect "$1" --ask
-}
