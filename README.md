@@ -17,3 +17,7 @@ git clone git@github.com:elanmed/dotfiles .dotfiles
 ```sh
 git submodule foreach git pull origin master
 ```
+
+### TODO
+
+- [ ] Uninstall script
