@@ -156,3 +156,10 @@ h_run_shell_in_container() {
     zsh -c "$1"
   fi
 }
+
+h_set_wezterm_user_var() {
+  [[ $# -ne 2 ]] && h_format_error "usage: h_set_wezterm_user_var <key> <value>"
+
+  printf "\033]1337;SetUserVar=%s=%s\007" "$1" $(echo -n "$2" | base64)
+  # printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" $(echo -n "true" | base64)
+}

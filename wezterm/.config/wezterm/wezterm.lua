@@ -43,9 +43,9 @@ config.font = wezterm.font "ComicCodeLigatures Nerd Font"
 config.font_size = 12.0
 
 local function toggle_pane_height()
-  return wezterm.action_callback(function(win, pane)
+  return wezterm.action_callback(function(window, pane)
     local is_top_pane = true
-    for _, pane_info in ipairs(win:active_tab():panes_with_info()) do
+    for _, pane_info in ipairs(window:active_tab():panes_with_info()) do
       if pane_info.pane:pane_id() == pane:pane_id() then
         is_top_pane = pane_info.top == 0
         break
@@ -56,22 +56,30 @@ local function toggle_pane_height()
     local shrink_direction = is_top_pane and "Up" or "Down"
 
     local curr_height = pane:get_dimensions().viewport_rows
-    local max_height = win:active_tab():get_size().rows
+    local max_height = window:active_tab():get_size().rows
 
     local half_max_height = math.floor(max_height / 2)
 
     if curr_height > half_max_height then
       -- shrinks by this amount
-      win:perform_action(wezterm.action.AdjustPaneSize { shrink_direction, curr_height - half_max_height, }, pane)
+      window:perform_action(wezterm.action.AdjustPaneSize { shrink_direction, curr_height - half_max_height, }, pane)
     else
-      win:perform_action(wezterm.action.AdjustPaneSize { grow_direction, max_height - curr_height, }, pane)
+      window:perform_action(wezterm.action.AdjustPaneSize { grow_direction, max_height - curr_height, }, pane)
     end
   end)
 end
 
+local send_keys_or_paste = wezterm.action_callback(function(window, pane)
+  if pane:get_user_vars().AGENT_JS_ACTIVE == "true" then
+    pane:send_text "\x16"
+  else
+    window:perform_action(wezterm.action.PasteFrom "Clipboard", pane)
+  end
+end)
+
 config.leader = { key = "Space", mods = "CTRL", }
 config.keys = {
-  { key = "v", mods = cmd_or_ctrl(), action = wezterm.action.PasteFrom "Clipboard", },
+  { key = "v", mods = cmd_or_ctrl(), action = send_keys_or_paste, },
   { key = "p", mods = "LEADER|CTRL", action = wezterm.action.ActivateTabRelative(-1), },
   { key = "n", mods = "LEADER|CTRL", action = wezterm.action.ActivateTabRelative(1), },
   { key = "q", mods = "LEADER|CTRL", action = wezterm.action.QuitApplication, },
