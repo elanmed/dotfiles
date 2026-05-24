@@ -1,12 +1,12 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
-usage="usage: ./uninstall.sh --package-manager brew|dnf|apt"
+usage="usage: ./uninstall.sh -p brew|dnf|apt"
 package_manager=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --package-manager)
+    -p)
       if [[ -z ${2:-} ]]; then
         h_echo error "$usage"
         exit 1

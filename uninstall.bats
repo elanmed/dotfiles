@@ -5,14 +5,14 @@ setup() {
   export UNINSTALL_SCRIPT="${BATS_TEST_DIRNAME}/uninstall.sh"
 }
 
-@test "uninstall.sh: fails without --package-manager argument" {
+@test "uninstall.sh: fails without -p argument" {
   run bash "$UNINSTALL_SCRIPT"
   [ "$status" -ne 0 ]
   [[ $output =~ "usage:" ]]
 }
 
-@test "uninstall.sh: fails when --package-manager has no value" {
-  run bash "$UNINSTALL_SCRIPT" --package-manager
+@test "uninstall.sh: fails when -p has no value" {
+  run bash "$UNINSTALL_SCRIPT" -p
   [ "$status" -ne 0 ]
   [[ $output =~ "usage:" ]]
 }
@@ -24,7 +24,7 @@ setup() {
 }
 
 @test "uninstall.sh: fails with invalid package manager" {
-  run bash "$UNINSTALL_SCRIPT" --package-manager "invalid-pm"
+  run bash "$UNINSTALL_SCRIPT" -p "invalid-pm"
   [ "$status" -ne 0 ]
   [[ $output =~ "h_validate_package_manager" ]]
 }
@@ -34,7 +34,7 @@ setup() {
     cd "$(mktemp -d)"
     cp "$UNINSTALL_SCRIPT" .
     cp "${BATS_TEST_DIRNAME}/helpers.sh" .
-    run bash ./uninstall.sh --package-manager dnf
+    run bash ./uninstall.sh -p dnf
     [ "$status" -ne 0 ]
     [[ $output =~ "installed_packages log does not exist" ]]
   )

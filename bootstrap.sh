@@ -1,14 +1,14 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
-usage="usage: ./bootstrap.sh --package-manager brew|dnf|apt --desktop-env mate|gnome|macos|server"
+usage="usage: ./bootstrap.sh -p brew|dnf|apt -d mate|gnome|macos|server"
 
 package_manager=""
 desktop_env=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --package-manager)
+    -p)
       if [[ -z ${2:-} ]]; then
         h_echo error "$usage"
         exit 1
@@ -16,7 +16,7 @@ while [[ $# -gt 0 ]]; do
       package_manager="$2"
       shift 2
       ;;
-    --desktop-env)
+    -d)
       if [[ -z ${2:-} ]]; then
         h_echo error "$usage"
         exit 1
@@ -83,7 +83,7 @@ h_install_package "$package_manager" unzip
 h_echo doing "writing $desktop_env to .desktop_env"
 echo "$desktop_env" >./.desktop_env
 
-source "$HOME/.dotfiles/stow.sh" --desktop-env "$desktop_env"
+source "$HOME/.dotfiles/stow.sh" -d "$desktop_env"
 
 if [[ $desktop_env == "server" ]]; then
   h_echo noop "SKIPPING: bootstrapping fonts"
@@ -119,7 +119,7 @@ h_echo doing "generating vim-js manifest"
 npm --prefix ~/.dotfiles/neovim/.local/lib/vim-js run gen-manifest chrome
 
 h_echo doing "bootstrapping neovim"
-bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh --package-manager "$package_manager" --desktop-env "$desktop_env"
+bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh -p "$package_manager" -d "$desktop_env"
 
 h_echo doing "fetching terminfo"
 tempfile=$(mktemp) &&

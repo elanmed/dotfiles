@@ -5,38 +5,38 @@ setup() {
   export BOOTSTRAP_SCRIPT="${BATS_TEST_DIRNAME}/bootstrap.sh"
 }
 
-@test "bootstrap.sh: fails without --package-manager argument" {
+@test "bootstrap.sh: fails without -p argument" {
   run bash "$BOOTSTRAP_SCRIPT"
   [ "$status" -ne 0 ]
   [[ $output =~ "usage:" ]]
 }
 
-@test "bootstrap.sh: fails without --desktop-env argument" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf
+@test "bootstrap.sh: fails without -d argument" {
+  run bash "$BOOTSTRAP_SCRIPT" -p dnf
   [ "$status" -ne 0 ]
   [[ $output =~ "usage:" ]]
 }
 
 @test "bootstrap.sh: fails with invalid package manager" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager "invalid-pm" --desktop-env server
+  run bash "$BOOTSTRAP_SCRIPT" -p "invalid-pm" -d server
   [ "$status" -ne 0 ]
   [[ $output =~ "h_validate_package_manager" ]]
 }
 
-@test "bootstrap.sh: fails when --package-manager has no value" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager --desktop-env server
+@test "bootstrap.sh: fails when -p has no value" {
+  run bash "$BOOTSTRAP_SCRIPT" -p -d server
   [ "$status" -ne 0 ]
   [[ $output =~ "usage:" ]]
 }
 
 @test "bootstrap.sh: fails with invalid desktop env" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env "kde"
+  run bash "$BOOTSTRAP_SCRIPT" -p dnf -d "kde"
   [ "$status" -ne 0 ]
   [[ $output =~ "h_validate_desktop_env" ]]
 }
 
-@test "bootstrap.sh: fails when --desktop-env has no value" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env
+@test "bootstrap.sh: fails when -d has no value" {
+  run bash "$BOOTSTRAP_SCRIPT" -p dnf -d
   [ "$status" -ne 0 ]
   [[ $output =~ "usage:" ]]
 }
@@ -47,22 +47,22 @@ setup() {
   [[ $output =~ "usage:" ]]
 }
 
-@test "bootstrap.sh: accepts --desktop-env server" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env server
+@test "bootstrap.sh: accepts -d server" {
+  run bash "$BOOTSTRAP_SCRIPT" -p dnf -d server
   [[ $output =~ "writing server to .desktop_env" ]] || [ "$status" -eq 0 ]
 }
 
-@test "bootstrap.sh: accepts --desktop-env mate" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env mate
+@test "bootstrap.sh: accepts -d mate" {
+  run bash "$BOOTSTRAP_SCRIPT" -p dnf -d mate
   [[ $output =~ "writing mate to .desktop_env" ]] || [ "$status" -eq 0 ]
 }
 
-@test "bootstrap.sh: accepts --desktop-env gnome" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env gnome
+@test "bootstrap.sh: accepts -d gnome" {
+  run bash "$BOOTSTRAP_SCRIPT" -p dnf -d gnome
   [[ $output =~ "writing gnome to .desktop_env" ]] || [ "$status" -eq 0 ]
 }
 
-@test "bootstrap.sh: accepts --desktop-env macos" {
-  run bash "$BOOTSTRAP_SCRIPT" --package-manager dnf --desktop-env macos
+@test "bootstrap.sh: accepts -d macos" {
+  run bash "$BOOTSTRAP_SCRIPT" -p dnf -d macos
   [[ $output =~ "writing macos to .desktop_env" ]] || [ "$status" -eq 0 ]
 }

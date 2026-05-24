@@ -5,7 +5,7 @@ setup() {
   export STOW_SCRIPT="${BATS_TEST_DIRNAME}/stow.sh"
 }
 
-@test "stow.sh: fails without --desktop-env argument" {
+@test "stow.sh: fails without -d argument" {
   run bash "$STOW_SCRIPT"
   [ "$status" -ne 0 ]
   [[ $output =~ "usage:" ]]
@@ -18,33 +18,33 @@ setup() {
 }
 
 @test "stow.sh: fails with invalid desktop env" {
-  run bash "$STOW_SCRIPT" --desktop-env "kde"
+  run bash "$STOW_SCRIPT" -d "kde"
   [ "$status" -ne 0 ]
   [[ $output =~ "h_validate_desktop_env" ]]
 }
 
-@test "stow.sh: fails when --desktop-env has no value" {
-  run bash "$STOW_SCRIPT" --desktop-env
+@test "stow.sh: fails when -d has no value" {
+  run bash "$STOW_SCRIPT" -d
   [ "$status" -ne 0 ]
   [[ $output =~ "usage:" ]]
 }
 
-@test "stow.sh: accepts --desktop-env server" {
-  run bash "$STOW_SCRIPT" --desktop-env server
+@test "stow.sh: accepts -d server" {
+  run bash "$STOW_SCRIPT" -d server
   [ "$status" -eq 0 ]
 }
 
-@test "stow.sh: accepts --desktop-env mate" {
-  run bash "$STOW_SCRIPT" --desktop-env mate
+@test "stow.sh: accepts -d mate" {
+  run bash "$STOW_SCRIPT" -d mate
   [ "$status" -eq 0 ]
 }
 
-@test "stow.sh: accepts --desktop-env gnome" {
-  run bash "$STOW_SCRIPT" --desktop-env gnome
+@test "stow.sh: accepts -d gnome" {
+  run bash "$STOW_SCRIPT" -d gnome
   [ "$status" -eq 0 ]
 }
 
-@test "stow.sh: accepts --desktop-env macos" {
-  run bash "$STOW_SCRIPT" --desktop-env macos
+@test "stow.sh: accepts -d macos" {
+  run bash "$STOW_SCRIPT" -d macos
   [ "$status" -eq 0 ]
 }

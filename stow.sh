@@ -1,13 +1,13 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
-usage="usage: ./stow.sh --desktop-env mate|gnome|macos|server"
+usage="usage: ./stow.sh -d mate|gnome|macos|server"
 
 desktop_env=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --desktop-env)
+    -d)
       if [[ -z ${2:-} ]]; then
         h_echo error "$usage"
         exit 1
