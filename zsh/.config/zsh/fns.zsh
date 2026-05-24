@@ -128,6 +128,7 @@ sub_remove() {
 cagent() {
   h_require_root_env "cagent"
   h_set_wezterm_user_var "AGENT_JS_ACTIVE" "true"
+  xhost +local: >/dev/null 2>&1
   crun . fedora \
     node /root/.dotfiles/containers/.local/lib/agent-js/src/index.ts
   h_set_wezterm_user_var "AGENT_JS_ACTIVE" ""
