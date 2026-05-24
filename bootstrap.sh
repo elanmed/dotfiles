@@ -47,8 +47,13 @@ fi
 h_validate_package_manager "$package_manager"
 h_validate_desktop_env "$desktop_env"
 
+h_echo doing "resetting installed_packages log"
+echo -n "" >./installed_packages
+
+h_echo doing "initializing submodules"
 git submodule init
 git submodule update
+git submodule foreach git pull origin master
 
 if command -v zsh >/dev/null 2>&1; then
   h_echo noop "zsh already installed"

@@ -33,6 +33,7 @@ h_echo() {
 h_install_package() {
   [[ $# -ne 2 ]] && h_format_error "usage: h_install_package <package_manager> <package>"
   h_validate_package_manager "$1"
+  echo "$2" >>./installed_packages
 
   h_echo doing "installing $2"
 
@@ -45,6 +46,26 @@ h_install_package() {
       ;;
     apt)
       sudo apt-get install "$2" -y
+      ;;
+  esac
+}
+
+# usage: h_uninstall_package <package_manager> <package>
+h_uninstall_package() {
+  [[ $# -ne 2 ]] && h_format_error "usage: h_uninstall_package <package_manager> <package>"
+  h_validate_package_manager "$1"
+
+  h_echo doing "uninstalling $2"
+
+  case "$1" in
+    brew)
+      brew uninstall "$2"
+      ;;
+    dnf)
+      sudo dnf remove "$2" -y
+      ;;
+    apt)
+      sudo apt-get remove "$2" -y
       ;;
   esac
 }
