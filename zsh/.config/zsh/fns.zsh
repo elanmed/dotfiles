@@ -96,6 +96,8 @@ crun() {
     --workdir "$workspace" \
     --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro" \
     --volume "$(realpath "$dir"):$workspace" \
+    --volume /tmp/.X11-unix:/tmp/.X11-unix \
+    --env DISPLAY \
     "$distro-container" \
     zsh -ic 'exec "$@"' zsh "${cmd[@]}"
 }
@@ -125,8 +127,10 @@ sub_remove() {
 
 cagent() {
   h_require_root_env "cagent"
+  h_set_wezterm_user_var "AGENT_JS_ACTIVE" "true"
   crun . fedora \
     node /root/.dotfiles/containers/.local/lib/agent-js/src/index.ts
+  h_set_wezterm_user_var "AGENT_JS_ACTIVE" ""
 }
 
 chat() {
