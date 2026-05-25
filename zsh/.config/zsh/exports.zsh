@@ -32,9 +32,11 @@ pager() {
 export PAGER=pager
 export BAT_THEME="ansi"
 
-export AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
+export AGENT_JS_EDIT_PROMPT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
 nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" -c startinsert! __FILE__
 printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | base64)"'
+
+export AGENT_JS_EDIT_LOG='nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" __FILE__'
 
 if [[ "$(uname -s)" == "Linux" ]]; then
   # https://superuser.com/a/613754
