@@ -1,6 +1,5 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
-
 usage="usage: nvvm update"
 
 if [[ $1 != "update" ]]; then
@@ -14,9 +13,12 @@ tar_path="$HOME/.local/share/nvvm/neovim.tar.gz"
 if [[ "$(uname -s)" == "Linux" ]]; then
   asset_name="nvim-linux-x86_64.tar.gz"
   download_url="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz"
-else
+elif [[ "$(uname -m)" == "arm64" ]]; then
   asset_name="nvim-macos-arm64.tar.gz"
   download_url="https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-arm64.tar.gz"
+else
+  asset_name="nvim-macos-x86_64.tar.gz"
+  download_url="https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-x86_64.tar.gz"
 fi
 
 curl --silent --location --output "$tar_path" "$download_url"
@@ -25,7 +27,6 @@ latest_release=$(curl --silent "https://api.github.com/repos/neovim/neovim/relea
 expected_hash=$(
   echo "$latest_release" | jq --raw-output ".assets[] | select(.name == \"$asset_name\") | .digest | split(\":\") | .[1]"
 )
-
 actual_hash=$(sha256sum "$tar_path" | cut -d ' ' -f 1)
 
 if [[ $expected_hash != "$actual_hash" ]]; then
@@ -37,7 +38,8 @@ if [[ "$(uname -s)" == "Linux" ]]; then
   tar --extract --gzip --file="$tar_path" --directory="$HOME/.local/share/nvvm/"
   ln -sf "$HOME/.local/share/nvvm/nvim-linux-x86_64/bin/nvim" "$HOME/.local/bin/nvim"
 else
+  macos_arch_dir="nvim-macos-$(uname -m)"
   xattr -c "$tar_path"
   tar --extract --gzip --file="$tar_path" --directory "$HOME/.local/share/nvvm/"
-  ln -sf "$HOME/.local/share/nvvm/nvim-macos-arm64/bin/nvim" "$HOME/.local/bin/nvim"
+  ln -sf "$HOME/.local/share/nvvm/$macos_arch_dir/bin/nvim" "$HOME/.local/bin/nvim"
 fi
