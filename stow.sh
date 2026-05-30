@@ -34,7 +34,7 @@ base_dirs=("containers" "git" "neovim" "nvm" "scripts" "zsh")
 server_dirs=("${base_dirs[@]}")
 mate_dirs=("${base_dirs[@]}" "${desktop_dirs[@]}" "mate")
 gnome_dirs=("${base_dirs[@]}" "${desktop_dirs[@]}" "gnome")
-macos_dirs=("${base_dirs[@]}" "${desktop_dirs[@]}")
+macos_dirs=("${base_dirs[@]}" "${desktop_dirs[@]}" "macos")
 
 run_stow() {
   for dir in "$@"; do
