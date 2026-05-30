@@ -1,3 +1,5 @@
+#!/bin/bash
+
 gsettings set org.gnome.desktop.wm.keybindings close "['<Control>q']"
 gsettings set org.gnome.desktop.wm.keybindings maximize "['<Shift><Control>o']"
 gsettings set org.gnome.desktop.wm.keybindings minimize "['<Control>m']"

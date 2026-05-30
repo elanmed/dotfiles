@@ -1,3 +1,5 @@
+#!/bin/bash
+
 gsettings set org.mate.Marco.window-keybindings close '<Control>q'
 gsettings set org.mate.Marco.window-keybindings maximize '<Shift><Control>o'
 gsettings set org.mate.Marco.window-keybindings minimize '<Control>m'

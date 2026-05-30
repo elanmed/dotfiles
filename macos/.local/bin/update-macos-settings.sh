@@ -1,3 +1,5 @@
+#!/bin/bash
+
 defaults write com.apple.controlcenter "BatteryShowPercentage" -bool true
 defaults write com.apple.dock autohide -bool true
 defaults write NSGlobalDomain KeyRepeat -int 3
