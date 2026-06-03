@@ -18,7 +18,11 @@ source "$HOME/.dotfiles/zsh/.config/zsh/aliases.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/fns.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/vi-mode.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/prompt.zsh"
+
+# auto-export every variable
+set -a
 source "$HOME/.dotfiles/.env"
+set +a
 
 # https://github.com/zsh-users/zsh-syntax-highlighting#why-must-zsh-syntax-highlightingzsh-be-sourced-at-the-end-of-the-zshrc-file
 source "$HOME/.dotfiles/zsh/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
