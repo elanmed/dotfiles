@@ -60,6 +60,9 @@ cbuild() {
   fi
 
   h_require_root_env "cbuild"
+  if h_is_macos; then
+    podman machine start 2>/dev/null
+  fi
   podman build --tag "$1-container" --no-cache "$HOME/.dotfiles/containers/.containerfiles/$1"
   podman image prune --force
 }
@@ -74,6 +77,10 @@ crun() {
   fi
 
   h_require_root_env "crun"
+
+  if h_is_macos; then
+    podman machine start >/dev/null 2>&1
+  fi
 
   local workspace="/$(basename "$(realpath "$1")")"
   local dir="$1"

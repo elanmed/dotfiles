@@ -79,6 +79,13 @@ h_install_package "$package_manager" source-highlight
 h_install_package "$package_manager" highlight
 h_install_package "$package_manager" lazygit
 h_install_package "$package_manager" unzip
+h_install_package "$package_manager" podman
+
+if h_is_macos; then
+  h_echo doing "initializing the podman vim"
+  podman machine init
+  podman machine start
+fi
 
 h_echo doing "writing $desktop_env to .desktop_env"
 echo "$desktop_env" >./.desktop_env

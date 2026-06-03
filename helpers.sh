@@ -158,10 +158,6 @@ h_require_root_env() {
   if h_is_toolbox || h_is_podman; then
     h_format_error "$1 should only be used in a root environment"
   fi
-
-  if h_is_macos; then
-    h_format_error "$1 is not supported on macOS"
-  fi
 }
 
 # usage: h_run_shell_in_container <shell-command>
