@@ -82,6 +82,14 @@ crun() {
     podman machine start >/dev/null 2>&1
   fi
 
+  if h_is_macos; then
+    node ~/.dotfiles/containers/.local/lib/agent-js/scripts/pbpaste.ts &
+    CLIP_PID=$!
+    trap "kill $CLIP_PID 2>/dev/null" EXIT
+  else
+    xhost +local: >/dev/null 2>&1
+  fi
+
   local workspace="/$(basename "$(realpath "$1")")"
   local dir="$1"
   local distro="$2"
@@ -89,22 +97,36 @@ crun() {
   local cmd=("$@")
   [[ ${#cmd[@]} -eq 0 ]] && cmd=("zsh")
 
-  # --interactive: keep stdin open to enable typing commands into the container
-  # --tty: allocate a pseudo-terminal, enabling colors, line editing, and ctrl-c
-  # --rm: delete the container's file system on exit (non-mounted volumes)
-  # --security-opt label=disable: disable SELinux so the container can read/write mounted volumes
-  # --workdir: cd "$workspace" on load
-  # --volume: bind the host dir on the left of the : to the container dir on the right side of the :
-  podman run \
-    --interactive \
-    --tty \
-    --rm \
-    --security-opt label=disable \
-    --workdir "$workspace" \
-    --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro" \
-    --volume "$(realpath "$dir"):$workspace" \
-    --volume /tmp/.X11-unix:/tmp/.X11-unix \
-    --env DISPLAY \
+  local podman_args=(
+    # keep stdin open to enable typing commands into the container
+    --interactive
+    # allocate a pseudo-terminal, enabling colors, line editing, and ctrl-c
+    --tty
+    # delete the container's file system on exit (non-mounted volumes)
+    --rm
+    # disable SELinux so the container can read/write mounted volumes
+    --security-opt label=disable
+    # cd "$workspace" on load
+    --workdir "$workspace"
+    # bind the host dir on the left of the : to the container dir on the right side of the :
+    --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro"
+    --volume "$(realpath "$dir"):$workspace"
+
+    --env AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
+nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" -c startinsert! __FILE__
+printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | base64)"'
+    --env AGENT_JS_HISTORY='nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" __FILE__'
+  )
+  if h_is_macos; then
+    podman_args+=(--env AGENT_JS_CLIPBOARD_PASTE='nc --recv-only host.docker.internal 12345')
+  else
+    podman_args+=(
+      --volume /tmp/.X11-unix:/tmp/.X11-unix
+      --env DISPLAY
+    )
+  fi
+
+  podman run "${podman_args[@]}" \
     "$distro-container" \
     zsh -ic 'exec "$@"' zsh "${cmd[@]}"
 }
@@ -135,14 +157,6 @@ sub_remove() {
 cagent() {
   h_require_root_env "cagent"
   h_set_wezterm_user_var "AGENT_JS_ACTIVE" "true"
-
-  if h_is_macos; then
-    node ~/.dotfiles/containers/.local/lib/agent-js/scripts/pbpaste.ts &
-    CLIP_PID=$!
-    trap "kill $CLIP_PID 2>/dev/null" EXIT
-  else
-    xhost +local: >/dev/null 2>&1
-  fi
 
   crun . fedora \
     node /root/.dotfiles/containers/.local/lib/agent-js/src/index.ts

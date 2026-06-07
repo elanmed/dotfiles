@@ -1,4 +1,5 @@
 #!/bin/zsh
+source ~/.dotfiles/helpers.sh
 
 export BUN_INSTALL="$HOME/.bun"
 
@@ -28,14 +29,10 @@ export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
 export BAT_THEME="ansi"
 
+# in the container
 export AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
 nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" -c startinsert! __FILE__
 printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | base64)"'
-
-if h_is_macos; then
-  export AGENT_JS_CLIPBOARD_PASTE="nc -q 0 host.docker.internal 12345"
-fi
-
 export AGENT_JS_HISTORY='nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" __FILE__'
 
 if [[ "$(uname -s)" == "Linux" ]]; then
