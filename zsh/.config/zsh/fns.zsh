@@ -135,7 +135,15 @@ sub_remove() {
 cagent() {
   h_require_root_env "cagent"
   h_set_wezterm_user_var "AGENT_JS_ACTIVE" "true"
-  xhost +local: >/dev/null 2>&1
+
+  if h_is_macos; then
+    node ~/.dotfiles/containers/.local/lib/agent-js/scripts/pbpaste.ts &
+    CLIP_PID=$!
+    trap "kill $CLIP_PID 2>/dev/null" EXIT
+  else
+    xhost +local: >/dev/null 2>&1
+  fi
+
   crun . fedora \
     node /root/.dotfiles/containers/.local/lib/agent-js/src/index.ts
   h_set_wezterm_user_var "AGENT_JS_ACTIVE" ""
