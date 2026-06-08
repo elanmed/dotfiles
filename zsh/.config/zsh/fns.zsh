@@ -83,8 +83,13 @@ crun() {
   fi
 
   if h_is_macos; then
-    node ~/.dotfiles/containers/.local/lib/agent-js/scripts/pbpaste.ts &
+    fifo=/tmp/pbpaste-fifo
+    rm -f "$fifo"
+    mkfifo "$fifo"
+    node ~/.dotfiles/containers/.local/lib/agent-js/scripts/pbpaste.ts >"$fifo" &
     CLIP_PID=$!
+    read -r PORT_ADDR <"$fifo"
+    rm -f "$fifo"
     trap "kill $CLIP_PID 2>/dev/null" EXIT
   else
     xhost +local: >/dev/null 2>&1
@@ -118,7 +123,7 @@ printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | ba
     --env AGENT_JS_HISTORY='nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" __FILE__'
   )
   if h_is_macos; then
-    podman_args+=(--env AGENT_JS_CLIPBOARD_PASTE='nc --recv-only host.docker.internal 12345')
+    podman_args+=(--env AGENT_JS_CLIPBOARD_PASTE="nc --recv-only host.docker.internal $PORT_ADDR")
   else
     podman_args+=(
       --volume /tmp/.X11-unix:/tmp/.X11-unix
