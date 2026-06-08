@@ -82,18 +82,21 @@ crun() {
     podman machine start >/dev/null 2>&1
   fi
 
+  fifo=/tmp/pbpaste-fifo
+  rm -f "$fifo"
+  mkfifo "$fifo"
+
   if h_is_macos; then
-    fifo=/tmp/pbpaste-fifo
-    rm -f "$fifo"
-    mkfifo "$fifo"
-    node ~/.dotfiles/containers/.local/lib/agent-js/scripts/pbpaste.ts >"$fifo" &
-    CLIP_PID=$!
-    read -r PORT_ADDR <"$fifo"
-    rm -f "$fifo"
-    trap "kill $CLIP_PID 2>/dev/null" EXIT
+    paste_cmd="pbpaste"
   else
-    xhost +local: >/dev/null 2>&1
+    paste_cmd="xclip -selection clipboard -o"
   fi
+
+  node ~/.dotfiles/containers/.local/lib/agent-js/scripts/paste-server.ts "$paste_cmd" >"$fifo" &
+  paste_server_pid="$!"
+  read -r PORT_ADDR <"$fifo"
+  rm -f "$fifo"
+  trap "kill $paste_server_pid 2>/dev/null" EXIT
 
   local workspace="/$(basename "$(realpath "$1")")"
   local dir="$1"
@@ -121,15 +124,8 @@ crun() {
 nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" -c startinsert! __FILE__
 printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | base64)"'
     --env AGENT_JS_HISTORY='nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" __FILE__'
+    --env AGENT_JS_CLIPBOARD_PASTE="nc --recv-only host.docker.internal $PORT_ADDR"
   )
-  if h_is_macos; then
-    podman_args+=(--env AGENT_JS_CLIPBOARD_PASTE="nc --recv-only host.docker.internal $PORT_ADDR")
-  else
-    podman_args+=(
-      --volume /tmp/.X11-unix:/tmp/.X11-unix
-      --env DISPLAY
-    )
-  fi
 
   podman run "${podman_args[@]}" \
     "$distro-container" \
