@@ -82,21 +82,31 @@ crun() {
     podman machine start >/dev/null 2>&1
   fi
 
-  fifo=/tmp/pbpaste-fifo
-  rm -f "$fifo"
-  mkfifo "$fifo"
-
   if h_is_macos; then
     paste_cmd="pbpaste"
+    copy_cmd="pbcopy"
   else
     paste_cmd="xclip -selection clipboard -o"
+    copy_cmd="xclip -selection clipboard -in"
   fi
 
-  node ~/.dotfiles/containers/.local/lib/agent-js/scripts/paste-server.ts "$paste_cmd" >"$fifo" &
+  paste_fifo=/tmp/paste-fifo
+  rm -f "$paste_fifo"
+  mkfifo "$paste_fifo"
+  node ~/.dotfiles/containers/.local/lib/agent-js/scripts/paste-server.ts "$paste_cmd" >"$paste_fifo" &
   paste_server_pid="$!"
-  read -r PORT_ADDR <"$fifo"
-  rm -f "$fifo"
-  trap "kill $paste_server_pid 2>/dev/null" EXIT
+  read -r PASTE_PORT <"$paste_fifo"
+  rm -f "$paste_fifo"
+
+  copy_fifo=/tmp/copy-fifo
+  rm -f "$copy_fifo"
+  mkfifo "$copy_fifo"
+  node ~/.dotfiles/containers/.local/lib/agent-js/scripts/copy-server.ts "$copy_cmd" >"$copy_fifo" &
+  copy_server_pid="$!"
+  read -r COPY_PORT <"$copy_fifo"
+  rm -f "$copy_fifo"
+
+  trap "kill $paste_server_pid $copy_server_pid 2>/dev/null" EXIT
 
   local workspace="/$(basename "$(realpath "$1")")"
   local dir="$1"
@@ -121,10 +131,12 @@ crun() {
     --volume "$(realpath "$dir"):$workspace"
 
     --env AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
-nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" -c startinsert! __FILE__
+nvim -u ~/.dotfiles/neovim/.config/nvim/container.lua -c "normal! G$" -c startinsert! __FILE__
 printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | base64)"'
-    --env AGENT_JS_HISTORY='nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" __FILE__'
-    --env AGENT_JS_CLIPBOARD_PASTE="nc --recv-only host.docker.internal $PORT_ADDR"
+    --env AGENT_JS_HISTORY='nvim -u ~/.dotfiles/neovim/.config/nvim/container.lua -c "normal! G$" __FILE__'
+    --env AGENT_JS_CLIPBOARD_PASTE="nc --recv-only host.docker.internal $PASTE_PORT"
+    --env COPY_PORT="$COPY_PORT"
+    --env PASTE_PORT="$PASTE_PORT"
   )
 
   podman run "${podman_args[@]}" \
