@@ -131,9 +131,9 @@ crun() {
     --volume "$(realpath "$dir"):$workspace"
 
     --env AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
-nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" -c startinsert! __FILE__
+nvim -u ~/.dotfiles/neovim/.config/nvim/container.lua -c "normal! G$" -c startinsert! __FILE__
 printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | base64)"'
-    --env AGENT_JS_HISTORY='nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua -c "normal! G$" __FILE__'
+    --env AGENT_JS_HISTORY='nvim -u ~/.dotfiles/neovim/.config/nvim/container.lua -c "normal! G$" __FILE__'
     --env AGENT_JS_CLIPBOARD_PASTE="nc --recv-only host.docker.internal $PASTE_PORT"
     --env COPY_PORT="$COPY_PORT"
     --env PASTE_PORT="$PASTE_PORT"
