@@ -168,9 +168,9 @@ h_run_shell_in_container() {
 
   if [[ $(uname -s) == "Linux" ]] && ! h_is_toolbox && ! h_is_podman; then
     h_echo doing "starting toolbox"
-    toolbox run -c fedora-toolbox-43 zsh -ic "eval $1; exec zsh"
+    toolbox run -c fedora-toolbox-43 zsh -ic "$1; exec zsh"
   else
-    zsh -c "eval $1"
+    zsh -c "$1"
   fi
 }
 
