@@ -76,6 +76,7 @@ h_install_package "$package_manager" tmux
 h_install_package "$package_manager" bats
 h_install_package "$package_manager" xclip
 h_install_package "$package_manager" fzf
+h_install_package "$package_manager" nc
 h_install_package "$package_manager" source-highlight
 h_install_package "$package_manager" highlight
 h_install_package "$package_manager" lazygit

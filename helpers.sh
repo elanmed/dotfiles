@@ -37,6 +37,9 @@ h_resolve_package() {
     dnf:fd | apt:fd)
       echo "fd-find"
       ;;
+    apt:nc)
+      echo "netcat-openbsd"
+      ;;
     brew:bats)
       echo "bats-core"
       ;;
