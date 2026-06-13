@@ -122,6 +122,24 @@ setup() {
   [[ $output =~ "usage: h_validate_package_manager" ]]
 }
 
+@test "h_has_package: exits early with 0 arguments" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_has_package 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage: h_has_package" ]]
+}
+
+@test "h_has_package: exits early with 1 argument" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_has_package 'dnf' 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage: h_has_package" ]]
+}
+
+@test "h_has_package: exits early with 3 arguments" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_has_package 'dnf' 'package' 'extra' 2>&1"
+  [ "$status" -ne 0 ]
+  [[ $output =~ "usage: h_has_package" ]]
+}
+
 @test "h_install_package: exits early with 0 arguments" {
   run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_install_package 2>&1"
   [ "$status" -ne 0 ]
@@ -291,7 +309,6 @@ setup() {
   [ "$status" -ne 0 ]
   [[ $output =~ "usage: h_run_shell_in_container" ]]
 }
-
 
 @test "h_is_toolbox: returns 0 when hostname is toolbox" {
   run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; hostname() { echo 'toolbox'; }; h_is_toolbox"

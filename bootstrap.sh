@@ -53,7 +53,7 @@ echo -n "" >./installed_packages
 h_echo doing "initializing submodules"
 git submodule init
 git submodule update
-git submodule foreach git pull origin master
+git submodule foreach --quiet 'source ~/.dotfiles/helpers.sh && h_update_submodule'
 
 if command -v zsh >/dev/null 2>&1; then
   h_echo noop "zsh already installed"

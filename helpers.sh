@@ -43,6 +43,27 @@ h_resolve_package() {
   esac
 }
 
+# usage: h_has_package <package_manager> <package>
+h_has_package() {
+  [[ $# -ne 2 ]] && h_format_error "usage: h_has_package <package_manager> <package>"
+  h_validate_package_manager "$1"
+
+  local pkg
+  pkg=$(h_resolve_package "$1" "$2")
+
+  case "$1" in
+    brew)
+      brew list "$pkg" >/dev/null 2>&1
+      ;;
+    dnf)
+      rpm -q "$pkg" >/dev/null 2>&1
+      ;;
+    apt)
+      dpkg -s "$pkg" >/dev/null 2>&1
+      ;;
+  esac
+}
+
 # usage: h_install_package <package_manager> <package>
 h_install_package() {
   [[ $# -ne 2 ]] && h_format_error "usage: h_install_package <package_manager> <package>"
@@ -50,6 +71,12 @@ h_install_package() {
 
   local pkg
   pkg=$(h_resolve_package "$1" "$2")
+
+  if h_has_package "$1" "$2"; then
+    h_echo noop "already has $pkg"
+    return 0
+  fi
+
   echo "$pkg" >>./installed_packages
 
   if [[ $1 == "dnf" && $2 == "lazygit" ]]; then
@@ -149,6 +176,17 @@ h_string_includes() {
     return 0
   else
     return 1
+  fi
+}
+
+# usage: h_update_submodule
+h_update_submodule() {
+  git checkout -b master origin/master >/dev/null 2>&1 || git checkout master >/dev/null 2>&1
+  git fetch origin master -q
+  if [[ "$(git rev-parse HEAD)" != "$(git rev-parse origin/master)" ]]; then
+    git pull origin master
+  else
+    h_echo noop "submodule $sm_path is up to date"
   fi
 }
 
