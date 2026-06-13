@@ -73,6 +73,7 @@ fi
 h_install_package "$package_manager" stow
 h_install_package "$package_manager" shfmt
 h_install_package "$package_manager" tmux
+h_install_package "$package_manager" bats
 h_install_package "$package_manager" xclip
 h_install_package "$package_manager" fzf
 h_install_package "$package_manager" source-highlight
