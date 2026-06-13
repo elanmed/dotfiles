@@ -29,23 +29,45 @@ h_echo() {
   esac
 }
 
+# usage: h_resolve_package <package_manager> <canonical_name>
+h_resolve_package() {
+  [[ $# -ne 2 ]] && h_format_error "usage: h_resolve_package <package_manager> <canonical_name>"
+
+  case "$1:$2" in
+    dnf:fd | apt:fd)
+      echo "fd-find"
+      ;;
+    *)
+      echo "$2"
+      ;;
+  esac
+}
+
 # usage: h_install_package <package_manager> <package>
 h_install_package() {
   [[ $# -ne 2 ]] && h_format_error "usage: h_install_package <package_manager> <package>"
   h_validate_package_manager "$1"
-  echo "$2" >>./installed_packages
 
-  h_echo doing "installing $2"
+  local pkg
+  pkg=$(h_resolve_package "$1" "$2")
+  echo "$pkg" >>./installed_packages
+
+  if [[ $1 == "dnf" && $2 == "lazygit" ]]; then
+    h_echo doing "enabling COPR repo dejan/lazygit"
+    sudo dnf copr enable "dejan/lazygit" -y
+  fi
+
+  h_echo doing "installing $pkg"
 
   case "$1" in
     brew)
-      brew install "$2"
+      brew install "$pkg"
       ;;
     dnf)
-      sudo dnf install "$2" -y
+      sudo dnf install "$pkg" -y
       ;;
     apt)
-      sudo apt-get install "$2" -y
+      sudo apt-get install "$pkg" -y
       ;;
   esac
 }
@@ -55,17 +77,20 @@ h_uninstall_package() {
   [[ $# -ne 2 ]] && h_format_error "usage: h_uninstall_package <package_manager> <package>"
   h_validate_package_manager "$1"
 
-  h_echo doing "uninstalling $2"
+  local pkg
+  pkg=$(h_resolve_package "$1" "$2")
+
+  h_echo doing "uninstalling $pkg"
 
   case "$1" in
     brew)
-      brew uninstall "$2"
+      brew uninstall "$pkg"
       ;;
     dnf)
-      sudo dnf remove "$2" -y
+      sudo dnf remove "$pkg" -y
       ;;
     apt)
-      sudo apt-get remove "$2" -y
+      sudo apt-get remove "$pkg" -y
       ;;
   esac
 }

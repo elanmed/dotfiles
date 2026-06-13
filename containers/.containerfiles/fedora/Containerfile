@@ -1,6 +1,6 @@
 FROM fedora:43
 
-RUN dnf install -y git zsh which hostname libatomic git-delta nc && \
+RUN dnf install -y git zsh which hostname libatomic nc && \
     dnf clean all
 
 ENV SHELL=/usr/bin/zsh

@@ -80,6 +80,7 @@ h_install_package "$package_manager" highlight
 h_install_package "$package_manager" lazygit
 h_install_package "$package_manager" unzip
 h_install_package "$package_manager" podman
+h_install_package "$package_manager" git-delta
 
 if h_is_macos; then
   h_echo doing "initializing the podman vim"
