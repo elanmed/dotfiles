@@ -108,23 +108,23 @@ fi
 
 h_echo doing "initializing nvm"
 source ~/.nvm/nvm.sh
-nvm install --lts
+nvm install --lts >/dev/null
 
 h_echo doing "installing pnpm"
-npm install -g pnpm@latest-11
+npm install -g --silent pnpm@latest-11
 
 h_echo doing "install bun"
 # bun writes to your zshrc on every install
 chmod a-w ~/.zshrc
-curl -fsSL https://bun.com/install | bash
+curl -fsSL https://bun.com/install | bash >/dev/null
 chmod u+w ~/.zshrc
 export PATH="$HOME/.bun/bin:$PATH"
 
 h_echo doing "installing agent-js deps"
-pnpm --prefix ~/.dotfiles/containers/.local/lib/agent-js install
+pnpm --prefix ~/.dotfiles/containers/.local/lib/agent-js install --silent
 
 h_echo doing "generating vim-js manifest"
-npm --prefix ~/.dotfiles/neovim/.local/lib/vim-js run gen-manifest chrome
+npm --prefix ~/.dotfiles/neovim/.local/lib/vim-js run gen-manifest chrome >/dev/null
 
 h_echo doing "bootstrapping neovim"
 bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh -p "$package_manager" -d "$desktop_env"
