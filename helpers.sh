@@ -40,6 +40,9 @@ h_resolve_package() {
     apt:nc)
       echo "netcat-openbsd"
       ;;
+    brew:nc)
+      echo "netcat"
+      ;;
     brew:bats)
       echo "bats-core"
       ;;
