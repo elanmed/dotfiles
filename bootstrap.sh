@@ -86,8 +86,8 @@ h_install_package "$package_manager" git-delta
 
 if h_is_macos; then
   h_echo doing "initializing the podman vim"
-  podman machine init
-  podman machine start
+  podman machine init >/dev/null
+  podman machine start >/dev/null
 fi
 
 h_echo doing "writing $desktop_env to .desktop_env"
