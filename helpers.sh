@@ -12,16 +12,16 @@ h_echo() {
 
   case "$1" in
     "error")
-      echo -e "${red}$2${no_color}" >&2
+      printf "%b\n" "${red}$2${no_color}" >&2
       ;;
     "query")
-      echo -e "${green}$2${no_color}"
+      printf "%b\n" "${green}$2${no_color}"
       ;;
     "noop")
-      echo -e "${blue}$2${no_color}"
+      printf "%b\n" "${blue}$2${no_color}"
       ;;
     "doing")
-      echo -e "${purple}$2${no_color}"
+      printf "%b\n" "${purple}$2${no_color}"
       ;;
     *)
       h_format_error "usage: h_echo <mode> <message>"
@@ -153,7 +153,7 @@ h_validate_desktop_env() {
 # usage: h_format_error <error_message>
 h_format_error() {
   [[ $# -ne 1 ]] && {
-    echo -e "${red}usage: h_format_error <error_message>${no_color}" >&2
+    printf "%b\n" "${red}usage: h_format_error <error_message>${no_color}" >&2
     kill -INT $$
   }
 
@@ -249,6 +249,6 @@ h_run_shell_in_container() {
 h_set_wezterm_user_var() {
   [[ $# -ne 2 ]] && h_format_error "usage: h_set_wezterm_user_var <key> <value>"
 
-  printf "\033]1337;SetUserVar=%s=%s\007" "$1" $(echo -n "$2" | base64)
+  printf "\033]1337;SetUserVar=%s=%s\007" "$1" $(printf '%s' "$2" | base64)
   # printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" $(echo -n "true" | base64)
 }
