@@ -80,13 +80,12 @@ h_install_package() {
 
   local pkg
   pkg=$(h_resolve_package "$1" "$2")
+  echo "$pkg" >>./installed_packages
 
   if h_has_package "$1" "$2"; then
     h_echo noop "already has $pkg"
     return 0
   fi
-
-  echo "$pkg" >>./installed_packages
 
   if [[ $1 == "dnf" && $2 == "lazygit" ]]; then
     h_echo doing "enabling COPR repo dejan/lazygit"
