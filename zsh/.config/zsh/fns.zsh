@@ -184,14 +184,13 @@ chat() {
 
 hor() {
   xrandr --output eDP-1 --rotate normal
-  xinput list --name-only | grep '^IPTSD Virtual' | while read dev; do
+  xinput list --name-only | grep '^Wacom HID .* \(Finger touch\|Pen stylus\)$' | while read dev; do
     xinput set-prop "$dev" "Coordinate Transformation Matrix" 1 0 0 0 1 0 0 0 1
   done
 }
-
 ver() {
   xrandr --output eDP-1 --rotate left
-  xinput list --name-only | grep '^IPTSD Virtual' | while read dev; do
+  xinput list --name-only | grep '^Wacom HID .* \(Finger touch\|Pen stylus\)$' | while read dev; do
     xinput set-prop "$dev" "Coordinate Transformation Matrix" 0 -1 1 1 0 0 0 0 1
   done
 }
