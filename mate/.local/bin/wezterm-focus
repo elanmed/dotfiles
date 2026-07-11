@@ -1,2 +1,0 @@
-#!/bin/bash
-wmctrl -x -a org.wezfurlong.wezterm || wezterm

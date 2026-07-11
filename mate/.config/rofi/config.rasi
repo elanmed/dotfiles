@@ -1,6 +1,6 @@
 configuration {
-/*  modes: "window,drun,run,ssh";*/
-  font: "mono 8";
+  modes: "window,drun";
+  font: "mono 16";
 /*  location: 0;*/
 /*  yoffset: 0;*/
 /*  xoffset: 0;*/
@@ -76,7 +76,7 @@ configuration {
 /*  kb-remove-word-back: "Control+Alt+h,Control+BackSpace";*/
 /*  kb-remove-word-forward: "Control+Alt+d";*/
 /*  kb-remove-char-forward: "Delete,Control+d";*/
-/*  kb-remove-char-back: "BackSpace,Shift+BackSpace,Control+h";*/
+  kb-remove-char-back: ""; /* default is control+h*/
 /*  kb-remove-to-eol: "Control+k";*/
 /*  kb-remove-to-sol: "Control+u";*/
 /*  kb-accept-entry: "Control+j,Control+m,Return,KP_Enter";*/
@@ -84,9 +84,9 @@ configuration {
 /*  kb-accept-custom-alt: "Control+Shift+Return";*/
 /*  kb-accept-alt: "Shift+Return";*/
 /*  kb-delete-entry: "Shift+Delete";*/
-/*  kb-mode-next: "Shift+Right,Control+Tab";*/
-/*  kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";*/
-/*  kb-mode-complete: "Control+l";*/
+  kb-mode-next: "Control+l";
+  kb-mode-previous: "Control+h";
+  kb-mode-complete: ""; /* default is control+l */
 /*  kb-row-left: "Control+Page_Up";*/
 /*  kb-row-right: "Control+Page_Down";*/
 /*  kb-row-up: "Up,Control+p";*/
