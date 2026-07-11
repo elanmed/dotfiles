@@ -110,8 +110,7 @@ fi
 
 h_echo doing "initializing nvm"
 source ~/.nvm/nvm.sh
-nvm install --lts >/dev/null
-nvm alias default node >/dev/null
+nvm install node >/dev/null
 
 h_echo doing "installing pnpm"
 npm install -g --silent pnpm@latest-11
