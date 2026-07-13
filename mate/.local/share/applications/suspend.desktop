@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Suspend
-Exec=systemctl suspend
+# Exec=systemctl suspend
+Exec=mate-screensaver-command -l
 Type=Application
 Terminal=false
