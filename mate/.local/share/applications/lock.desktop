@@ -1,3 +1,4 @@
+[Desktop Entry]
 Name=Lock
 Exec=mate-screensaver-command -l
 Type=Application
