@@ -149,3 +149,5 @@ configuration {
       sorting-method:    "name";
   }
 }
+//@theme "/usr/share/rofi/themes/docu.rasi"
+@theme "/usr/share/rofi/themes/fancy.rasi"
