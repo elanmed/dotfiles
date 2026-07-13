@@ -11,7 +11,6 @@ gsettings set org.mate.peripherals-keyboard rate 25
 gsettings set org.mate.peripherals-keyboard delay 250
 gsettings set org.mate.peripherals-touchpad tap-to-click true
 gsettings set org.mate.interface accessibility true
-gsettings set org.mate.screensaver lock-enabled true
 
 gsettings set org.mate.Marco.keybinding-commands command-2 'rofi -show window'
 gsettings set org.mate.Marco.global-keybindings run-command-2 '<Alt>space'
