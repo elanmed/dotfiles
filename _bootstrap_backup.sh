@@ -1,7 +1,7 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
-usage="usage: ./bootstrap.sh -p brew|dnf|apt -d mate|gnome|macos|server"
+usage="usage: ./bootstrap.sh -p brew|dnf|apt -d mate|gnome|macos|headless"
 
 package_manager=""
 desktop_env=""
