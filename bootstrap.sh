@@ -63,3 +63,44 @@ if ! h_string_includes "$SHELL" "zsh"; then
   h_echo noop "exiting early, log out and re-run the script"
   exit 0
 fi
+
+if h_array_includes "$desktop_env" "mate" "gnome" "macos"; then
+  h_echo doing "installing $desktop_env-specific packages"
+fi
+
+case "$desktop_env" in
+  gnome)
+    echo ""
+    ;;
+  mate)
+    h_install_package "$package_manager" git
+    h_install_package "$package_manager" curl
+    h_install_package "$package_manager" wmctrl
+    h_install_package "$package_manager" rofi
+    h_install_package "$package_manager" keyd
+    # h_install_package "$package_manager" wezterm
+    h_install_package "$package_manager" xinput
+    h_install_package "$package_manager" flatpak
+    h_install_package "$package_manager" gnome-software
+    h_install_package "$package_manager" gnome-software-plugin-flatpak
+    h_install_package "$package_manager" xss-lock
+    ;;
+  macos)
+    echo ""
+    ;;
+esac
+
+h_echo doing "installing system packages"
+h_install_package "$package_manager" stow
+h_install_package "$package_manager" shfmt
+h_install_package "$package_manager" tmux
+h_install_package "$package_manager" bats
+h_install_package "$package_manager" xclip
+h_install_package "$package_manager" fzf
+h_install_package "$package_manager" nc
+h_install_package "$package_manager" source-highlight
+h_install_package "$package_manager" highlight
+h_install_package "$package_manager" lazygit
+h_install_package "$package_manager" unzip
+h_install_package "$package_manager" podman
+h_install_package "$package_manager" git-delta
