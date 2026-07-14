@@ -205,16 +205,6 @@ f() {
   toolbox enter fedora-toolbox-43
 }
 
-tbuild() {
-  h_require_root_env "toolbox"
-  if h_is_macos; then
-    h_echo error "toolbox is only supported on linux"
-    exit 1
-  fi
-
-  toolbox create --distro fedora --release 43
-}
-
 v() {
   h_run_shell_in_container "\$NVIM_CMD $@"
 }
