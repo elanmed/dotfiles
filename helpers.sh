@@ -8,7 +8,7 @@ export no_color='\033[0m'
 
 # usage: h_echo <mode> <message>
 h_echo() {
-  [[ $# -ne 2 ]] && h_format_error "usage: h_echo <mode> <message>"
+  [[ $# -ne 2 ]] && h_throw_error "usage: h_echo <mode> <message>"
 
   case "$1" in
     "error")
@@ -24,14 +24,14 @@ h_echo() {
       printf "%b\n" "${purple}$2${no_color}"
       ;;
     *)
-      h_format_error "usage: h_echo <mode> <message>"
+      h_throw_error "usage: h_echo <mode> <message>"
       ;;
   esac
 }
 
 # usage: h_resolve_package <package_manager> <canonical_name>
 h_resolve_package() {
-  [[ $# -ne 2 ]] && h_format_error "usage: h_resolve_package <package_manager> <canonical_name>"
+  [[ $# -ne 2 ]] && h_throw_error "usage: h_resolve_package <package_manager> <canonical_name>"
 
   case "$1:$2" in
     dnf:fd | apt:fd)
@@ -54,7 +54,7 @@ h_resolve_package() {
 
 # usage: h_has_package <package_manager> <package>
 h_has_package() {
-  [[ $# -ne 2 ]] && h_format_error "usage: h_has_package <package_manager> <package>"
+  [[ $# -ne 2 ]] && h_throw_error "usage: h_has_package <package_manager> <package>"
   h_validate_package_manager "$1"
 
   local pkg
@@ -75,7 +75,7 @@ h_has_package() {
 
 # usage: h_install_package <package_manager> <package>
 h_install_package() {
-  [[ $# -ne 2 ]] && h_format_error "usage: h_install_package <package_manager> <package>"
+  [[ $# -ne 2 ]] && h_throw_error "usage: h_install_package <package_manager> <package>"
   h_validate_package_manager "$1"
 
   local pkg
@@ -109,7 +109,7 @@ h_install_package() {
 
 # usage: h_uninstall_package <package_manager> <package>
 h_uninstall_package() {
-  [[ $# -ne 2 ]] && h_format_error "usage: h_uninstall_package <package_manager> <package>"
+  [[ $# -ne 2 ]] && h_throw_error "usage: h_uninstall_package <package_manager> <package>"
   h_validate_package_manager "$1"
 
   local pkg
@@ -130,29 +130,32 @@ h_uninstall_package() {
   esac
 }
 
+# TODO: cleanup
 # usage: h_validate_package_manager <package_manager>
 h_validate_package_manager() {
-  [[ $# -ne 1 ]] && h_format_error "usage: h_validate_package_manager <package_manager>"
+  [[ $# -ne 1 ]] && h_throw_error "usage: h_validate_package_manager <package_manager>"
 
   if ! h_array_includes "$1" "brew" "dnf" "apt"; then
-    h_format_error "usage: h_validate_package_manager <package_manager>"
+    h_throw_error "usage: h_validate_package_manager <package_manager>"
   fi
 }
 
 # usage: h_validate_desktop_env <desktop_env>
 # valid desktop_env: mate, gnome, macos, headless
 h_validate_desktop_env() {
-  [[ $# -ne 1 ]] && h_format_error "usage: h_validate_desktop_env <mate|gnome|macos|headless>"
+  [[ $# -ne 1 ]] && h_throw_error "usage: h_validate_desktop_env <mate
 
+  # TODO: cleanup
   if ! h_array_includes "$1" "mate" "gnome" "macos" "headless"; then
-    h_format_error "usage: h_validate_desktop_env <mate|gnome|macos|headless>"
+    h_throw_error "usage: h_validate_desktop_env <mate
   fi
 }
 
-# usage: h_format_error <error_message>
-h_format_error() {
+# TODO: rename
+# usage: h_throw_error <error_message>
+h_throw_error() {
   [[ $# -ne 1 ]] && {
-    printf "%b\n" "${red}usage: h_format_error <error_message>${no_color}" >&2
+    printf "%b\n" "${red}usage: h_throw_error <error_message>${no_color}" >&2
     kill -INT $$
   }
 
@@ -162,7 +165,7 @@ h_format_error() {
 
 # usage: h_array_includes <needle> <items...>
 h_array_includes() {
-  [[ $# -lt 2 ]] && h_format_error "usage: h_array_includes <needle> <items...>"
+  [[ $# -lt 2 ]] && h_throw_error "usage: h_array_includes <needle> <items...>"
 
   local needle="$1"
   shift # remove the first argument
@@ -178,7 +181,7 @@ h_array_includes() {
 
 # usage: h_string_includes <string> <substring>
 h_string_includes() {
-  [[ $# -ne 2 ]] && h_format_error "usage: h_string_includes <string> <substring>"
+  [[ $# -ne 2 ]] && h_throw_error "usage: h_string_includes <string> <substring>"
 
   if [[ $1 == *"$2"* ]]; then
     return 0
@@ -224,10 +227,10 @@ h_is_macos() {
 
 # usage: h_require_root_env <command_name>
 h_require_root_env() {
-  [[ $# -ne 1 ]] && h_format_error "usage: h_require_root_env <command_name>"
+  [[ $# -ne 1 ]] && h_throw_error "usage: h_require_root_env <command_name>"
 
   if h_is_toolbox || h_is_podman; then
-    h_format_error "$1 should only be used in a root environment"
+    h_throw_error "$1 should only be used in a root environment"
   fi
 }
 
@@ -235,7 +238,7 @@ h_require_root_env() {
 # Runs a shell command string (e.g. "cd dir && cmd") inside toolbox on Linux,
 # keeping the container alive after the command exits.
 h_run_shell_in_container() {
-  [[ $# -ne 1 ]] && h_format_error "usage: h_run_shell_in_container <shell-command>"
+  [[ $# -ne 1 ]] && h_throw_error "usage: h_run_shell_in_container <shell-command>"
 
   if [[ $(uname -s) == "Linux" ]] && ! h_is_toolbox && ! h_is_podman; then
     h_echo doing "starting toolbox"
@@ -246,7 +249,7 @@ h_run_shell_in_container() {
 }
 
 h_set_wezterm_user_var() {
-  [[ $# -ne 2 ]] && h_format_error "usage: h_set_wezterm_user_var <key> <value>"
+  [[ $# -ne 2 ]] && h_throw_error "usage: h_set_wezterm_user_var <key> <value>"
 
   printf "\033]1337;SetUserVar=%s=%s\007" "$1" $(printf '%s' "$2" | base64)
   # printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" $(echo -n "true" | base64)

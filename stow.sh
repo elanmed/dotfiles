@@ -64,6 +64,6 @@ case "$desktop_env" in
     run_stow "${macos_dirs[@]}"
     ;;
   *)
-    h_format_error "$usage"
+    h_throw_error "$usage"
     ;;
 esac

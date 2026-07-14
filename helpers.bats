@@ -209,22 +209,22 @@ setup() {
   [[ $output =~ "usage: h_echo" ]]
 }
 
-@test "h_format_error: outputs error message and exits" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_format_error 'test error' 2>&1"
+@test "h_throw_error: outputs error message and exits" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_throw_error 'test error' 2>&1"
   [ "$status" -ne 0 ]
   [[ $output =~ "test error" ]]
 }
 
-@test "h_format_error: exits early with 0 arguments" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_format_error 2>&1"
+@test "h_throw_error: exits early with 0 arguments" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_throw_error 2>&1"
   [ "$status" -ne 0 ]
-  [[ $output =~ "usage: h_format_error" ]]
+  [[ $output =~ "usage: h_throw_error" ]]
 }
 
-@test "h_format_error: exits early with 2 arguments" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_format_error 'error1' 'error2' 2>&1"
+@test "h_throw_error: exits early with 2 arguments" {
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_throw_error 'error1' 'error2' 2>&1"
   [ "$status" -ne 0 ]
-  [[ $output =~ "usage: h_format_error" ]]
+  [[ $output =~ "usage: h_throw_error" ]]
 }
 @test "h_validate_desktop_env: accepts mate" {
   run h_validate_desktop_env "mate"
