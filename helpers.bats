@@ -241,8 +241,8 @@ setup() {
   [ "$status" -eq 0 ]
 }
 
-@test "h_validate_desktop_env: accepts server" {
-  run h_validate_desktop_env "server"
+@test "h_validate_desktop_env: accepts headless" {
+  run h_validate_desktop_env "headless"
   [ "$status" -eq 0 ]
 }
 

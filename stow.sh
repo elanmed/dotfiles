@@ -1,7 +1,7 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
-usage="usage: ./stow.sh -d mate|gnome|macos|server"
+usage="usage: ./stow.sh -d mate|gnome|macos|headless"
 
 desktop_env=""
 
@@ -57,7 +57,7 @@ case "$desktop_env" in
     run_stow "${mate_dirs[@]}"
     link_keyd
     ;;
-  "server")
+  "headless")
     run_stow "${server_dirs[@]}"
     ;;
   "macos")

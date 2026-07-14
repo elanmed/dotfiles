@@ -17,7 +17,7 @@ export PATH="$HOME/.dotfiles/neovim/.config/nvim/language_servers/lua-language-s
 # https://tech.serhatteker.com/post/2019-12/remove-duplicates-in-path-zsh/
 typeset -U path
 
-if [[ -f "$HOME/.dotfiles/.desktop_env" ]] && [[ "$(cat "$HOME/.dotfiles/.desktop_env")" == "server" ]]; then
+if [[ -f "$HOME/.dotfiles/.desktop_env" ]] && [[ "$(cat "$HOME/.dotfiles/.desktop_env")" == "headless" ]]; then
   export NVIM_CMD="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
 else
   export NVIM_CMD="nvim"

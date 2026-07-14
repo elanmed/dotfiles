@@ -29,8 +29,8 @@ setup() {
   [[ $output =~ "usage:" ]]
 }
 
-@test "stow.sh: accepts -d server" {
-  run bash "$STOW_SCRIPT" -d server
+@test "stow.sh: accepts -d headless" {
+  run bash "$STOW_SCRIPT" -d headless
   [ "$status" -eq 0 ]
 }
 

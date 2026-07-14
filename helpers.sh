@@ -140,12 +140,12 @@ h_validate_package_manager() {
 }
 
 # usage: h_validate_desktop_env <desktop_env>
-# valid desktop_env: mate, gnome, macos, server
+# valid desktop_env: mate, gnome, macos, headless
 h_validate_desktop_env() {
-  [[ $# -ne 1 ]] && h_format_error "usage: h_validate_desktop_env <mate|gnome|macos|server>"
+  [[ $# -ne 1 ]] && h_format_error "usage: h_validate_desktop_env <mate|gnome|macos|headless>"
 
-  if ! h_array_includes "$1" "mate" "gnome" "macos" "server"; then
-    h_format_error "usage: h_validate_desktop_env <mate|gnome|macos|server>"
+  if ! h_array_includes "$1" "mate" "gnome" "macos" "headless"; then
+    h_format_error "usage: h_validate_desktop_env <mate|gnome|macos|headless>"
   fi
 }
 
