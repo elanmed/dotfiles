@@ -49,3 +49,17 @@ echo -n "" >./installed_packages
 # install packages
 # diff from previous expected packages
 # notify if diff (new or removed expected package)
+
+h_echo doing "initializing submodules"
+git submodule init
+git submodule update
+git submodule foreach --quiet 'source ~/.dotfiles/helpers.sh && h_update_submodule'
+
+h_install_package "$package_manager" zsh
+
+if ! h_string_includes "$SHELL" "zsh"; then
+  h_echo doing "setting the default shell to zsh"
+  chsh -s "$(command -v zsh)"
+  h_echo noop "exiting early, log out and re-run the script"
+  exit 0
+fi
