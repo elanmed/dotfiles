@@ -56,7 +56,8 @@ killp() {
 
 cbuild() {
   if [[ $1 != "ubuntu" ]] && [[ $1 != "fedora" ]]; then
-    h_format_error "usage: cbuild {ubuntu,fedora}"
+    h_echo error "usage: cbuild {ubuntu,fedora}"
+    exit 1
   fi
 
   h_require_root_env "cbuild"
@@ -69,11 +70,13 @@ cbuild() {
 
 crun() {
   if [[ -z $1 ]]; then
-    h_format_error "usage: crun <directory> {ubuntu,fedora} [command...]"
+    h_echo error "usage: crun <directory> {ubuntu,fedora} [command...]"
+    exit 1
   fi
 
   if [[ $2 != "ubuntu" ]] && [[ $2 != "fedora" ]]; then
-    h_format_error "usage: crun <directory> {ubuntu,fedora} [command...]"
+    h_echo error "usage: crun <directory> {ubuntu,fedora} [command...]"
+    exit 1
   fi
 
   h_require_root_env "crun"
@@ -154,11 +157,13 @@ cat_args() {
 sub_remove() {
   local name="$1"
   [[ -z $name ]] && {
-    h_format_error "usage: sub_remove <path>"
+    h_echo error "usage: sub_remove <path>"
+    exit 1
   }
 
   [[ -d ".git/modules/$name" ]] || {
-    h_format_error "module data not found: .git/modules/$name"
+    h_echo error "module data not found: .git/modules/$name"
+    exit 1
   }
 
   git submodule deinit --force "$name" || return 1
@@ -203,7 +208,8 @@ f() {
 tbuild() {
   h_require_root_env "toolbox"
   if h_is_macos; then
-    h_format_error "toolbox is only supported on linux"
+    h_echo error "toolbox is only supported on linux"
+    exit 1
   fi
 
   toolbox create --distro fedora --release 43
