@@ -143,11 +143,11 @@ h_validate_package_manager() {
 # usage: h_validate_desktop_env <desktop_env>
 # valid desktop_env: mate, gnome, macos, headless
 h_validate_desktop_env() {
-  [[ $# -ne 1 ]] && h_throw_error "usage: h_validate_desktop_env <mate
+  [[ $# -ne 1 ]] && h_throw_error "usage: h_validate_desktop_env <desktop_env>"
 
   # TODO: cleanup
   if ! h_array_includes "$1" "mate" "gnome" "macos" "headless"; then
-    h_throw_error "usage: h_validate_desktop_env <mate
+    h_throw_error "usage: h_validate_desktop_env <desktop_env>"
   fi
 }
 
