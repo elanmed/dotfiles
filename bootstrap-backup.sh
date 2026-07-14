@@ -95,7 +95,7 @@ echo "$desktop_env" >./.desktop_env
 
 source "$HOME/.dotfiles/stow.sh" -d "$desktop_env"
 
-if [[ $desktop_env == "server" ]]; then
+if [[ $desktop_env == "headless" ]]; then
   h_echo noop "SKIPPING: bootstrapping fonts"
 else
   h_echo doing "bootstrapping fonts"
