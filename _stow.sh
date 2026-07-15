@@ -1,6 +1,8 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
+# TODO: make internal
+
 usage="usage: ./stow.sh -d mate|gnome|macos|headless"
 
 desktop_env=""
