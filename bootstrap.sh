@@ -69,56 +69,13 @@ if ! h_string_includes "$SHELL" "zsh"; then
   exit 0
 fi
 
-if h_array_includes "$desktop_env" "${gui_desktop_envs[@]}"; then
-  h_echo doing "installing $desktop_env-specific packages"
-fi
+source "./_stow.sh" "$desktop_env"
+source "./_install_packages" "$package_manager" "$desktop_env"
 
 # h_install_package "$package_manager" wezterm
-
-case "$desktop_env" in
-  gnome)
-    echo ""
-    ;;
-  mate)
-    h_install_package "$package_manager" wmctrl
-    h_install_package "$package_manager" rofi
-    h_install_package "$package_manager" keyd
-    h_install_package "$package_manager" xinput
-    h_install_package "$package_manager" flatpak
-    h_install_package "$package_manager" gnome-software
-    h_install_package "$package_manager" gnome-software-plugin-flatpak
-    h_install_package "$package_manager" xss-lock
-    ;;
-  macos)
-    echo ""
-    ;;
-esac
-
-case "$package_manager" in
-  brew) ;;
-  dnf) ;;
-  apt) ;;
-esac
-
-h_echo doing "installing system packages"
-h_install_package "$package_manager" stow
-h_install_package "$package_manager" shfmt
-h_install_package "$package_manager" tmux
-h_install_package "$package_manager" bats
-h_install_package "$package_manager" xclip
-h_install_package "$package_manager" fzf
-h_install_package "$package_manager" source-highlight
-h_install_package "$package_manager" highlight
-h_install_package "$package_manager" lazygit
-h_install_package "$package_manager" podman
-h_install_package "$package_manager" git-delta
 
 if h_is_macos; then
   h_echo doing "initializing the podman vim"
   podman machine init >/dev/null
   podman machine start >/dev/null
-fi
-
-if h_array_includes "$desktop_env" "${gui_desktop_envs[@]}"; then
-  h_echo doing "installing $desktop_env-specific packages"
 fi
