@@ -28,13 +28,13 @@ if [[ -z $desktop_env ]]; then
 fi
 h_validate_desktop_env "$desktop_env"
 
-desktop_dirs=("fonts" "tmux" "wezterm")
+gui_desktop_dirs=("fonts" "tmux" "wezterm")
 base_dirs=("containers" "git" "neovim" "nvm" "scripts" "zsh")
 
 server_dirs=("${base_dirs[@]}")
-mate_dirs=("${base_dirs[@]}" "${desktop_dirs[@]}" "mate")
-gnome_dirs=("${base_dirs[@]}" "${desktop_dirs[@]}" "gnome")
-macos_dirs=("${base_dirs[@]}" "${desktop_dirs[@]}" "macos")
+mate_dirs=("${base_dirs[@]}" "${gui_desktop_dirs[@]}" "mate")
+gnome_dirs=("${base_dirs[@]}" "${gui_desktop_dirs[@]}" "gnome")
+macos_dirs=("${base_dirs[@]}" "${gui_desktop_dirs[@]}" "macos")
 
 run_stow() {
   for dir in "$@"; do
