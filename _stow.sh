@@ -1,34 +1,7 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
-# TODO: make internal
-
-usage="usage: ./stow.sh -d mate|gnome|macos|headless"
-
-desktop_env=""
-
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    -d)
-      if [[ -z ${2:-} ]]; then
-        h_echo error "$usage"
-        exit 1
-      fi
-      desktop_env="$2"
-      shift 2
-      ;;
-    *)
-      h_echo error "$usage"
-      exit 1
-      ;;
-  esac
-done
-
-if [[ -z $desktop_env ]]; then
-  h_echo error "$usage"
-  exit 1
-fi
-h_validate_desktop_env "$desktop_env"
+[[ $# -ne 2 ]] && h_throw_error "usage: ./_stow.sh <desktop_env>"
 
 gui_desktop_dirs=("fonts" "tmux" "wezterm")
 base_dirs=("containers" "git" "neovim" "nvm" "scripts" "zsh")
