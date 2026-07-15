@@ -25,7 +25,11 @@ if [[ -z $package_manager ]]; then
   h_echo error "$usage"
   exit 1
 fi
-h_validate_package_manager "$package_manager"
+
+if ! h_array_includes "$1" "brew" "dnf" "apt"; then
+  h_echo error "$usage"
+  exit 1
+fi
 
 if [[ ! -f ./installed_packages ]]; then
   echo "installed_packages log does not exist"

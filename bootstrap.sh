@@ -2,6 +2,9 @@
 source ~/.dotfiles/helpers.sh
 
 usage="usage: ./bootstrap.sh -p {brew,dnf,apt} -d {mate,gnome,macos,headless}"
+gui_desktop_envs=("gnome" "mate" "macos")
+desktop_envs=("${gui_desktop_envs[@]}" "headless")
+package_managers=("brew" "dnf" "apt")
 
 package_manager=""
 desktop_env=""
@@ -36,10 +39,17 @@ if [[ -z $package_manager ]] || [[ -z $desktop_env ]]; then
   exit 1
 fi
 
-gui_desktop_envs=("gnome" "mate" "macos")
-
 h_validate_package_manager "$package_manager"
-h_validate_desktop_env "$desktop_env"
+
+if ! h_array_includes "$desktop_env" "${desktop_envs[@]}"; then
+  h_echo error "$usage"
+  exit 1
+fi
+
+if ! h_array_includes "$package_manager" "${package_managers[@]}"; then
+  h_echo error "$usage"
+  exit 1
+fi
 
 h_echo doing "writing $desktop_env to .desktop_env"
 echo "$desktop_env" >./.desktop_env
@@ -50,10 +60,6 @@ if [[ -e ./installed_packages ]]; then
   cp ./installed_packages ./installed_packages_prev
 fi
 echo -n "" >./installed_packages
-
-# install packages
-# diff from previous expected packages
-# notify if diff (new or removed expected package)
 
 h_echo doing "initializing submodules"
 git submodule init
@@ -119,3 +125,8 @@ npm --prefix ~/.dotfiles/neovim/.local/lib/vim-js run gen-manifest chrome >/dev/
 
 h_echo doing "bootstrapping neovim"
 bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh -p "$package_manager" -d "$desktop_env"
+
+if [[ -e ./installed_packages_prev ]]; then
+  h_echo doing "diffing last log and current log"
+  diff ./installed_packages_prev ./installed_packages
+fi

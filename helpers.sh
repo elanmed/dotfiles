@@ -55,7 +55,6 @@ h_resolve_package() {
 # usage: h_has_package <package_manager> <package>
 h_has_package() {
   [[ $# -ne 2 ]] && h_throw_error "usage: h_has_package <package_manager> <package>"
-  h_validate_package_manager "$1"
 
   local pkg
   pkg=$(h_resolve_package "$1" "$2")
@@ -76,7 +75,6 @@ h_has_package() {
 # usage: h_install_package <package_manager> <package>
 h_install_package() {
   [[ $# -ne 2 ]] && h_throw_error "usage: h_install_package <package_manager> <package>"
-  h_validate_package_manager "$1"
 
   local pkg
   pkg=$(h_resolve_package "$1" "$2")
@@ -110,7 +108,6 @@ h_install_package() {
 # usage: h_uninstall_package <package_manager> <package>
 h_uninstall_package() {
   [[ $# -ne 2 ]] && h_throw_error "usage: h_uninstall_package <package_manager> <package>"
-  h_validate_package_manager "$1"
 
   local pkg
   pkg=$(h_resolve_package "$1" "$2")
