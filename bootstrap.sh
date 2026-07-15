@@ -39,8 +39,6 @@ if [[ -z $package_manager ]] || [[ -z $desktop_env ]]; then
   exit 1
 fi
 
-h_validate_package_manager "$package_manager"
-
 if ! h_array_includes "$desktop_env" "${desktop_envs[@]}"; then
   h_echo error "$usage"
   exit 1
