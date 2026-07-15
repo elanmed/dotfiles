@@ -36,8 +36,13 @@ if [[ -z $package_manager ]] || [[ -z $desktop_env ]]; then
   exit 1
 fi
 
+gui_desktop_envs=("gnome" "mate" "macos")
+
 h_validate_package_manager "$package_manager"
 h_validate_desktop_env "$desktop_env"
+
+h_echo doing "writing $desktop_env to .desktop_env"
+echo "$desktop_env" >./.desktop_env
 
 h_echo doing "setting up installed_packages log"
 if [[ -e ./installed_packages ]]; then
@@ -64,21 +69,20 @@ if ! h_string_includes "$SHELL" "zsh"; then
   exit 0
 fi
 
-if h_array_includes "$desktop_env" "mate" "gnome" "macos"; then
+if h_array_includes "$desktop_env" "${gui_desktop_envs[@]}"; then
   h_echo doing "installing $desktop_env-specific packages"
 fi
+
+# h_install_package "$package_manager" wezterm
 
 case "$desktop_env" in
   gnome)
     echo ""
     ;;
   mate)
-    h_install_package "$package_manager" git
-    h_install_package "$package_manager" curl
     h_install_package "$package_manager" wmctrl
     h_install_package "$package_manager" rofi
     h_install_package "$package_manager" keyd
-    # h_install_package "$package_manager" wezterm
     h_install_package "$package_manager" xinput
     h_install_package "$package_manager" flatpak
     h_install_package "$package_manager" gnome-software
@@ -90,6 +94,12 @@ case "$desktop_env" in
     ;;
 esac
 
+case "$package_manager" in
+  brew) ;;
+  dnf) ;;
+  apt) ;;
+esac
+
 h_echo doing "installing system packages"
 h_install_package "$package_manager" stow
 h_install_package "$package_manager" shfmt
@@ -97,10 +107,18 @@ h_install_package "$package_manager" tmux
 h_install_package "$package_manager" bats
 h_install_package "$package_manager" xclip
 h_install_package "$package_manager" fzf
-h_install_package "$package_manager" nc
 h_install_package "$package_manager" source-highlight
 h_install_package "$package_manager" highlight
 h_install_package "$package_manager" lazygit
-h_install_package "$package_manager" unzip
 h_install_package "$package_manager" podman
 h_install_package "$package_manager" git-delta
+
+if h_is_macos; then
+  h_echo doing "initializing the podman vim"
+  podman machine init >/dev/null
+  podman machine start >/dev/null
+fi
+
+if h_array_includes "$desktop_env" "${gui_desktop_envs[@]}"; then
+  h_echo doing "installing $desktop_env-specific packages"
+fi
