@@ -127,27 +127,6 @@ h_uninstall_package() {
   esac
 }
 
-# TODO: cleanup
-# usage: h_validate_package_manager <package_manager>
-h_validate_package_manager() {
-  [[ $# -ne 1 ]] && h_throw_error "usage: h_validate_package_manager <package_manager>"
-
-  if ! h_array_includes "$1" "brew" "dnf" "apt"; then
-    h_throw_error "usage: h_validate_package_manager <package_manager>"
-  fi
-}
-
-# usage: h_validate_desktop_env <desktop_env>
-# valid desktop_env: mate, gnome, macos, headless
-h_validate_desktop_env() {
-  [[ $# -ne 1 ]] && h_throw_error "usage: h_validate_desktop_env <desktop_env>"
-
-  # TODO: cleanup
-  if ! h_array_includes "$1" "mate" "gnome" "macos" "headless"; then
-    h_throw_error "usage: h_validate_desktop_env <desktop_env>"
-  fi
-}
-
 # TODO: rename
 # usage: h_throw_error <error_message>
 h_throw_error() {
