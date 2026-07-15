@@ -1,15 +1,10 @@
 #!/bin/bash
 source ~/.dotfiles/helpers.sh
 
-[[ $# -ne 2 ]] && h_throw_error "usage: ./_stow.sh <desktop_env>"
+[[ $# -ne 1 ]] && h_throw_error "usage: ./_stow.sh <desktop_env>"
 
 gui_desktop_dirs=("fonts" "tmux" "wezterm")
 base_dirs=("containers" "git" "neovim" "nvm" "scripts" "zsh")
-
-server_dirs=("${base_dirs[@]}")
-mate_dirs=("${base_dirs[@]}" "${gui_desktop_dirs[@]}" "mate")
-gnome_dirs=("${base_dirs[@]}" "${gui_desktop_dirs[@]}" "gnome")
-macos_dirs=("${base_dirs[@]}" "${gui_desktop_dirs[@]}" "macos")
 
 run_stow() {
   for dir in "$@"; do
@@ -19,24 +14,24 @@ run_stow() {
 }
 
 link_keyd() {
-  h_echo doing "symlinking keyd conf"
-  sudo mkdir -p /etc/keyd
-  sudo ln -sf ~/.dotfiles/keyd/etc/keyd/default.conf /etc/keyd/default.conf
 }
 
 case "$desktop_env" in
   "gnome")
-    run_stow "${gnome_dirs[@]}"
+    run_stow "${base_dirs[@]}" "${gui_desktop_dirs[@]}" "gnome"
     ;;
   "mate")
-    run_stow "${mate_dirs[@]}"
-    link_keyd
+    run_stow "${base_dirs[@]}" "${gui_desktop_dirs[@]}" "mate"
+
+    h_echo doing "symlinking keyd conf"
+    sudo mkdir -p /etc/keyd
+    sudo ln -sf ~/.dotfiles/keyd/etc/keyd/default.conf /etc/keyd/default.conf
     ;;
   "headless")
-    run_stow "${server_dirs[@]}"
+    run_stow "${base_dirs[@]}"
     ;;
   "macos")
-    run_stow "${macos_dirs[@]}"
+    run_stow "${base_dirs[@]}" "${gui_desktop_dirs[@]}" "macos"
     ;;
   *)
     h_throw_error "$usage"
