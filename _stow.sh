@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/.dotfiles/helpers.sh
+source "$HOME/.dotfiles/helpers.sh"
 
 [[ $# -ne 1 ]] && h_throw_error "usage: ./_stow.sh <desktop_env>"
 
@@ -22,7 +22,7 @@ case "$desktop_env" in
 
     h_echo doing "symlinking keyd conf"
     sudo mkdir -p /etc/keyd
-    sudo ln -sf ~/.dotfiles/keyd/etc/keyd/default.conf /etc/keyd/default.conf
+    sudo ln -sf "$HOME/.dotfiles/keyd/etc/keyd/default.conf" /etc/keyd/default.conf
     ;;
   "headless")
     run_stow "${base_dirs[@]}"
@@ -31,6 +31,6 @@ case "$desktop_env" in
     run_stow "${base_dirs[@]}" "${gui_desktop_dirs[@]}" "macos"
     ;;
   *)
-    h_throw_error "$usage"
+    h_throw_error "invalid desktop env: $desktop_env"
     ;;
 esac

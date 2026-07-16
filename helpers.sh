@@ -79,7 +79,7 @@ h_install_package() {
 
   local pkg
   pkg=$(h_resolve_package "$1" "$2")
-  echo "$pkg" >>"~/.dotfiles/installed_packages"
+  echo "$pkg" >>"$HOME/.dotfiles/installed_packages"
 
   if h_has_package "$1" "$2"; then
     h_echo noop "already has $pkg"

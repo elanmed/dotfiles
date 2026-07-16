@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/.dotfiles/helpers.sh
+source "$HOME/.dotfiles/helpers.sh"
 usage="usage: nvvm update"
 
 if [[ $1 != "update" ]]; then
