@@ -63,7 +63,7 @@ echo -n "" >"$HOME/.dotfiles/installed_packages"
 h_echo doing "initializing submodules"
 git submodule init
 git submodule update
-git submodule foreach --quiet 'source "$HOME/.dotfiles/_helpers.sh" && h_update_submodule'
+git submodule foreach --quiet "bash -c 'source $HOME/.dotfiles/_helpers.sh && h_update_submodule'"
 
 h_install_package "$package_manager" zsh
 
