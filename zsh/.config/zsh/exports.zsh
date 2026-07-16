@@ -22,7 +22,9 @@ else
   export NVIM_CMD="nvim"
 fi
 
-export TERM="wezterm"
+if infocmp wezterm &>/dev/null; then
+  export TERM="wezterm"
+fi
 export EDITOR="$NVIM_CMD"
 export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
