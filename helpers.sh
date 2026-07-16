@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+# set -euo pipefail
 
 export red='\033[0;31m'
 export blue='\033[0;34m'

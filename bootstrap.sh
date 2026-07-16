@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+# set -euo pipefail
 source ~/.dotfiles/helpers.sh
 
 usage="usage: ./bootstrap.sh -p {brew,dnf,apt} -d {mate,gnome,macos,headless}"

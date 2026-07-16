@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+# set -euo pipefail
 source ~/.dotfiles/helpers.sh
 
 usage="usage: ./uninstall.sh -p brew|dnf|apt"

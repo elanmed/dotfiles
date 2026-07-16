@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+# set -euo pipefail
 source ~/.dotfiles/helpers.sh
 
 [[ $# -ne 2 ]] && h_throw_error "usage: ./_install_packages.sh <package_manager> <desktop_env>"
