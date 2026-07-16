@@ -104,6 +104,10 @@ h_install_package() {
       sudo apt-get install "$pkg" -y >/dev/null
       ;;
   esac
+
+  if [[ $1 == "apt" && $2 == "fd-find" ]]; then
+    ln -s $(which fdfind) ~/.local/bin/fd
+  fi
 }
 
 # usage: h_uninstall_package <package_manager> <package>
