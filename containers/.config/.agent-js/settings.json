@@ -1,11 +1,11 @@
 {
-  "model": "kimi-k2.6",
+  "model": "kimi-k2.7-code",
   "baseURL": "https://opencode.ai/zen/go/v1",
   "pricingPerModel": {
-    "kimi-k2.6": {
+    "kimi-k2.7-code": {
       "inputPerToken": 0.95,
       "outputPerToken": 4.0,
-      "cacheReadPerToken": 0.16
+      "cacheReadPerToken": 0.19
     }
   }
 }
