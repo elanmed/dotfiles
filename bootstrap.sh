@@ -1,6 +1,6 @@
 #!/bin/bash
 # set -euo pipefail
-source "$HOME/.dotfiles/helpers.sh"
+source "$HOME/.dotfiles/_helpers.sh"
 
 usage="usage: ./bootstrap.sh -p {brew,dnf,apt} -d {mate,gnome,macos,headless}"
 gui_desktop_envs=("gnome" "mate" "macos")
@@ -63,7 +63,7 @@ echo -n "" >"$HOME/.dotfiles/installed_packages"
 h_echo doing "initializing submodules"
 git submodule init
 git submodule update
-git submodule foreach --quiet 'source "$HOME/.dotfiles/helpers.sh" && h_update_submodule'
+git submodule foreach --quiet 'source "$HOME/.dotfiles/_helpers.sh" && h_update_submodule'
 
 h_install_package "$package_manager" zsh
 

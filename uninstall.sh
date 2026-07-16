@@ -1,6 +1,6 @@
 #!/bin/bash
 # set -euo pipefail
-source ~/.dotfiles/helpers.sh
+source "$HOME/.dotfiles/_helpers.sh"
 
 usage="usage: ./uninstall.sh -p brew|dnf|apt"
 package_manager=""

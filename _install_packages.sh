@@ -1,6 +1,6 @@
 #!/bin/bash
 # set -euo pipefail
-source "$HOME/.dotfiles/helpers.sh"
+source "$HOME/.dotfiles/_helpers.sh"
 
 [[ $# -ne 2 ]] && h_throw_error "usage: ./_install_packages.sh <package_manager> <desktop_env>"
 package_manager="$1"
@@ -10,7 +10,6 @@ base_packages=(
   "stow"
   "shfmt"
   "tmux"
-  "bats"
   "fzf"
   "lazygit"
   "podman"

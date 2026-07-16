@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/.dotfiles/helpers.sh
+source "$HOME/.dotfiles/_helpers.sh"
 
 usage="usage: ./bootstrap.sh -p brew|dnf|apt -d mate|gnome|macos|headless"
 
@@ -53,7 +53,7 @@ echo -n "" >./installed_packages
 h_echo doing "initializing submodules"
 git submodule init
 git submodule update
-git submodule foreach --quiet 'source ~/.dotfiles/helpers.sh && h_update_submodule'
+git submodule foreach --quiet 'source "$HOME/.dotfiles/_helpers.sh" && h_update_submodule'
 
 if command -v zsh >/dev/null 2>&1; then
   h_echo noop "zsh already installed"
