@@ -1,8 +1,8 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y git zsh sudo curl apt-utils libatomic unzip && \
+    apt-get install -y git zsh sudo curl apt-utils libatomic1 unzip && \
     apt-get clean
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
