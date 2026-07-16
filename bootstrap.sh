@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 source ~/.dotfiles/helpers.sh
 
 usage="usage: ./bootstrap.sh -p {brew,dnf,apt} -d {mate,gnome,macos,headless}"
@@ -50,14 +51,14 @@ if ! h_array_includes "$package_manager" "${package_managers[@]}"; then
 fi
 
 h_echo doing "writing $desktop_env to .desktop_env"
-echo "$desktop_env" >./.desktop_env
+echo "$desktop_env" >"~/.dotfiles/.desktop_env"
 
 h_echo doing "setting up installed_packages log"
-if [[ -e ./installed_packages ]]; then
+if [[ -e "~/.dotfiles/installed_packages" ]]; then
   h_echo doing "backing up current log"
-  cp ./installed_packages ./installed_packages_prev
+  cp "~/.dotfiles/installed_packages" "~/.dotfiles/installed_packages_prev"
 fi
-echo -n "" >./installed_packages
+echo -n "" >"~/.dotfiles/installed_packages"
 
 h_echo doing "initializing submodules"
 git submodule init
@@ -81,7 +82,8 @@ if h_array_includes "$desktop_env" "${gui_desktop_envs[@]}"; then
   if [[ "$(uname -s)" == "Linux" ]]; then
     h_echo noop "fonts already in the correct directory"
   else
-    for font_dir in "~/.dotfiles/fonts/.local/share/fonts/*"; do
+    for font_dir in ~/.dotfiles/fonts/.local/share/fonts/*; do
+      [[ -e $font_dir ]] || continue
       cp -r "$font_dir" ~/Library/Fonts/
     done
   fi
@@ -96,9 +98,13 @@ fi
 # h_install_package "$package_manager" wezterm
 
 if h_is_macos; then
-  h_echo doing "initializing the podman vim"
-  podman machine init >/dev/null
-  podman machine start >/dev/null
+  h_echo doing "initializing the podman machine"
+  if ! podman machine ls --format '{{.Name}}' 2>/dev/null | grep -qx 'podman-machine-default'; then
+    podman machine init >/dev/null
+  fi
+  if ! podman machine inspect --format '{{.State}}' 2>/dev/null | grep -qx 'running'; then
+    podman machine start >/dev/null
+  fi
 fi
 
 h_echo doing "initializing nvm"
@@ -124,7 +130,7 @@ npm --prefix ~/.dotfiles/neovim/.local/lib/vim-js run gen-manifest chrome >/dev/
 h_echo doing "bootstrapping neovim"
 bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh -p "$package_manager" -d "$desktop_env"
 
-if [[ -e ./installed_packages_prev ]]; then
+if [[ -e "~/.dotfiles/installed_packages_prev" ]]; then
   h_echo doing "diffing prev log and current log"
-  diff ./installed_packages_prev ./installed_packages
+  diff "~/.dotfiles/installed_packages_prev" "~/.dotfiles/installed_packages"
 fi

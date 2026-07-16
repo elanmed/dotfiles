@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 source ~/.dotfiles/helpers.sh
 
 [[ $# -ne 2 ]] && h_throw_error "usage: ./_install_packages.sh <package_manager> <desktop_env>"
@@ -53,6 +54,6 @@ case "$desktop_env" in
     install_packages "${base_packages[@]}" "${macos_packages[@]}"
     ;;
   *)
-    h_throw_error "$usage"
+    h_throw_error "invalid desktop env: $desktop_env"
     ;;
 esac

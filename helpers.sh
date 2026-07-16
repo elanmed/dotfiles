@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 export red='\033[0;31m'
 export blue='\033[0;34m'
@@ -78,7 +79,7 @@ h_install_package() {
 
   local pkg
   pkg=$(h_resolve_package "$1" "$2")
-  echo "$pkg" >>./installed_packages
+  echo "$pkg" >>"~/.dotfiles/installed_packages"
 
   if h_has_package "$1" "$2"; then
     h_echo noop "already has $pkg"
@@ -174,6 +175,22 @@ h_update_submodule() {
   else
     h_echo noop "submodule $sm_path is up to date"
   fi
+}
+
+h_validate_package_manager() {
+  [[ $# -ne 1 ]] && return 1
+  case "$1" in
+    brew | dnf | apt) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+h_validate_desktop_env() {
+  [[ $# -ne 1 ]] && return 1
+  case "$1" in
+    mate | gnome | macos | headless) return 0 ;;
+    *) return 1 ;;
+  esac
 }
 
 h_is_podman() {

@@ -13,9 +13,6 @@ run_stow() {
   done
 }
 
-link_keyd() {
-}
-
 case "$desktop_env" in
   "gnome")
     run_stow "${base_dirs[@]}" "${gui_desktop_dirs[@]}" "gnome"
