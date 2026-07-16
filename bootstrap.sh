@@ -74,23 +74,23 @@ if ! h_string_includes "$SHELL" "zsh"; then
 fi
 
 source "./_stow.sh" "$desktop_env"
-source "./_install_packages" "$package_manager" "$desktop_env"
+source "./_install_packages.sh" "$package_manager" "$desktop_env"
 
 if h_array_includes "$desktop_env" "${gui_desktop_envs[@]}"; then
   h_echo doing "bootstrapping fonts"
   if [[ "$(uname -s)" == "Linux" ]]; then
     h_echo noop "fonts already in the correct directory"
   else
-    for font_dir in ~/.dotfiles/fonts/.local/share/fonts/*; do
+    for font_dir in "~/.dotfiles/fonts/.local/share/fonts/*"; do
       cp -r "$font_dir" ~/Library/Fonts/
     done
   fi
 
   h_echo doing "fetching terminfo"
   tempfile=$(mktemp) &&
-    curl -so $tempfile https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo &&
-    tic -x -o ~/.terminfo $tempfile &&
-    rm $tempfile
+    curl -so "$tempfile" "https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo" &&
+    tic -x -o ~/.terminfo "$tempfile" &&
+    rm "$tempfile"
 fi
 
 # h_install_package "$package_manager" wezterm
@@ -125,6 +125,6 @@ h_echo doing "bootstrapping neovim"
 bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh -p "$package_manager" -d "$desktop_env"
 
 if [[ -e ./installed_packages_prev ]]; then
-  h_echo doing "diffing last log and current log"
+  h_echo doing "diffing prev log and current log"
   diff ./installed_packages_prev ./installed_packages
 fi

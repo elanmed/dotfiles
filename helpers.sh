@@ -127,7 +127,6 @@ h_uninstall_package() {
   esac
 }
 
-# TODO: rename
 # usage: h_throw_error <error_message>
 h_throw_error() {
   [[ $# -ne 1 ]] && {

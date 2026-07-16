@@ -2,6 +2,8 @@
 source ~/.dotfiles/helpers.sh
 
 [[ $# -ne 2 ]] && h_throw_error "usage: ./_install_packages.sh <package_manager> <desktop_env>"
+package_manager="$1"
+desktop_env="$2"
 
 base_packages=(
   "stow"
@@ -33,11 +35,11 @@ headless_packages=()
 
 install_packages() {
   for package in "$@"; do
-    h_install_package "$1" package
+    h_install_package "$package_manager" "$package"
   done
 }
 
-case "$2" in
+case "$desktop_env" in
   "gnome")
     install_packages "${base_packages[@]}" "${linux_packages[@]}" "${gnome_packages[@]}"
     ;;
