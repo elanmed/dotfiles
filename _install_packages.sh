@@ -45,7 +45,6 @@ case "$desktop_env" in
     ;;
   "mate")
     install_packages "${base_packages[@]}" "${linux_packages[@]}" "${mate_packages[@]}"
-    link_keyd
     ;;
   "headless")
     install_packages "${base_packages[@]}" "${linux_packages[@]}"
