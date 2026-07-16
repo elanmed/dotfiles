@@ -177,6 +177,7 @@ h_update_submodule() {
   fi
 }
 
+# TODO: consolidate, remove
 h_validate_package_manager() {
   [[ $# -ne 1 ]] && return 1
   case "$1" in
