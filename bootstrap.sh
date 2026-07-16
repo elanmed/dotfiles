@@ -74,8 +74,8 @@ if ! h_string_includes "$SHELL" "zsh"; then
   exit 0
 fi
 
-source "./_stow.sh" "$desktop_env"
 source "./_install_packages.sh" "$package_manager" "$desktop_env"
+source "./_stow.sh" "$desktop_env"
 
 if h_array_includes "$desktop_env" "${gui_desktop_envs[@]}"; then
   h_echo doing "bootstrapping fonts"
