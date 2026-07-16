@@ -8,14 +8,13 @@ base_packages=(
   "shfmt"
   "tmux"
   "bats"
-  "xclip"
   "fzf"
-  "source-highlight"
-  "highlight"
   "lazygit"
   "podman"
   "git-delta"
 )
+
+linux_packages=("xclip")
 
 mate_packages=(
   "wmctrl"
@@ -40,14 +39,14 @@ install_packages() {
 
 case "$2" in
   "gnome")
-    install_packages "${base_packages[@]}" "${gnome_packages[@]}"
+    install_packages "${base_packages[@]}" "${linux_packages[@]}" "${gnome_packages[@]}"
     ;;
   "mate")
-    install_packages "${base_packages[@]}" "${mate_packages[@]}"
+    install_packages "${base_packages[@]}" "${linux_packages[@]}" "${mate_packages[@]}"
     link_keyd
     ;;
   "headless")
-    install_packages "${base_packages[@]}"
+    install_packages "${base_packages[@]}" "${linux_packages[@]}"
     ;;
   "macos")
     install_packages "${base_packages[@]}" "${macos_packages[@]}"
