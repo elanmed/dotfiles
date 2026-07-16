@@ -80,7 +80,6 @@ source "./_install_packages.sh" "$package_manager" "$desktop_env"
 if h_array_includes "$desktop_env" "${gui_desktop_envs[@]}"; then
   h_echo doing "bootstrapping fonts"
   if [[ "$(uname -s)" == "Linux" ]]; then
-    h_echo noop "fonts already in the correct directory"
     fc-cache -f
   else
     for font_dir in "$HOME/.dotfiles/fonts/.local/share/fonts/"*; do
@@ -119,7 +118,7 @@ chmod u+w "$HOME/.zshrc"
 export PATH="$HOME/.bun/bin:$PATH"
 
 h_echo doing "installing agent-js deps"
-pnpm --prefix "$HOME/.dotfiles/containers/.local/lib/agent-js" install --silent
+pnpm --prefix "$HOME/.dotfiles/containers/.local/lib/agent-js" install --silent --yes
 
 h_echo doing "generating vim-js manifest"
 npm --prefix "$HOME/.dotfiles/neovim/.local/lib/vim-js" run gen-manifest chrome >/dev/null
