@@ -88,20 +88,20 @@ h_install_package() {
 
   if [[ $1 == "dnf" && $2 == "lazygit" ]]; then
     h_echo doing "enabling COPR repo dejan/lazygit"
-    sudo dnf copr enable "dejan/lazygit" -y
+    sudo dnf copr enable "dejan/lazygit" -y >/dev/null
   fi
 
   h_echo doing "installing $pkg"
 
   case "$1" in
     brew)
-      brew install "$pkg"
+      brew install "$pkg" >/dev/null
       ;;
     dnf)
-      sudo dnf install "$pkg" -y
+      sudo dnf install "$pkg" -y >/dev/null
       ;;
     apt)
-      sudo apt-get install "$pkg" -y
+      sudo apt-get install "$pkg" -y >/dev/null
       ;;
   esac
 }
@@ -117,13 +117,13 @@ h_uninstall_package() {
 
   case "$1" in
     brew)
-      brew uninstall "$pkg"
+      brew uninstall "$pkg" >/dev/null
       ;;
     dnf)
-      sudo dnf remove "$pkg" -y
+      sudo dnf remove "$pkg" -y >/dev/null
       ;;
     apt)
-      sudo apt-get remove "$pkg" -y
+      sudo apt-get remove "$pkg" -y >/dev/null
       ;;
   esac
 }
