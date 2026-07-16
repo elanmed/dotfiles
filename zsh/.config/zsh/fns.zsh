@@ -151,13 +151,6 @@ printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | ba
     zsh -ic 'exec "$@"' zsh "${cmd[@]}"
 }
 
-cat_args() {
-  for arg in "$@"; do
-    echo "FILE NAME: $arg"
-    cat "$arg"
-  done
-}
-
 sub_remove() {
   local name="$1"
   [[ -z $name ]] && {
