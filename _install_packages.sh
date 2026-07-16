@@ -30,7 +30,7 @@ mate_packages=(
 )
 
 gnome_packages=()
-macos_packages=()
+macos_packages=("universal-ctags")
 headless_packages=()
 
 install_packages() {
