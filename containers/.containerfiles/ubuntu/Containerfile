@@ -8,8 +8,8 @@ RUN apt-get update && \
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 ENV SHELL=/usr/bin/zsh
 
-RUN git clone https://github.com/elanmed/dotfiles ~/.dotfiles && \
-    cd ~/.dotfiles && \
+RUN git clone https://github.com/elanmed/dotfiles "$HOME/.dotfiles" && \
+    cd "$HOME/.dotfiles" && \
     sed -i 's|git@github.com:|https://github.com/|g' .gitmodules
 
-RUN cd ~/.dotfiles && bash bootstrap.sh -p apt -d headless
+RUN cd "$HOME/.dotfiles" && bash bootstrap.sh -p apt -d headless

@@ -1,5 +1,5 @@
 #!/bin/zsh
-source ~/.dotfiles/helpers.sh
+source "$HOME/.dotfiles/_helpers.sh"
 
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch
@@ -100,7 +100,7 @@ crun() {
   paste_fifo=/tmp/paste-fifo
   rm -f "$paste_fifo"
   mkfifo "$paste_fifo"
-  node ~/.dotfiles/containers/.local/lib/agent-js/scripts/paste-server.ts "$paste_cmd" >"$paste_fifo" &
+  node "$HOME/.dotfiles/containers/.local/lib/agent-js/scripts/paste-server.ts" "$paste_cmd" >"$paste_fifo" &
   paste_server_pid="$!"
   read -r PASTE_PORT <"$paste_fifo"
   rm -f "$paste_fifo"
@@ -108,7 +108,7 @@ crun() {
   copy_fifo=/tmp/copy-fifo
   rm -f "$copy_fifo"
   mkfifo "$copy_fifo"
-  node ~/.dotfiles/containers/.local/lib/agent-js/scripts/copy-server.ts "$copy_cmd" >"$copy_fifo" &
+  node "$HOME/.dotfiles/containers/.local/lib/agent-js/scripts/copy-server.ts" "$copy_cmd" >"$copy_fifo" &
   copy_server_pid="$!"
   read -r COPY_PORT <"$copy_fifo"
   rm -f "$copy_fifo"
@@ -138,9 +138,9 @@ crun() {
     --volume "$(realpath "$dir"):$workspace"
 
     --env AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
-nvim -u ~/.dotfiles/neovim/.config/nvim/container.lua -c "normal! G$" -c startinsert! __FILE__
+nvim -u "$HOME/.dotfiles/neovim/.config/nvim/container.lua" -c "normal! G$" -c startinsert! __FILE__
 printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | base64)"'
-    --env AGENT_JS_HISTORY='nvim -u ~/.dotfiles/neovim/.config/nvim/container.lua -c "normal! G$" __FILE__'
+    --env AGENT_JS_HISTORY='nvim -u "$HOME/.dotfiles/neovim/.config/nvim/container.lua" -c "normal! G$" __FILE__'
     --env AGENT_JS_CLIPBOARD_PASTE="nc --recv-only host.docker.internal $PASTE_PORT"
     --env COPY_PORT="$COPY_PORT"
     --env PASTE_PORT="$PASTE_PORT"
@@ -213,27 +213,27 @@ lg() {
 }
 
 ezsh() {
-  cd ~/.dotfiles/zsh/.config/zsh && "$NVIM_CMD"
+  cd "$HOME/.dotfiles/zsh/.config/zsh" && "$NVIM_CMD"
 }
 
 eterm() {
-  cd ~/.dotfiles && "$NVIM_CMD" ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua
+  cd "$HOME/.dotfiles" && "$NVIM_CMD" "$HOME/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
 }
 
 etmux() {
-  cd ~/.dotfiles && "$NVIM_CMD" ~/.dotfiles/tmux/.config/tmux/tmux.conf
+  cd "$HOME/.dotfiles" && "$NVIM_CMD" "$HOME/.dotfiles/tmux/.config/tmux/tmux.conf"
 }
 
 edot() {
-  cd ~/.dotfiles && "$NVIM_CMD"
+  cd "$HOME/.dotfiles" && "$NVIM_CMD"
 }
 
 evim() {
-  cd ~/.dotfiles/neovim/.config/nvim && "$NVIM_CMD"
+  cd "$HOME/.dotfiles/neovim/.config/nvim" && "$NVIM_CMD"
 }
 
 eagent() {
-  cd ~/.dotfiles/containers/.local/lib/agent-js && "$NVIM_CMD"
+  cd "$HOME/.dotfiles/containers/.local/lib/agent-js" && "$NVIM_CMD"
 }
 
 firmware-upgrade() {

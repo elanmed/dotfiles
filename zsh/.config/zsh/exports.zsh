@@ -1,5 +1,5 @@
 #!/bin/zsh
-source ~/.dotfiles/helpers.sh
+source "$HOME/.dotfiles/_helpers.sh"
 
 export BUN_INSTALL="$HOME/.bun"
 
@@ -18,7 +18,7 @@ export PATH="$HOME/.dotfiles/neovim/.config/nvim/language_servers/lua-language-s
 typeset -U path
 
 if [[ -f "$HOME/.dotfiles/.desktop_env" ]] && [[ "$(cat "$HOME/.dotfiles/.desktop_env")" == "headless" ]]; then
-  export NVIM_CMD="nvim -u ~/.dotfiles/neovim/.config/nvim/barebones.lua"
+  export NVIM_CMD="nvim -u $HOME/.dotfiles/neovim/.config/nvim/barebones.lua"
 else
   export NVIM_CMD="nvim"
 fi

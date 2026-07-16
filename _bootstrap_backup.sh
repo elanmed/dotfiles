@@ -102,14 +102,14 @@ else
   if [[ "$(uname -s)" == "Linux" ]]; then
     h_echo noop "fonts already in the correct directory"
   else
-    for font_dir in ~/.dotfiles/fonts/.local/share/fonts/*; do
-      cp -r "$font_dir" ~/Library/Fonts/
+    for font_dir in "$HOME/.dotfiles/fonts/.local/share/fonts/"*; do
+      cp -r "$font_dir" "$HOME/Library/Fonts/"
     done
   fi
 fi
 
 h_echo doing "initializing nvm"
-source ~/.nvm/nvm.sh
+source "$HOME/.nvm/nvm.sh"
 nvm install node >/dev/null
 
 h_echo doing "installing pnpm"
@@ -117,22 +117,22 @@ npm install -g --silent pnpm@latest-11
 
 h_echo doing "install bun"
 # bun writes to your zshrc on every install
-chmod a-w ~/.zshrc
+chmod a-w "$HOME/.zshrc"
 curl -fsSL https://bun.com/install | bash >/dev/null
-chmod u+w ~/.zshrc
+chmod u+w "$HOME/.zshrc"
 export PATH="$HOME/.bun/bin:$PATH"
 
 h_echo doing "installing agent-js deps"
-pnpm --prefix ~/.dotfiles/containers/.local/lib/agent-js install --silent
+pnpm --prefix "$HOME/.dotfiles/containers/.local/lib/agent-js" install --silent
 
 h_echo doing "generating vim-js manifest"
-npm --prefix ~/.dotfiles/neovim/.local/lib/vim-js run gen-manifest chrome >/dev/null
+npm --prefix "$HOME/.dotfiles/neovim/.local/lib/vim-js" run gen-manifest chrome >/dev/null
 
 h_echo doing "bootstrapping neovim"
-bash ~/.dotfiles/neovim/.config/nvim/bootstrap.sh -p "$package_manager" -d "$desktop_env"
+bash "$HOME/.dotfiles/neovim/.config/nvim/bootstrap.sh" -p "$package_manager" -d "$desktop_env"
 
 h_echo doing "fetching terminfo"
 tempfile=$(mktemp) &&
   curl -so $tempfile https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo &&
-  tic -x -o ~/.terminfo $tempfile &&
+  tic -x -o "$HOME/.terminfo" "$tempfile" &&
   rm $tempfile

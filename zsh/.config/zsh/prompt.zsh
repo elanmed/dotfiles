@@ -1,5 +1,5 @@
 #!/bin/zsh
-source ~/.dotfiles/helpers.sh
+source "$HOME/.dotfiles/_helpers.sh"
 
 # perform command substitution and parameter expansion
 # in prompt strings each time the prompt is displayed
