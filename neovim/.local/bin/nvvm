@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 source "$HOME/.dotfiles/_helpers.sh"
 usage="usage: nvvm update"
 
@@ -10,27 +11,30 @@ fi
 mkdir -p "$HOME/.local/share/nvvm/"
 tar_path="$HOME/.local/share/nvvm/neovim.tar.gz"
 
+latest_release=$(curl --silent --fail "https://api.github.com/repos/neovim/neovim/releases/tags/nightly")
+
 if [[ "$(uname -s)" == "Linux" ]]; then
   asset_name="nvim-linux-x86_64.tar.gz"
-  download_url="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz"
 elif [[ "$(uname -m)" == "arm64" ]]; then
   asset_name="nvim-macos-arm64.tar.gz"
-  download_url="https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-arm64.tar.gz"
 else
   asset_name="nvim-macos-x86_64.tar.gz"
-  download_url="https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-x86_64.tar.gz"
 fi
 
-curl --silent --location --output "$tar_path" "$download_url"
-
-latest_release=$(curl --silent "https://api.github.com/repos/neovim/neovim/releases/tags/nightly")
+download_url=$(
+  echo "$latest_release" | jq --raw-output ".assets[] | select(.name == \"$asset_name\") | .browser_download_url"
+)
 expected_hash=$(
   echo "$latest_release" | jq --raw-output ".assets[] | select(.name == \"$asset_name\") | .digest | split(\":\") | .[1]"
 )
-actual_hash=$(sha256sum "$tar_path" | cut -d ' ' -f 1)
+
+curl --silent --location --fail --output "$tar_path" "$download_url"
+
+actual_hash=$(openssl dgst -sha256 "$tar_path" | awk '{print $NF}')
 
 if [[ $expected_hash != "$actual_hash" ]]; then
-  echo "SHA256 mismatch!" >&2
+  rm -f "$tar_path"
+  h_echo error "SHA256 mismatch!"
   exit 1
 fi
 
@@ -43,3 +47,5 @@ else
   tar --extract --gzip --file="$tar_path" --directory="$HOME/.local/share/nvvm/"
   ln -sf "$HOME/.local/share/nvvm/nvim-linux-x86_64/bin/nvim" "$HOME/.local/bin/nvim"
 fi
+
+rm -f "$tar_path"
