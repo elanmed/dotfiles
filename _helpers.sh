@@ -95,15 +95,20 @@ h_install_package() {
 
   case "$1" in
     brew)
-      brew install "$pkg" >/dev/null
+      installOutput=$(brew install "$pkg" 2>&1)
       ;;
     dnf)
-      sudo dnf install "$pkg" -y >/dev/null
+      installOutput=$(sudo dnf install "$pkg" -y 2>&1)
       ;;
     apt)
-      sudo apt-get install "$pkg" -y >/dev/null
+      installOutput=$(sudo apt-get install "$pkg" -y 2>&1)
       ;;
   esac
+
+  # package managers write most of their output to stderr too
+  if [[ $? -ne 0 ]]; then
+    echo "$installOutput"
+  fi
 
   if [[ $1 == "apt" && $2 == "fd-find" ]]; then
     ln -s $(which fdfind) ~/.local/bin/fd
