@@ -177,14 +177,6 @@ h_update_submodule() {
   fi
 }
 
-h_is_toolbox() {
-  if [[ "$(hostname)" == "toolbx" ]] || [[ "$(hostname)" == "toolbox" ]]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
 h_is_podman() {
   if [[ -f /run/.containerenv ]]; then
     return 0
@@ -205,22 +197,8 @@ h_is_macos() {
 h_require_root_env() {
   [[ $# -ne 1 ]] && h_throw_error "usage: h_require_root_env <command_name>"
 
-  if h_is_toolbox || h_is_podman; then
+  if h_is_podman; then
     h_throw_error "$1 should only be used in a root environment"
-  fi
-}
-
-# usage: h_run_shell_in_container <shell-command>
-# Runs a shell command string (e.g. "cd dir && cmd") inside toolbox on Linux,
-# keeping the container alive after the command exits.
-h_run_shell_in_container() {
-  [[ $# -ne 1 ]] && h_throw_error "usage: h_run_shell_in_container <shell-command>"
-
-  if [[ $(uname -s) == "Linux" ]] && ! h_is_toolbox && ! h_is_podman; then
-    h_echo doing "starting toolbox"
-    toolbox run -c fedora-toolbox-43 zsh -ic "$1; exec zsh"
-  else
-    zsh -c "$1"
   fi
 }
 

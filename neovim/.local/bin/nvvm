@@ -34,12 +34,12 @@ if [[ $expected_hash != "$actual_hash" ]]; then
   exit 1
 fi
 
-if [[ "$(uname -s)" == "Linux" ]]; then
-  tar --extract --gzip --file="$tar_path" --directory="$HOME/.local/share/nvvm/"
-  ln -sf "$HOME/.local/share/nvvm/nvim-linux-x86_64/bin/nvim" "$HOME/.local/bin/nvim"
-else
+if h_is_macos; then
   macos_arch_dir="nvim-macos-$(uname -m)"
   xattr -c "$tar_path"
   tar --extract --gzip --file="$tar_path" --directory "$HOME/.local/share/nvvm/"
   ln -sf "$HOME/.local/share/nvvm/$macos_arch_dir/bin/nvim" "$HOME/.local/bin/nvim"
+else
+  tar --extract --gzip --file="$tar_path" --directory="$HOME/.local/share/nvvm/"
+  ln -sf "$HOME/.local/share/nvvm/nvim-linux-x86_64/bin/nvim" "$HOME/.local/bin/nvim"
 fi

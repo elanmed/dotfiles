@@ -12,6 +12,10 @@ ls() {
   fi
 }
 
+# lsa_cmd="command ls -a --color=tty"
+# [[ "$(uname -s)" == "Linux" ]] && lsa_cmd+=" --group-directories-first"
+# alias lsa="$lsa_cmd"
+
 unalias z
 # need `function`
 # https://github.com/ohmyzsh/ohmyzsh/issues/6723#issue-313463147
@@ -25,10 +29,10 @@ cd() {
   ls
 }
 
-if [[ "$(uname -s)" == "Linux" ]]; then
-  alias copy="xclip -selection clipboard"
-else
+if h_is_macos; then
   alias copy="pbcopy"
+else
+  alias copy="xclip -selection clipboard"
 fi
 
 abspath() {
@@ -200,37 +204,36 @@ ver() {
   done
 }
 
-f() {
-  h_require_root_env "f"
-  toolbox enter fedora-toolbox-43
-}
-
 v() {
-  h_run_shell_in_container "\$NVIM_CMD $@"
+  "$NVIM_CMD" "$@"
 }
 
 lg() {
-  h_run_shell_in_container "lazygit $@"
+  lazygit "$@"
 }
 
 ezsh() {
-  h_run_shell_in_container 'cd ~/.dotfiles/zsh/.config/zsh && $NVIM_CMD'
+  cd ~/.dotfiles/zsh/.config/zsh && "$NVIM_CMD"
 }
 
 eterm() {
-  h_run_shell_in_container 'cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua'
+  cd ~/.dotfiles && "$NVIM_CMD" ~/.dotfiles/wezterm/.config/wezterm/wezterm.lua
 }
 
 etmux() {
-  h_run_shell_in_container 'cd ~/.dotfiles && $NVIM_CMD ~/.dotfiles/tmux/.config/tmux/tmux.conf'
+  cd ~/.dotfiles && "$NVIM_CMD" ~/.dotfiles/tmux/.config/tmux/tmux.conf
 }
 
 edot() {
-  h_run_shell_in_container 'cd ~/.dotfiles && $NVIM_CMD'
+  cd ~/.dotfiles && "$NVIM_CMD"
 }
 
 evim() {
-  h_run_shell_in_container 'cd ~/.dotfiles/neovim/.config/nvim && $NVIM_CMD'
+  cd ~/.dotfiles/neovim/.config/nvim && "$NVIM_CMD"
+}
+
+eagent() {
+  cd ~/.dotfiles/containers/.local/lib/agent-js && "$NVIM_CMD"
 }
 
 firmware-upgrade() {

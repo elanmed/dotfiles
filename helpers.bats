@@ -276,7 +276,7 @@ setup() {
 }
 
 @test "h_require_root_env: returns 0 on Linux root env" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; h_is_podman() { return 1; }; h_is_toolbox() { return 1; }; h_require_root_env 'testcmd'"
+  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; h_is_podman() { return 1; }; h_require_root_env 'testcmd'"
   [ "$status" -eq 0 ]
 }
 
@@ -296,33 +296,6 @@ setup() {
   run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_require_root_env 'cmd1' 'cmd2' 2>&1"
   [ "$status" -ne 0 ]
   [[ $output =~ "usage: h_require_root_env" ]]
-}
-
-@test "h_run_shell_in_container: runs command" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_run_shell_in_container 'echo hello'"
-  [ "$status" -eq 0 ]
-  [[ $output =~ "hello" ]]
-}
-
-@test "h_run_shell_in_container: exits early with 0 arguments" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh' && h_run_shell_in_container 2>&1"
-  [ "$status" -ne 0 ]
-  [[ $output =~ "usage: h_run_shell_in_container" ]]
-}
-
-@test "h_is_toolbox: returns 0 when hostname is toolbox" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; hostname() { echo 'toolbox'; }; h_is_toolbox"
-  [ "$status" -eq 0 ]
-}
-
-@test "h_is_toolbox: returns 0 when hostname is toolbx" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; hostname() { echo 'toolbx'; }; h_is_toolbox"
-  [ "$status" -eq 0 ]
-}
-
-@test "h_is_toolbox: returns 1 when hostname is not toolbox" {
-  run bash -c "source '${BATS_TEST_DIRNAME}/helpers.sh'; hostname() { echo 'myhost'; }; h_is_toolbox"
-  [ "$status" -eq 1 ]
 }
 
 @test "h_is_podman: returns 0 when /run/.containerenv exists" {

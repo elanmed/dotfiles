@@ -6,28 +6,18 @@ source ~/.dotfiles/helpers.sh
 setopt PROMPT_SUBST
 
 prompt_prefix() {
-  if [[ "$(uname -s)" == "Linux" ]]; then
-    if h_is_toolbox; then
-      echo "%B%b"
-    elif h_is_podman; then
-      echo "%B%b"
-    else
-      echo "%B%b"
-    fi
-  else
+  if h_is_podman; then
+    echo "%B%b"
+  elif h_is_macos; then
     echo ""
+  else
+    echo "%B%b"
   fi
 }
 
 prompt_dir_color() {
-  if [[ "$(uname -s)" == "Linux" ]]; then
-    if h_is_toolbox; then
-      echo "yellow"
-    elif h_is_podman; then
-      echo "green"
-    else
-      echo "red"
-    fi
+  if h_is_podman; then
+    echo "green"
   else
     echo "yellow"
   fi
