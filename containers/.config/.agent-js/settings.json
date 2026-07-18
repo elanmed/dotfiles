@@ -6,6 +6,29 @@
       "inputPerToken": 0.95,
       "outputPerToken": 4.0,
       "cacheReadPerToken": 0.19
+    },
+    "glm-5.2": {
+      "inputPerToken": 1.4,
+      "outputPerToken": 4.4,
+      "cacheReadPerToken": 0.26
+    },
+    "deepseek-v4-pro": {
+      "inputPerToken": 1.74,
+      "outputPerToken": 3.48,
+      "cacheReadPerToken": 0.0145
     }
-  }
+  },
+  "loadingStateFrames": [
+    "⠋ ",
+    "⠙ ",
+    "⠹ ",
+    "⠸ ",
+    "⠼ ",
+    "⠴ ",
+    "⠦ ",
+    "⠧ ",
+    "⠇ ",
+    "⠏ "
+  ],
+  "promptPrefix": "􀀀   > "
 }
