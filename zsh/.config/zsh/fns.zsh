@@ -6,9 +6,9 @@ setopt +o nomatch
 unalias ls 2>/dev/null
 ls() {
   if [[ "$(uname -s)" == "Linux" ]]; then
-    command ls --color=auto "$@"
+    command ls --color=auto -A "$@"
   else
-    command ls -G "$@"
+    command ls -G -A "$@"
   fi
 }
 
