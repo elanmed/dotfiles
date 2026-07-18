@@ -11,7 +11,7 @@ prompt_prefix() {
   elif h_is_macos; then
     echo ""
   else
-    echo "%B%b"
+    echo "%B􀂍 %b"
   fi
 }
 
