@@ -39,7 +39,10 @@ local function cmd_or_ctrl()
 end
 
 local config = wezterm.config_builder()
-config.font = wezterm.font "ComicCodeLigatures Nerd Font"
+config.font = wezterm.font_with_fallback {
+  "ComicCodeLigatures Nerd Font",
+  "Pokemon 151",
+}
 config.font_size = 12.0
 
 local function toggle_pane_height()
