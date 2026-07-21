@@ -111,7 +111,7 @@ h_install_package() {
   fi
 
   if [[ $1 == "apt" && $2 == "fd-find" ]]; then
-    ln -s $(which fdfind) ~/.local/bin/fd
+    sudo ln -s $(which fdfind) ~/.local/bin/fd
   fi
 }
 
