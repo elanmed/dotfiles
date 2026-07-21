@@ -43,11 +43,24 @@ fi
 # https://github.com/nvm-sh/nvm#git-install
 export NVM_DIR="$HOME/.nvm"
 
-# Add the active node version to PATH without loading nvm.
+# Add Node to PATH without loading nvm.
+# Respect nvm's default alias if it points to an installed version;
+# otherwise fall back to the latest installed version.
 # nvm itself is lazy-loaded on first use of the `nvm` command.
 local nvm_active
-nvm_active=$(command ls -d "$NVM_DIR/versions/node"/*/bin 2>/dev/null | command sort -V | command tail -n1)
-if [[ -n $nvm_active ]]; then
+if [[ -f "$NVM_DIR/alias/default" ]]; then
+  local default_version
+  default_version=$(command cat "$NVM_DIR/alias/default" 2>/dev/null)
+  for v in "$default_version" "v$default_version"; do
+    [[ -d "$NVM_DIR/versions/node/$v/bin" ]] && nvm_active="$NVM_DIR/versions/node/$v/bin"
+  done
+fi
+
+if [[ -z $nvm_active || ! -d $nvm_active ]]; then
+  nvm_active=$(command ls -d "$NVM_DIR/versions/node"/*/bin 2>/dev/null | command sort -V | command tail -n1)
+fi
+
+if [[ -n $nvm_active && -d $nvm_active ]]; then
   export PATH="$nvm_active:$PATH"
 fi
 
