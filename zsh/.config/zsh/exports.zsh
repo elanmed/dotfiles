@@ -42,8 +42,19 @@ fi
 
 # https://github.com/nvm-sh/nvm#git-install
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-nvm use node >/dev/null 2>&1
+
+# Add the active node version to PATH without loading nvm.
+# nvm itself is lazy-loaded on first use of the `nvm` command.
+local nvm_active
+nvm_active=$(command ls -d "$NVM_DIR/versions/node"/*/bin 2>/dev/null | command sort -V | command tail -n1)
+if [[ -n $nvm_active ]]; then
+  export PATH="$nvm_active:$PATH"
+fi
+
+nvm() {
+  unset -f nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#969896"
