@@ -31,5 +31,8 @@ prompt_git_branch() {
   fi
 }
 
-PROMPT='%B%F{$(prompt_dir_color)}%~%f%b $(prompt_git_branch)
-$(prompt_prefix) :: '
+_prompt_prefix="$(prompt_prefix)"
+_prompt_dir_color="$(prompt_dir_color)"
+
+PROMPT='%B%F{'$_prompt_dir_color'}%~%f%b $(prompt_git_branch)
+'$_prompt_prefix' :: '
