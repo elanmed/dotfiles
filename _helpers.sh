@@ -111,9 +111,22 @@ h_install_package() {
     echo "$installOutput"
   fi
 
-  if [[ $1 == "apt" && $2 == "fd-find" ]]; then
-    sudo ln -s $(which fdfind) ~/.local/bin/fd
-  fi
+  h_post_install "$1" "$2"
+}
+
+# usage: h_post_install <package_manager> <canonical_name>
+# handles post-install steps like symlinking renamed binaries (e.g. apt's fdfind → fd)
+h_post_install() {
+  [[ $# -ne 2 ]] && h_throw_error "usage: h_post_install <package_manager> <canonical_name>"
+
+  case "$1:$2" in
+    apt:fd)
+      ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+      ;;
+    apt:bat)
+      ln -sf "$(command -v batcat)" "$HOME/.local/bin/bat"
+      ;;
+  esac
 }
 
 # usage: h_uninstall_package <package_manager> <package>
