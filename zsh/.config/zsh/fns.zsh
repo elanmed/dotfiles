@@ -1,5 +1,4 @@
 #!/bin/zsh
-# _helpers.sh already sourced by exports.zsh
 
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch

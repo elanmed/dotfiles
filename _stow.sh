@@ -1,5 +1,4 @@
 #!/bin/bash
-source "$HOME/.dotfiles/_helpers.sh"
 
 [[ $# -ne 1 ]] && h_throw_error "usage: ./_stow.sh <desktop_env>"
 

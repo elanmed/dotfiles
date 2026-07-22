@@ -1,5 +1,4 @@
 #!/bin/zsh
-source "$HOME/.dotfiles/_helpers.sh"
 
 export BUN_INSTALL="$HOME/.bun"
 

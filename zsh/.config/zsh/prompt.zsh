@@ -1,5 +1,4 @@
 #!/bin/zsh
-# _helpers.sh already sourced by exports.zsh
 
 # perform command substitution and parameter expansion
 # in prompt strings each time the prompt is displayed
