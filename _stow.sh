@@ -4,7 +4,7 @@ source "$HOME/.dotfiles/_helpers.sh"
 [[ $# -ne 1 ]] && h_throw_error "usage: ./_stow.sh <desktop_env>"
 
 gui_desktop_dirs=("fonts" "tmux" "wezterm")
-base_dirs=("containers" "git" "neovim" "nvm" "scripts" "zsh")
+base_dirs=("containers" "git" "lazygit" "neovim" "nvm" "scripts" "zsh")
 
 run_stow() {
   for dir in "$@"; do
