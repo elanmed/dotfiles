@@ -200,23 +200,6 @@ h_update_submodule() {
   fi
 }
 
-# TODO: consolidate, remove
-h_validate_package_manager() {
-  [[ $# -ne 1 ]] && return 1
-  case "$1" in
-    brew | dnf | apt) return 0 ;;
-    *) return 1 ;;
-  esac
-}
-
-h_validate_desktop_env() {
-  [[ $# -ne 1 ]] && return 1
-  case "$1" in
-    mate | gnome | macos | headless) return 0 ;;
-    *) return 1 ;;
-  esac
-}
-
 h_is_podman() {
   if [[ -f /run/.containerenv ]]; then
     return 0
