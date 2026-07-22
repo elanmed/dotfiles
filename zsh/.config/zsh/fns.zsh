@@ -96,7 +96,7 @@ crun() {
     copy_cmd="xclip -selection clipboard -in"
   fi
 
-  paste_fifo=/tmp/paste-fifo
+  paste_fifo=$(mktemp -u /tmp/paste-fifo.XXXXXX)
   rm -f "$paste_fifo"
   mkfifo "$paste_fifo"
   node "$HOME/.dotfiles/containers/.local/lib/agent-js/scripts/paste-server.ts" "$paste_cmd" >"$paste_fifo" &
@@ -104,7 +104,7 @@ crun() {
   read -r PASTE_PORT <"$paste_fifo"
   rm -f "$paste_fifo"
 
-  copy_fifo=/tmp/copy-fifo
+  copy_fifo=$(mktemp -u /tmp/copy-fifo.XXXXXX)
   rm -f "$copy_fifo"
   mkfifo "$copy_fifo"
   node "$HOME/.dotfiles/containers/.local/lib/agent-js/scripts/copy-server.ts" "$copy_cmd" >"$copy_fifo" &
@@ -112,7 +112,7 @@ crun() {
   read -r COPY_PORT <"$copy_fifo"
   rm -f "$copy_fifo"
 
-  trap "kill $paste_server_pid $copy_server_pid 2>/dev/null" EXIT
+  trap "kill $paste_server_pid $copy_server_pid 2>/dev/null" EXIT INT TERM
 
   local workspace="/$(basename "$(realpath "$1")")"
   local dir="$1"
