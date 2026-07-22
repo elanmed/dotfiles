@@ -9,9 +9,9 @@ prompt_prefix() {
   if h_is_podman; then
     echo "%B%b"
   elif h_is_macos; then
-    echo ""
+    echo "􀂍 "
   else
-    echo "%B􀂍 %b"
+    echo "􀀀 "
   fi
 }
 
