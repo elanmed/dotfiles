@@ -1,6 +1,7 @@
 #!/bin/bash
 # set -euo pipefail
 
+export _H_OS="$(uname -s)"
 export red='\033[0;31m'
 export blue='\033[0;34m'
 export green='\033[0;32m'
@@ -212,11 +213,7 @@ h_is_podman() {
 }
 
 h_is_macos() {
-  if [[ "$(uname -s)" == "Darwin" ]]; then
-    return 0
-  else
-    return 1
-  fi
+  [[ $_H_OS == "Darwin" ]]
 }
 
 # usage: h_require_root_env <command_name>

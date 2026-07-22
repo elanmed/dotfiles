@@ -1,11 +1,11 @@
 #!/bin/zsh
-source "$HOME/.dotfiles/_helpers.sh"
+# _helpers.sh already sourced by exports.zsh
 
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch
 unalias ls 2>/dev/null
 ls() {
-  if [[ "$(uname -s)" == "Linux" ]]; then
+  if [[ $_H_OS == "Linux" ]]; then
     command ls --color=auto -A "$@"
   else
     command ls -G -A "$@"

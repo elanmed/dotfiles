@@ -22,7 +22,7 @@ else
   export NVIM_CMD="nvim"
 fi
 
-if infocmp wezterm &>/dev/null; then
+if [[ $_H_OS != "Darwin" ]] && infocmp wezterm &>/dev/null; then
   export TERM="wezterm"
 fi
 export EDITOR="$NVIM_CMD"
@@ -30,7 +30,7 @@ export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
 export BAT_THEME="ansi"
 
-if [[ "$(uname -s)" == "Linux" ]]; then
+if [[ $_H_OS == "Linux" ]]; then
   # https://superuser.com/a/613754
   export XDG_TEMPLATES_DIR="$HOME"
   export XDG_PUBLICSHARE_DIR="$HOME"

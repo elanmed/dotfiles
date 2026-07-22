@@ -1,7 +1,13 @@
 #!/bin/zsh
 
 # https://github.com/junegunn/fzf#setting-up-shell-integration
-source <(fzf --zsh 2>/dev/null)
+# cache fzf shell integration to avoid process substitution on every startup
+_fzf_zsh_cache="$HOME/.cache/fzf-zsh.zsh"
+if [[ ! -f $_fzf_zsh_cache ]] || [[ fzf -nt $_fzf_zsh_cache ]]; then
+  fzf --zsh >"$_fzf_zsh_cache" 2>/dev/null
+fi
+[[ -f $_fzf_zsh_cache ]] && source "$_fzf_zsh_cache"
+unset _fzf_zsh_cache
 
 # plugins
 source "$HOME/.dotfiles/zsh/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
