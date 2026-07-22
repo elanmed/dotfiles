@@ -133,11 +133,9 @@ fi
 
 h_echo doing "compiling zsh files for faster startup"
 zsh_files=(
-  "$HOME/.dotfiles/zsh/.zshrc"
   "$HOME/.dotfiles/_helpers.sh"
   "$HOME/.zcompdump"
   "$HOME/.dotfiles/zsh/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  "$HOME/.dotfiles/zsh/.zsh/base16-shell/base16-shell.plugin.zsh"
   "$HOME/.dotfiles/zsh/.zsh/zsh-z/zsh-z.plugin.zsh"
   "$HOME/.dotfiles/zsh/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 )
