@@ -5,3 +5,5 @@ tags
 Session.vim
 installed_packages
 installed_packages_prev
+*.zwc
+*.zwc.old

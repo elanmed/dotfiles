@@ -130,3 +130,21 @@ if [[ -e "$HOME/.dotfiles/installed_packages_prev" ]]; then
   h_echo doing "diffing prev log and current log"
   diff "$HOME/.dotfiles/installed_packages_prev" "$HOME/.dotfiles/installed_packages"
 fi
+
+h_echo doing "compiling zsh files for faster startup"
+zsh_files=(
+  "$HOME/.dotfiles/zsh/.zshrc"
+  "$HOME/.dotfiles/_helpers.sh"
+  "$HOME/.zcompdump"
+  "$HOME/.dotfiles/zsh/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  "$HOME/.dotfiles/zsh/.zsh/base16-shell/base16-shell.plugin.zsh"
+  "$HOME/.dotfiles/zsh/.zsh/zsh-z/zsh-z.plugin.zsh"
+  "$HOME/.dotfiles/zsh/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+)
+for file in "$HOME/.dotfiles/zsh/.config/zsh/"*.zsh; do
+  zsh_files+=("$file")
+done
+
+for file in "${zsh_files[@]}"; do
+  zsh -c "zcompile '$file'" 2>/dev/null
+done
