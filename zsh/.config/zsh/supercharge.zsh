@@ -7,10 +7,11 @@ zstyle ':completion:*' menu yes select
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zmodload zsh/complist
 _comp_options+=(globdots) # Include hidden files.
-for dump in "$HOME/.zcompdump"(N.mh+24); do
+if [[ -n "$HOME/.zcompdump"(N.mh+24) ]]; then
   compinit
-done
-compinit -C
+else
+  compinit -C
+fi
 
 unsetopt BEEP
 setopt AUTO_CD
