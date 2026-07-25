@@ -11,6 +11,7 @@ base_packages=(
   "tmux"
   "fzf"
   "lazygit"
+  "golang"
   "podman"
   "git-delta"
 )

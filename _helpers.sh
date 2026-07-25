@@ -82,14 +82,15 @@ h_install_package() {
   pkg=$(h_resolve_package "$1" "$2")
   echo "$pkg" >>"$HOME/.dotfiles/installed_packages"
 
-  if h_has_package "$1" "$2"; then
-    h_echo noop "already has $pkg"
+  if [[ $2 == "lazygit" ]]; then
+    go install github.com/jesseduffield/lazygit@latest >/dev/null
+    h_echo doing "installing $pkg"
     return 0
   fi
 
-  if [[ $1 == "dnf" && $2 == "lazygit" ]]; then
-    h_echo doing "enabling COPR repo dejan/lazygit"
-    sudo dnf copr enable "dejan/lazygit" -y >/dev/null
+  if h_has_package "$1" "$2"; then
+    h_echo noop "already has $pkg"
+    return 0
   fi
 
   h_echo doing "installing $pkg"
