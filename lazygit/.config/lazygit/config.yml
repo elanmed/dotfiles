@@ -16,6 +16,12 @@ gui:
   filterMode: fuzzy
   disableStartupPopups: true
   notARepository: quit
+  sidePanels:
+    - [status]
+    - [files]
+    - [branches]
+    - [commits]
+    - [stash]
 
 keybinding:
   universal:
