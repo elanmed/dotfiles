@@ -4,7 +4,10 @@
 
 git:
   pagers:
-    - pager: delta --paging=never
+    - name: delta
+      pager: delta --paging=never
+    - name: delta-side-by-side
+      pager: delta --paging=never --side-by-side
 
 gui:
   expandFocusedSidePanel: true
@@ -13,3 +16,7 @@ gui:
   filterMode: fuzzy
   disableStartupPopups: true
   notARepository: quit
+
+keybinding:
+  universal:
+    cyclePagers: "="
