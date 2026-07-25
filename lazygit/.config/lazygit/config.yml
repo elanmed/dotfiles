@@ -1,3 +1,15 @@
+# git:
+#   paging:
+#     pager: delta --paging=never
+
 git:
-  paging:
-    pager: delta --paging=never
+  pagers:
+    - pager: delta --paging=never
+
+gui:
+  expandFocusedSidePanel: true
+  showRandomTip: false
+  border: single
+  filterMode: fuzzy
+  disableStartupPopups: true
+  notARepository: quit
