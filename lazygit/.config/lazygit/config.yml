@@ -1,7 +1,3 @@
-# git:
-#   paging:
-#     pager: delta --paging=never
-
 git:
   pagers:
     - name: delta
@@ -16,12 +12,12 @@ gui:
   filterMode: fuzzy
   disableStartupPopups: true
   notARepository: quit
+  showBottomLine: false
+  showListFooter: false
   sidePanels:
-    - [status]
     - [files]
     - [branches]
     - [commits]
-    - [stash]
 
 keybinding:
   universal:
