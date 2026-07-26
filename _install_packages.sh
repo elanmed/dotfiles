@@ -10,8 +10,8 @@ base_packages=(
   "shfmt"
   "tmux"
   "fzf"
-  "lazygit"
   "golang"
+  "lazygit"
   "podman"
   "git-delta"
 )
