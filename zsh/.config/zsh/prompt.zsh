@@ -4,11 +4,22 @@
 # in prompt strings each time the prompt is displayed
 setopt PROMPT_SUBST
 
+randicon() {
+  pokemon_count=151
+  first_codepoint=0x100000
+
+  random_offset=$((RANDOM % pokemon_count))
+  codepoint=$((first_codepoint + random_offset))
+  codepoint_hex=$(printf '%08x' "$codepoint")
+
+  printf "\U${codepoint_hex}"
+}
+
 if h_is_podman; then
   _prompt_prefix="%B󰍇%b"
   _prompt_dir_color="green"
 else
-  _prompt_prefix="􀀀 "
+  _prompt_prefix='$(randicon)  '
   _prompt_dir_color="yellow"
 fi
 
