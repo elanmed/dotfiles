@@ -6,7 +6,6 @@ git:
       pager: delta --paging=never --side-by-side
 
 gui:
-  expandFocusedSidePanel: true
   showRandomTip: false
   border: single
   filterMode: fuzzy
