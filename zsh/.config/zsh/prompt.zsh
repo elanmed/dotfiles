@@ -27,7 +27,7 @@ prompt_git_branch() {
   local branch
   branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d '/' -f 3)
   if [[ -n $branch ]]; then
-    echo "on %F{magenta} $branch%f"
+    echo "on %F{magenta} $branch%f"
   fi
 }
 
