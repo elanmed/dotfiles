@@ -19,7 +19,7 @@ if h_is_podman; then
   _prompt_prefix="%B󰍇%b"
   _prompt_dir_color="green"
 else
-  _prompt_prefix='$(randicon)  '
+  _prompt_prefix='$(randicon)'
   _prompt_dir_color="yellow"
 fi
 
@@ -32,4 +32,4 @@ prompt_git_branch() {
 }
 
 PROMPT='%B%F{'$_prompt_dir_color'}%~%f%b $(prompt_git_branch)
-'$_prompt_prefix' :: '
+'$_prompt_prefix'   \$ '
