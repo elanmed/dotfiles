@@ -35,5 +35,7 @@
     "⠇ ",
     "⠏ "
   ],
-  "promptPrefix": "􀀀   > "
+  "promptPrefix": "􀀀   > ",
+  "usageLimitDollar": 12,
+  "usageLimitMs": 18000000
 }
