@@ -131,7 +131,7 @@ crun() {
     # disable SELinux so the container can read/write mounted volumes
     --security-opt label=disable
     # cd "$workspace" on load
-    --workdir "$workspace"
+    --workdir "/mounted/$workspace"
     # bind the host dir on the left of the : to the container dir on the right side of the :
     --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro"
     --volume "$HOME/.config/.agent-js:/root/.config/.agent-js"
