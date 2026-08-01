@@ -37,5 +37,5 @@
   ],
   "promptPrefix": "􀀀   > ",
   "usageLimitDollar": 12,
-  "usageLimitMs": 18000000
+  "usageLimitDuration": "5h"
 }
