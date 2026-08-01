@@ -121,9 +121,11 @@ crun() {
   local cmd=("$@")
   [[ ${#cmd[@]} -eq 0 ]] && cmd=("zsh")
 
-  local agent_js_config_volumes=()
+  local agent_js_config_volumes=(--volume "$HOME/.dotfiles/containers/.config/.agent-js:/root/.config/.agent-js")
   for file in "$HOME/.config/.agent-js"/*; do
-    agent_js_config_volumes+=(--volume "$(realpath "$file"):/root/.config/.agent-js/$(basename "$file")")
+    if [[ ! -L $file ]]; then
+      agent_js_config_volumes+=(--volume "$file:/root/.config/.agent-js/$(basename "$file")")
+    fi
   done
 
   local podman_args=(
