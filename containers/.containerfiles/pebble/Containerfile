@@ -11,6 +11,6 @@ RUN git clone https://github.com/elanmed/dotfiles ~/.dotfiles && \
 
 RUN cd ~/.dotfiles && bash bootstrap.sh -p dnf -d headless
 RUN . ~/.dotfiles/nvm/.nvm/nvm.sh && nvm install --lts
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    ~/.local/bin/uv tool install pebble-tool && \
-    . ~/.dotfiles/nvm/.nvm/nvm.sh && ~/.local/bin/pebble sdk install latest
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+RUN ~/.local/bin/uv tool install pebble-tool
+RUN . ~/.dotfiles/nvm/.nvm/nvm.sh && ~/.local/bin/pebble sdk install latest
