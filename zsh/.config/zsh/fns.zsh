@@ -121,13 +121,6 @@ crun() {
   local cmd=("$@")
   [[ ${#cmd[@]} -eq 0 ]] && cmd=("zsh")
 
-  local agent_js_config_volumes=(--volume "$HOME/.dotfiles/containers/.config/.agent-js:/root/.config/.agent-js")
-  for file in "$HOME/.config/.agent-js"/*; do
-    if [[ ! -L $file ]]; then
-      agent_js_config_volumes+=(--volume "$file:/root/.config/.agent-js/$(basename "$file")")
-    fi
-  done
-
   local podman_args=(
     # keep stdin open to enable typing commands into the container
     --interactive
@@ -141,8 +134,8 @@ crun() {
     --workdir "/mounted/$workspace"
     # bind the host dir on the left of the : to the container dir on the right side of the :
     --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro"
-    "${agent_js_config_volumes[@]}"
     --volume "$(realpath "$dir"):/mounted/$workspace"
+    --volume "$HOME/.dotfiles/containers/.config/.agent-js:/root/.config/.agent-js"
 
     --env AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
 nvim -u "$HOME/.dotfiles/neovim/.config/nvim/container.lua" -c "normal! G$" -c startinsert! __FILE__
