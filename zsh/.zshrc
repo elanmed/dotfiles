@@ -12,7 +12,7 @@ unset _fzf_zsh_cache
 source "$HOME/.dotfiles/_helpers.sh"
 
 # plugins
-source "$HOME/.dotfiles/zsh/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[[ -z $DISABLE_ZSH_AUTOSUGGEST ]] && source "$HOME/.dotfiles/zsh/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$HOME/.dotfiles/zsh/.zsh/base16-shell/base16-shell.plugin.zsh"
 source "$HOME/.dotfiles/zsh/.zsh/zsh-z/zsh-z.plugin.zsh"
 source "$HOME/.dotfiles/zsh/.config/zsh/supercharge.zsh"
