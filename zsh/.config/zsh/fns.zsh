@@ -58,8 +58,8 @@ killp() {
 }
 
 cbuild() {
-  if [[ $1 != "ubuntu" ]] && [[ $1 != "fedora" ]]; then
-    h_echo error "usage: cbuild {ubuntu,fedora}"
+  if [[ $1 != "ubuntu" ]] && [[ $1 != "fedora" ]] && [[ $1 != "pebble" ]]; then
+    h_echo error "usage: cbuild {ubuntu,fedora,pebble}"
     exit 1
   fi
 
@@ -77,8 +77,8 @@ crun() {
     exit 1
   fi
 
-  if [[ $2 != "ubuntu" ]] && [[ $2 != "fedora" ]]; then
-    h_echo error "usage: crun <directory> {ubuntu,fedora} [command...]"
+  if [[ $2 != "ubuntu" ]] && [[ $2 != "fedora" ]] && [[ $2 != "pebble" ]]; then
+    h_echo error "usage: crun <directory> {ubuntu,fedora,pebble} [command...]"
     exit 1
   fi
 
@@ -136,6 +136,7 @@ crun() {
     --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro"
     --volume "$(realpath "$dir"):/mounted/$workspace"
     --volume "$HOME/.dotfiles/containers/.config/.agent-js:/root/.config/.agent-js"
+    --volume /tmp/.X11-unix:/tmp/.X11-unix:ro
 
     --env AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
 nvim -u "$HOME/.dotfiles/neovim/.config/nvim/container.lua" -c "normal! G$" -c startinsert! __FILE__
@@ -144,6 +145,7 @@ printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | ba
     --env AGENT_JS_CLIPBOARD_PASTE="nc --recv-only host.docker.internal $PASTE_PORT"
     --env COPY_PORT="$COPY_PORT"
     --env PASTE_PORT="$PASTE_PORT"
+    --env DISPLAY="$DISPLAY"
   )
 
   podman run "${podman_args[@]}" \
