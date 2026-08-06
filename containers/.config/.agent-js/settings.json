@@ -1,5 +1,5 @@
 {
-  "model": "kimi-k3",
+  "model": "deepseek-v4-pro",
   "baseURL": "https://opencode.ai/zen/go/v1",
   "pricingPerModel": {
     "kimi-k3": {
