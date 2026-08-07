@@ -27,17 +27,19 @@ if h_is_macos; then
   _battery_percent=""
 else
   percent="$(cat /sys/class/power_supply/BAT*/capacity)"
+  charging="$(cat /sys/class/power_supply/AC/online)"
+
+  icons_charging=("󰢟" "󱊤" "󱊥" "󱊦")
+  icons_discharging=("󰂎" "󱊡" "󱊢" "󱊣")
+
   icon=""
-  if [[ -z $percent ]]; then
-    icon=""
-  elif [[ $percent -gt 75 ]]; then
-    icon="󱊣"
-  elif [[ $percent -gt 50 ]]; then
-    icon="󱊢"
-  elif [[ $percent -gt 25 ]]; then
-    icon="󱊡"
-  else
-    icon="󰂎"
+  if [[ -n $percent ]]; then
+    idx=$((percent > 75 ? 3 : percent > 50 ? 2 : percent > 25 ? 1 : 0))
+    if [[ $charging -eq 1 ]]; then
+      icon="${icons_charging[$idx]}"
+    else
+      icon="${icons_discharging[$idx]}"
+    fi
   fi
 
   _battery_percent="at %F{green}$icon $(cat /sys/class/power_supply/BAT*/capacity)%%%f"
