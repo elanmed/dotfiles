@@ -23,6 +23,26 @@ else
   _prompt_dir_color="yellow"
 fi
 
+if h_is_macos; then
+  _battery_percent=""
+else
+  percent="$(cat /sys/class/power_supply/BAT*/capacity)"
+  icon=""
+  if [[ -z $percent ]]; then
+    icon=""
+  elif [[ $percent -gt 75 ]]; then
+    icon="󱊣"
+  elif [[ $percent -gt 50 ]]; then
+    icon="󱊢"
+  elif [[ $percent -gt 25 ]]; then
+    icon="󱊡"
+  else
+    icon="󰂎"
+  fi
+
+  _battery_percent="at %F{green}$icon $(cat /sys/class/power_supply/BAT*/capacity)%%%f"
+fi
+
 prompt_git_branch() {
   local branch
   branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d '/' -f 3)
@@ -31,5 +51,5 @@ prompt_git_branch() {
   fi
 }
 
-PROMPT='%B%F{'$_prompt_dir_color'}%~%f%b $(prompt_git_branch)
-'$_prompt_prefix'   :: '
+PROMPT='%B%F{'$_prompt_dir_color'}%~%f%b $(prompt_git_branch) '$_battery_percent'
+'$_prompt_prefix'  :: '
