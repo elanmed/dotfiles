@@ -65,6 +65,21 @@ vi-yank-clipboard() {
 zle -N vi-yank-clipboard
 bindkey -M vicmd y vi-yank-clipboard
 
+fzf-git-branch() {
+  if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+    zle -M "Not in a git repo"
+    return 1
+  fi
+  local branch="$(git branch --format='%(refname:short)' | fzf --height=40% --reverse)"
+  zle reset-prompt
+  if [[ -z $branch ]] && return 1
+  LBUFFER="$LBUFFER$branch"
+  return 0
+}
+zle -N fzf-git-branch
+bindkey -M vicmd '^b' fzf-git-branch
+bindkey -M viins '^b' fzf-git-branch
+
 # https://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 fg-widget() {
   if [[ $#BUFFER -eq 0 ]]; then
