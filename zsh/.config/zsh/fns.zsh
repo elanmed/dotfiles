@@ -19,7 +19,12 @@ unalias z
 # need `function`
 # https://github.com/ohmyzsh/ohmyzsh/issues/6723#issue-313463147
 function z {
+  local before="$PWD"
   zshz "$@"
+  if [[ $before == $PWD ]]; then
+    h_echo "error" "Did not change dirs"
+    return 1
+  fi
   ls
 }
 
