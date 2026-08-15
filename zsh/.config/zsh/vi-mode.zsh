@@ -22,6 +22,7 @@ bindkey -M viins '^r' fzf-history-widget
 bindkey -M vicmd '^t' fzf-file-widget
 bindkey -M viins '^t' fzf-file-widget
 # custom
+FZF_COMPLETION_TRIGGER=''
 bindkey -M vicmd '^x' fzf-completion
 bindkey -M viins '^x' fzf-completion
 bindkey -M viins '^n' menu-complete
