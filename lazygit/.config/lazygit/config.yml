@@ -1,10 +1,9 @@
 git:
-  pagers:
+  diffRenderers:
     - name: delta
-      pager: delta --paging=never
+      command: delta --paging=never
     - name: delta-side-by-side
-      pager: delta --paging=never --side-by-side
-
+      command: delta --paging=never --side-by-side
 gui:
   showRandomTip: false
   border: single
@@ -17,7 +16,6 @@ gui:
     - [files]
     - [branches]
     - [commits]
-
 keybinding:
   universal:
-    cyclePagers: "="
+    cycleDiffRenderers: "="
