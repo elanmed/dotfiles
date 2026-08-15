@@ -215,27 +215,27 @@ lg() {
 }
 
 ezsh() {
-  cd "$HOME/.dotfiles/zsh/.config/zsh" && "$NVIM_CMD"
+  builtin cd "$HOME/.dotfiles/zsh/.config/zsh" && "$NVIM_CMD"
 }
 
 eterm() {
-  cd "$HOME/.dotfiles" && "$NVIM_CMD" "$HOME/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
+  builtin cd "$HOME/.dotfiles" && "$NVIM_CMD" "$HOME/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
 }
 
 etmux() {
-  cd "$HOME/.dotfiles" && "$NVIM_CMD" "$HOME/.dotfiles/tmux/.config/tmux/tmux.conf"
+  builtin cd "$HOME/.dotfiles" && "$NVIM_CMD" "$HOME/.dotfiles/tmux/.config/tmux/tmux.conf"
 }
 
 edot() {
-  cd "$HOME/.dotfiles" && "$NVIM_CMD"
+  builtin cd "$HOME/.dotfiles" && "$NVIM_CMD"
 }
 
 evim() {
-  cd "$HOME/.dotfiles/neovim/.config/nvim" && "$NVIM_CMD"
+  builtin cd "$HOME/.dotfiles/neovim/.config/nvim" && "$NVIM_CMD"
 }
 
 eagent() {
-  cd "$HOME/.dotfiles/containers/.local/lib/agent-js" && "$NVIM_CMD"
+  builtin cd "$HOME/.dotfiles/containers/.local/lib/agent-js" && "$NVIM_CMD"
 }
 
 firmware-upgrade() {
