@@ -29,7 +29,9 @@ function z {
 }
 
 cd() {
+  local before="$PWD"
   builtin cd "$@"
+  if [[ $before == $PWD ]] && return 1;
   ls
 }
 
