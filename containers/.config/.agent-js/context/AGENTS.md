@@ -11,3 +11,13 @@ You are being called in a container, not in the root system where the user is. T
 ### General coding practices
 
 - Minimize diffs — only change what's necessary
+- Minimize comments - only add a comment when the user asks for one. Do not removing existing comments
+- Lua: prefer long strings (`[[...]]`) for multi-line string literals instead of escaped `\n`.
+- JavaScript, TypeScript: prefer template literals for multi-line string literals instead of escaped `\n`.
+
+### Neovim plugins
+
+- All Neovim plugins you encounter uses modern APIs — when in doubt, check `:help` docs.
+  - To look up a Neovim API: `nvim --headless -c "help vim.text.diff" -c ".,.+100w! /tmp/help.txt" -c "qa" 2>&1`
+  - Adjust `100` as needed
+- For writing tests with Neovim plugins, see the `testing-neovim-plugins` skill
