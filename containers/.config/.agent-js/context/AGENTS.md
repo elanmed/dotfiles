@@ -21,3 +21,4 @@ You are being called in a container, not in the root system where the user is. T
   - To look up a Neovim API: `nvim --headless -c "help vim.text.diff" -c ".,.+100w! /tmp/help.txt" -c "qa" 2>&1`
   - Adjust `100` as needed
 - For writing tests with Neovim plugins, see the `testing-neovim-plugins` skill
+- In tests, avoid raw `child.lua` strings — they are prone to bugs. If you must use a `child.lua` string, make a helper function that takes arguments rather than embedding logic inline.
