@@ -1,5 +1,5 @@
 ---
-name: testing
+name: testing-neovim-plugins
 description: Use when writing tests for Neovim plugins
 ---
 
