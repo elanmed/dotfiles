@@ -13,6 +13,7 @@ You are being called in a container, not in the root system where the user is. T
 - Minimize diffs — only change what's necessary
 - Minimize comments - only add a comment when the user asks for one. Do not removing existing comments
 - Lua: prefer long strings (`[[...]]`) for multi-line string literals instead of escaped `\n`.
+- Lua: do not declare multiple variables on one line — use one `local` per line.
 - JavaScript, TypeScript: prefer template literals for multi-line string literals instead of escaped `\n`.
 
 ### Neovim plugins
@@ -21,4 +22,4 @@ You are being called in a container, not in the root system where the user is. T
   - To look up a Neovim API: `nvim --headless -c "help vim.text.diff" -c ".,.+100w! /tmp/help.txt" -c "qa" 2>&1`
   - Adjust `100` as needed
 - For writing tests with Neovim plugins, see the `testing-neovim-plugins` skill
-- In tests, avoid raw `child.lua` strings — they are prone to bugs. If you must use a `child.lua` string, make a helper function that takes arguments rather than embedding logic inline.
+- In tests, avoid raw `child.lua` strings — they are prone to bugs. If you must use a `child.lua` string, make a helper function that takes arguments rather than embedding logic inline. Prefer `child.lua_func`
