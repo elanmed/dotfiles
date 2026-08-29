@@ -142,7 +142,7 @@ crun() {
     # bind the host dir on the left of the : to the container dir on the right side of the :
     --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro"
     --volume "$(realpath "$dir"):/mounted/$workspace"
-    --volume "$HOME/.dotfiles/containers/.config/agent-js:/root/.config/.agent-js"
+    --volume "$HOME/.dotfiles/containers/.config/agent-js:/root/.config/agent-js"
     --volume /tmp/.X11-unix:/tmp/.X11-unix:ro
 
     --env AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
