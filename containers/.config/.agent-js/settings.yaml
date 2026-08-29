@@ -1,0 +1,34 @@
+model: deepseek-v4-pro
+baseURL: https://opencode.ai/zen/go/v1
+# baseURL: https://opencode.ai/zen/v1
+pricingPerModel:
+  kimi-k3:
+    inputPerMillion: 3
+    outputPerMillion: 15
+    cacheReadPerMillion: 0.3
+  kimi-k2.7-code:
+    inputPerMillion: 0.95
+    outputPerMillion: 4
+    cacheReadPerMillion: 0.19
+  glm-5.2:
+    inputPerMillion: 1.4
+    outputPerMillion: 4.4
+    cacheReadPerMillion: 0.26
+  deepseek-v4-pro:
+    inputPerMillion: 1.74
+    outputPerMillion: 3.48
+    cacheReadPerMillion: 0.0145
+loadingStateFrames:
+  - "⠋ "
+  - "⠙ "
+  - "⠹ "
+  - "⠸ "
+  - "⠼ "
+  - "⠴ "
+  - "⠦ "
+  - "⠧ "
+  - "⠇ "
+  - "⠏ "
+promptPrefix: "􀀀   > "
+usageLimitDollar: 12
+usageLimitDuration: 5h
