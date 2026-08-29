@@ -207,7 +207,7 @@ ver() {
 }
 
 v() {
-  "$NVIM_CMD" "$@"
+  ${=NVIM_CMD} "$@"
 }
 
 lg() {
@@ -215,27 +215,27 @@ lg() {
 }
 
 ezsh() {
-  builtin cd "$HOME/.dotfiles/zsh/.config/zsh" && "$NVIM_CMD"
+  builtin cd "$HOME/.dotfiles/zsh/.config/zsh" && ${=NVIM_CMD}
 }
 
 eterm() {
-  builtin cd "$HOME/.dotfiles" && "$NVIM_CMD" "$HOME/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
+  builtin cd "$HOME/.dotfiles" && ${=NVIM_CMD} "$HOME/.dotfiles/wezterm/.config/wezterm/wezterm.lua"
 }
 
 etmux() {
-  builtin cd "$HOME/.dotfiles" && "$NVIM_CMD" "$HOME/.dotfiles/tmux/.config/tmux/tmux.conf"
+  builtin cd "$HOME/.dotfiles" && ${=NVIM_CMD} "$HOME/.dotfiles/tmux/.config/tmux/tmux.conf"
 }
 
 edot() {
-  builtin cd "$HOME/.dotfiles" && "$NVIM_CMD"
+  builtin cd "$HOME/.dotfiles" && ${=NVIM_CMD}
 }
 
 evim() {
-  builtin cd "$HOME/.dotfiles/neovim/.config/nvim" && "$NVIM_CMD"
+  builtin cd "$HOME/.dotfiles/neovim/.config/nvim" && ${=NVIM_CMD}
 }
 
 eagent() {
-  builtin cd "$HOME/.dotfiles/containers/.local/lib/agent-js" && "$NVIM_CMD"
+  builtin cd "$HOME/.dotfiles/containers/.local/lib/agent-js" && ${=NVIM_CMD}
 }
 
 firmware-upgrade() {
