@@ -27,7 +27,7 @@ if h_is_macos; then
   _battery_percent=""
 else
   percent="$(cat /sys/class/power_supply/BAT*/capacity)"
-  charging="$(cat /sys/class/power_supply/AC/online)"
+  charging="$(cat /sys/class/power_supply/AC/online 2>/dev/null)"
 
   icons_charging=("󰢟" "󱊤" "󱊥" "󱊦")
   icons_discharging=("󰂎" "󱊡" "󱊢" "󱊣")
