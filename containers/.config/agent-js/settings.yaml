@@ -30,5 +30,6 @@ loadingStateFrames:
   - "⠇ "
   - "⠏ "
 promptPrefix: "􀀀   > "
-usageLimitDollar: 12
-usageLimitDuration: 5h
+usageLimit:
+  dollarAmount: 12
+  duration: 5h
