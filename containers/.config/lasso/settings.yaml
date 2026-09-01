@@ -1,6 +1,7 @@
 model: deepseek-v4-flash
-baseURL: https://opencode.ai/zen/go/v1
-# baseURL: https://opencode.ai/zen/v1
+# baseURL: https://opencode.ai/zen/go/v1
+# baseURL: https://openrouter.ai/api/v1
+baseURL: https://opencode.ai/zen/v1
 contextWindowPerModel:
   deepseek-v4-flash: 1000000
   deepseek-v4-pro: 1000000

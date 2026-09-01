@@ -7,3 +7,4 @@ installed_packages
 installed_packages_prev
 *.zwc
 *.zwc.old
+.pnpm-store

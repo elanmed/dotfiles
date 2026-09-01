@@ -11,7 +11,6 @@ gui:
   disableStartupPopups: true
   notARepository: quit
   showBottomLine: false
-  showListFooter: false
   sidePanels:
     - [files]
     - [branches]
