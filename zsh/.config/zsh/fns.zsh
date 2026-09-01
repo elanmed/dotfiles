@@ -145,11 +145,11 @@ crun() {
     --volume "$HOME/.dotfiles/containers/.config/lasso:/root/.config/lasso"
     --volume /tmp/.X11-unix:/tmp/.X11-unix:ro
 
-    --env AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
+    --env LASSO_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "LASSO_ACTIVE" "$(echo -n "false" | base64)"
 nvim -u "$HOME/.dotfiles/neovim/.config/nvim/container.lua" -c "normal! G$" -c startinsert! __FILE__
-printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "true" | base64)"'
-    --env AGENT_JS_HISTORY='nvim -u "$HOME/.dotfiles/neovim/.config/nvim/container.lua" -c "normal! G$" __FILE__'
-    --env AGENT_JS_CLIPBOARD_PASTE="nc --recv-only host.docker.internal $PASTE_PORT"
+printf "\033]1337;SetUserVar=%s=%s\007" "LASSO_ACTIVE" "$(echo -n "true" | base64)"'
+    --env LASSO_HISTORY='nvim -u "$HOME/.dotfiles/neovim/.config/nvim/container.lua" -c "normal! G$" __FILE__'
+    --env LASSO_CLIPBOARD_PASTE="nc --recv-only host.docker.internal $PASTE_PORT"
     --env COPY_PORT="$COPY_PORT"
     --env PASTE_PORT="$PASTE_PORT"
     --env DISPLAY="$DISPLAY"
@@ -180,11 +180,11 @@ sub_remove() {
 
 cagent() {
   h_require_root_env "cagent"
-  h_set_wezterm_user_var "AGENT_JS_ACTIVE" "true"
+  h_set_wezterm_user_var "LASSO_ACTIVE" "true"
 
   crun . fedora \
     node /root/.dotfiles/containers/.local/lib/lasso/src/index.ts
-  h_set_wezterm_user_var "AGENT_JS_ACTIVE" ""
+  h_set_wezterm_user_var "LASSO_ACTIVE" ""
 }
 
 chat() {

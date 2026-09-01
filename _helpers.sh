@@ -226,5 +226,5 @@ h_set_wezterm_user_var() {
   [[ $# -ne 2 ]] && h_throw_error "usage: h_set_wezterm_user_var <key> <value>"
 
   printf "\033]1337;SetUserVar=%s=%s\007" "$1" $(printf '%s' "$2" | base64)
-  # printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" $(echo -n "true" | base64)
+  # printf "\033]1337;SetUserVar=%s=%s\007" "LASSO_ACTIVE" $(echo -n "true" | base64)
 }

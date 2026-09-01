@@ -73,7 +73,7 @@ local function toggle_pane_height()
 end
 
 local send_keys_or_paste = wezterm.action_callback(function(window, pane)
-  if pane:get_user_vars().AGENT_JS_ACTIVE == "true" then
+  if pane:get_user_vars().LASSO_ACTIVE == "true" then
     pane:send_text "\x16"
   else
     window:perform_action(wezterm.action.PasteFrom "Clipboard", pane)
