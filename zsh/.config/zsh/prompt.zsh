@@ -19,7 +19,7 @@ if h_is_podman; then
   _prompt_prefix="%B󰍇%b"
   _prompt_dir_color="green"
 else
-  _prompt_prefix='$(randicon)'
+  _prompt_prefix="$(randicon)"
   _prompt_dir_color="yellow"
 fi
 
