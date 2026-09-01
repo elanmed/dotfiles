@@ -117,8 +117,8 @@ curl -fsSL https://bun.com/install | bash >/dev/null
 chmod u+w "$HOME/.zshrc"
 export PATH="$HOME/.bun/bin:$PATH"
 
-h_echo doing "installing agent-js deps"
-pnpm --prefix "$HOME/.dotfiles/containers/.local/lib/agent-js" install --silent --yes
+h_echo doing "installing lasso deps"
+pnpm --prefix "$HOME/.dotfiles/containers/.local/lib/lasso" install --silent --yes
 
 h_echo doing "generating vim-js manifest"
 npm --prefix "$HOME/.dotfiles/neovim/.local/lib/vim-js" run gen-manifest chrome >/dev/null

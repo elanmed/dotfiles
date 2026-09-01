@@ -106,7 +106,7 @@ crun() {
   paste_fifo=$(mktemp -u /tmp/paste-fifo.XXXXXX)
   rm -f "$paste_fifo"
   mkfifo "$paste_fifo"
-  node "$HOME/.dotfiles/containers/.local/lib/agent-js/scripts/paste-server.ts" "$paste_cmd" >"$paste_fifo" &
+  node "$HOME/.dotfiles/containers/.local/lib/lasso/scripts/paste-server.ts" "$paste_cmd" >"$paste_fifo" &
   paste_server_pid="$!"
   read -r PASTE_PORT <"$paste_fifo"
   rm -f "$paste_fifo"
@@ -114,7 +114,7 @@ crun() {
   copy_fifo=$(mktemp -u /tmp/copy-fifo.XXXXXX)
   rm -f "$copy_fifo"
   mkfifo "$copy_fifo"
-  node "$HOME/.dotfiles/containers/.local/lib/agent-js/scripts/copy-server.ts" "$copy_cmd" >"$copy_fifo" &
+  node "$HOME/.dotfiles/containers/.local/lib/lasso/scripts/copy-server.ts" "$copy_cmd" >"$copy_fifo" &
   copy_server_pid="$!"
   read -r COPY_PORT <"$copy_fifo"
   rm -f "$copy_fifo"
@@ -142,7 +142,7 @@ crun() {
     # bind the host dir on the left of the : to the container dir on the right side of the :
     --volume "$HOME/.dotfiles/.env:/root/.dotfiles/.env:ro"
     --volume "$(realpath "$dir"):/mounted/$workspace"
-    --volume "$HOME/.dotfiles/containers/.config/agent-js:/root/.config/agent-js"
+    --volume "$HOME/.dotfiles/containers/.config/lasso:/root/.config/lasso"
     --volume /tmp/.X11-unix:/tmp/.X11-unix:ro
 
     --env AGENT_JS_EDIT='printf "\033]1337;SetUserVar=%s=%s\007" "AGENT_JS_ACTIVE" "$(echo -n "false" | base64)"
@@ -183,7 +183,7 @@ cagent() {
   h_set_wezterm_user_var "AGENT_JS_ACTIVE" "true"
 
   crun . fedora \
-    node /root/.dotfiles/containers/.local/lib/agent-js/src/index.ts
+    node /root/.dotfiles/containers/.local/lib/lasso/src/index.ts
   h_set_wezterm_user_var "AGENT_JS_ACTIVE" ""
 }
 
@@ -235,7 +235,7 @@ evim() {
 }
 
 eagent() {
-  builtin cd "$HOME/.dotfiles/containers/.local/lib/agent-js" && ${=NVIM_CMD}
+  builtin cd "$HOME/.dotfiles/containers/.local/lib/lasso" && ${=NVIM_CMD}
 }
 
 firmware-upgrade() {
