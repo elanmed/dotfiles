@@ -39,3 +39,10 @@ promptPrefix: "􀀀   > "
 usageLimit:
   dollarAmount: 12
   duration: 5h
+keymaps:
+  history:
+    name: "o"
+    ctrl: true
+  commit:
+    name: "x"
+    ctrl: true
