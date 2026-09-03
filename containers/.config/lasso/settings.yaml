@@ -1,6 +1,5 @@
 model: gpt-5.6-luna
 # baseURL: https://opencode.ai/zen/go/v1
-# baseURL: https://openrouter.ai/api/v1
 baseURL: https://opencode.ai/zen/v1
 contextWindowPerModel:
   deepseek-v4-flash: 1000000
@@ -28,6 +27,20 @@ pricingPerModel:
     outputPerMillion: 1.2
     cacheReadPerMillion: 0.02
     cacheWritePerMillion: 0.25
+usageLimit:
+  dollarAmount: 12
+  duration: 5h
+keymaps:
+  history:
+    name: "o"
+    ctrl: true
+  commit:
+    name: "x"
+    ctrl: true
+  edit-str:
+    name: "h"
+    ctrl: true
+promptPrefix: "􀀀   > "
 loadingStateFrames:
   - "􀂗 "
   - "􀂘 "
@@ -80,14 +93,3 @@ loadingStateFrames:
   - "􀃇 "
   - "􀃈 "
   - "􀃉 "
-promptPrefix: "􀀀   > "
-usageLimit:
-  dollarAmount: 12
-  duration: 5h
-keymaps:
-  history:
-    name: "o"
-    ctrl: true
-  commit:
-    name: "x"
-    ctrl: true
