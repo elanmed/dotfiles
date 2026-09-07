@@ -32,12 +32,12 @@ usageLimit:
 
 # abcdefghijklmnopqrstuvwxyz
 # ------------m---q----v---z used by the os
-# a-c-e--------------------- used by native readline
-# a-c-e-------m---q----v---z used
-# -b-d-fghijkl-nop-rstu-wxy- available
+# a-c-e--hi----------------- used by native readline
+# a-c-e--hi---m---q----v---z used
+# -b-d-fg--jkl-nop-rstu-wxy- available
 keymaps:
   history:
-    name: "h"
+    name: "t"
     ctrl: true
   paste:
     name: "v"
@@ -45,11 +45,8 @@ keymaps:
   commit:
     name: "o"
     ctrl: true
-  clear:
-    name: "l"
-    ctrl: true
   lastresponse:
-    name: "r"
+    name: "l"
     ctrl: true
 messageQueueDelimiter: "ll\n"
 promptPrefix: "􀀀   > "
