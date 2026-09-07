@@ -29,12 +29,27 @@ pricingPerModel:
 usageLimit:
   dollarAmount: 12
   duration: 5h
+
+# abcdefghijklmnopqrstuvwxyz
+# ------------m---q----v---z used by the os
+# a-c-e--------------------- used by native readline
+# a-c-e-------m---q----v---z used
+# -b-d-fghijkl-nop-rstu-wxy- available
 keymaps:
   history:
-    name: "o"
+    name: "h"
+    ctrl: true
+  paste:
+    name: "v"
     ctrl: true
   commit:
-    name: "x"
+    name: "o"
+    ctrl: true
+  clear:
+    name: "l"
+    ctrl: true
+  lastresponse:
+    name: "r"
     ctrl: true
 messageQueueDelimiter: "ll\n"
 promptPrefix: "􀀀   > "
