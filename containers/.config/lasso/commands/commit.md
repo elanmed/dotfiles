@@ -27,3 +27,5 @@ Write commit messages that:
 - Are descriptive but concise
 
 Commit immediately without asking for confirmation. After committing, show the commit message and ask the user if they want to change it. If they do, run `git commit --amend -m "<new message>"` using exactly what they provide. If they ask another question or change the topic, move on.
+
+When making subsequent changes, don't commit after completing the change, only commit when directly told.
