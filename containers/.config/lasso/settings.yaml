@@ -62,7 +62,6 @@ keymaps:
   editpage:
     name: "f"
     ctrl: true
-messageQueueDelimiter: "ll\n"
 promptPrefix: "􀀀   > "
 loadingStateFrames:
   - "􀂗  "
