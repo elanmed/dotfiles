@@ -244,7 +244,11 @@ firmware-upgrade() {
 
 way() {
   rotate-portrait
-  cage waydroid show-full-ui
+  cage waydroid show-full-ui &
+  cage_pid=$!
+  sleep 1
+  wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
+  trap 'kill -9 -$cage_pid' INT
+  wait $cage_pid
   rotate-landscape
 }
-
