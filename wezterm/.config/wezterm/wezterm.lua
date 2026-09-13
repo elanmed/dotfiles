@@ -43,7 +43,7 @@ config.font = wezterm.font_with_fallback {
   "ComicCodeLigatures Nerd Font",
   "Pokemon 151",
 }
-config.font_size = 12.0
+config.font_size = 18.0
 
 local function toggle_pane_height()
   return wezterm.action_callback(function(window, pane)
