@@ -241,3 +241,10 @@ eagent() {
 firmware-upgrade() {
   sudo fwupdmgr update
 }
+
+way() {
+  rotate-portrait
+  cage waydroid show-full-ui
+  rotate-landscape
+}
+
