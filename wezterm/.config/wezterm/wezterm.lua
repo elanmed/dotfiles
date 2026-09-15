@@ -65,9 +65,15 @@ local function toggle_pane_height()
 
     if curr_height > half_max_height then
       -- shrinks by this amount
-      window:perform_action(wezterm.action.AdjustPaneSize { shrink_direction, curr_height - half_max_height, }, pane)
+      window:perform_action(
+        wezterm.action.AdjustPaneSize { shrink_direction, curr_height - half_max_height },
+        pane
+      )
     else
-      window:perform_action(wezterm.action.AdjustPaneSize { grow_direction, max_height - curr_height, }, pane)
+      window:perform_action(
+        wezterm.action.AdjustPaneSize { grow_direction, max_height - curr_height },
+        pane
+      )
     end
   end)
 end
@@ -80,25 +86,37 @@ local send_keys_or_paste = wezterm.action_callback(function(window, pane)
   end
 end)
 
-config.leader = { key = "Space", mods = "CTRL", }
+config.leader = { key = "Space", mods = "CTRL" }
 config.keys = {
-  { key = "v", mods = cmd_or_ctrl(), action = send_keys_or_paste, },
-  { key = "p", mods = "LEADER|CTRL", action = wezterm.action.ActivateTabRelative(-1), },
-  { key = "n", mods = "LEADER|CTRL", action = wezterm.action.ActivateTabRelative(1), },
-  { key = "q", mods = "LEADER|CTRL", action = wezterm.action.QuitApplication, },
-  { key = "x", mods = "LEADER|CTRL", action = wezterm.action.CloseCurrentTab { confirm = true, }, },
-  { key = "d", mods = "LEADER|CTRL", action = wezterm.action.CloseCurrentPane { confirm = true, }, },
-  { key = "c", mods = "LEADER|CTRL", action = wezterm.action.SpawnTab "CurrentPaneDomain", },
-  { key = "u", mods = "LEADER|CTRL", action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain", }, },
-  { key = "i", mods = "LEADER|CTRL", action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain", }, },
-  { key = "k", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Up", },
-  { key = "j", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Down", },
-  { key = "v", mods = "LEADER|CTRL", action = wezterm.action.ActivateCopyMode, },
-  { key = "o", mods = "LEADER|CTRL", action = wezterm.action.TogglePaneZoomState, },
-  { key = "t", mods = "LEADER|CTRL", action = toggle_pane_height(), },
-  { key = "l", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Right", },
-  { key = "h", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Left", },
-  { key = "Enter", mods = "SHIFT", action = wezterm.action.SendString "\x16\n", },
+  { key = "v", mods = cmd_or_ctrl(), action = send_keys_or_paste },
+  { key = "p", mods = "LEADER|CTRL", action = wezterm.action.ActivateTabRelative(-1) },
+  { key = "n", mods = "LEADER|CTRL", action = wezterm.action.ActivateTabRelative(1) },
+  { key = "q", mods = "LEADER|CTRL", action = wezterm.action.QuitApplication },
+  { key = "x", mods = "LEADER|CTRL", action = wezterm.action.CloseCurrentTab { confirm = true } },
+  {
+    key = "d",
+    mods = "LEADER|CTRL",
+    action = wezterm.action.CloseCurrentPane { confirm = true },
+  },
+  { key = "c", mods = "LEADER|CTRL", action = wezterm.action.SpawnTab "CurrentPaneDomain" },
+  {
+    key = "u",
+    mods = "LEADER|CTRL",
+    action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" },
+  },
+  {
+    key = "i",
+    mods = "LEADER|CTRL",
+    action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" },
+  },
+  { key = "k", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Up" },
+  { key = "j", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Down" },
+  { key = "v", mods = "LEADER|CTRL", action = wezterm.action.ActivateCopyMode },
+  { key = "o", mods = "LEADER|CTRL", action = wezterm.action.TogglePaneZoomState },
+  { key = "t", mods = "LEADER|CTRL", action = toggle_pane_height() },
+  { key = "l", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Right" },
+  { key = "h", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Left" },
+  { key = "Enter", mods = "SHIFT", action = wezterm.action.SendString "\x16\n" },
 }
 if is_linux() then
   config.window_decorations = "NONE"
@@ -128,7 +146,9 @@ config.colors = {
 
 wezterm.on("format-tab-title", function(tab)
   local cwd = tab.active_pane.current_working_dir
-  if not cwd then return "[no cwd]" end
+  if not cwd then
+    return "[no cwd]"
+  end
 
   local path = cwd.file_path
   local basename = path:match "([^/]+)/?$"
