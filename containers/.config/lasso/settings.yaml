@@ -49,6 +49,9 @@ keymaps:
   lastresponse:
     name: "r"
     ctrl: true
+  lastmessage:
+    name: "m"
+    ctrl: true
   editpage:
     name: "f"
     ctrl: true
