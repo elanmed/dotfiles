@@ -50,7 +50,7 @@ keymaps:
     name: "r"
     ctrl: true
   lastmessage:
-    name: "m"
+    name: "s"
     ctrl: true
   editpage:
     name: "f"
