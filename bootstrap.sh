@@ -144,5 +144,5 @@ for file in "$HOME/.dotfiles/zsh/.config/zsh/"*.zsh; do
 done
 
 for file in "${zsh_files[@]}"; do
-  zsh -c "zcompile '$file'" 2>/dev/null
+  zsh -c "zcompile '$file'" >/dev/null
 done
