@@ -30,12 +30,12 @@ pricingPerModel:
 usageLimit:
   dollarAmount: 12
   duration: 5h
-
+compactWithStructuredOutput: false
 # abcdefghijklmnopqrstuvwxyz
 # ------------m---q----v---z used by the os
-# a-c-e--hi----------------- used by native readline
-# a-c-e--hi---m---q----v---z used
-# -b-d-fg--jkl-nop-rstu-wxy- available
+# a-cde--hi----------------- used by native readline
+# a-cde--hi---m---q----v---z used
+# -b---fg--jkl-nop-rstu-wxy- available
 keymaps:
   history:
     name: "t"
@@ -51,6 +51,9 @@ keymaps:
     ctrl: true
   lastmessage:
     name: "s"
+    ctrl: true
+  lastdiff:
+    name: "x"
     ctrl: true
   editpage:
     name: "f"
