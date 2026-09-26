@@ -1,12 +1,13 @@
-# model: glm-5.3-flash
-model: gpt-6-luna
+model: glm-5.3-flash
+# model: gpt-6-luna
 baseURL: https://opencode.ai/zen/go/v1
 # baseURL: https://opencode.ai/zen/v1
 contextWindowPerModel:
   kimi-k3: 1000000
   gpt-6-luna: 1050000
   glm-5.3-flash: 1300000
-sdkProvider: "openai"
+sdkProvider: "openai-compatible"
+# sdkProvider: "openai"
 gateway: "opencode"
 pricingPerModel:
   kimi-k3:
