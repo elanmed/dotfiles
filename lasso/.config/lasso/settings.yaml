@@ -27,6 +27,7 @@ usageLimit:
   dollarAmount: 12
   duration: 5h
 compactWithStructuredOutput: false
+suppressToolEditDiffs: true
 # abcdefghijklmnopqrstuvwxyz
 # ------------m---q----v---z used by the os
 # a-cde--hi----------------- used by native readline
@@ -51,7 +52,7 @@ keymaps:
   lastdiff:
     name: "x"
     ctrl: true
-  editpage:
+  usage:
     name: "f"
     ctrl: true
 promptPrefix: "􀀀   > "
