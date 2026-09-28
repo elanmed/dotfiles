@@ -52,7 +52,7 @@ keymaps:
   lastdiff:
     name: "x"
     ctrl: true
-  usage:
+  editpage:
     name: "f"
     ctrl: true
 promptPrefix: "􀀀   > "
