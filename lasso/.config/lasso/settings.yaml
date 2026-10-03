@@ -3,14 +3,16 @@ model: mimo-v2.6-flash
 # model: gpt-6-luna
 baseURL: https://opencode.ai/zen/go/v1
 # baseURL: https://opencode.ai/zen/v1
+transcriptionModel: gpt-4o-mini-transcribe
 contextWindowPerModel:
   kimi-k3: 1000000
   gpt-6-luna: 1050000
   glm-5.3-flash: 1300000
   mimo-v2.6-flash: 1048576
-sdkProvider: "openai-compatible"
+sdkProvider: openai-compatible
+transcriptionSdkProvider: openai
 # sdkProvider: "openai"
-gateway: "opencode"
+gateway: opencode
 pricingPerModel:
   kimi-k3:
     inputPerMillion: 3
