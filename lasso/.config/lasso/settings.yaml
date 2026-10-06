@@ -1,6 +1,5 @@
-model: mimo-v2.6-flash
-# model: glm-5.3-flash
-# model: gpt-6-luna
+model: glm-5.3-flash
+transcriptionModel: gpt-4o-transcribe
 baseURL: https://opencode.ai/zen/go/v1
 # baseURL: https://opencode.ai/zen/v1
 transcriptionModel: gpt-4o-mini-transcribe
