@@ -1,8 +1,7 @@
 model: glm-5.3-flash
-transcriptionModel: gpt-4o-transcribe
+transcriptionModel: gpt-4o-mini-transcribe
 baseURL: https://opencode.ai/zen/go/v1
 # baseURL: https://opencode.ai/zen/v1
-transcriptionModel: gpt-4o-mini-transcribe
 contextWindowPerModel:
   kimi-k3: 1000000
   gpt-6-luna: 1050000
@@ -42,19 +41,19 @@ suppressToolEditDiffs: true
 # -b---fg--jkl-nop-rstu-wxy- available
 keymaps:
   history:
-    name: "t"
+    name: "p"
     ctrl: true
   paste:
     name: "v"
     ctrl: true
-  commit:
-    name: "o"
-    ctrl: true
-  lastresponse:
+  record:
     name: "r"
     ctrl: true
+  lastresponse:
+    name: "o"
+    ctrl: true
   lastmessage:
-    name: "s"
+    name: "u"
     ctrl: true
   lastdiff:
     name: "x"
