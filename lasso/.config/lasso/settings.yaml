@@ -1,4 +1,5 @@
-model: glm-5.3-flash
+# model: glm-5.3-flash
+model: claude-haiku-5-5
 transcriptionModel: gpt-4o-mini-transcribe
 baseURL: https://opencode.ai/zen/go/v1
 # baseURL: https://opencode.ai/zen/v1
@@ -6,7 +7,7 @@ contextWindowPerModel:
   kimi-k3: 1000000
   gpt-6-luna: 1050000
   glm-5.3-flash: 1300000
-  mimo-v2.6-flash: 1048576
+  claude-haiku-5-5: 100000
 sdkProvider: openai-compatible
 transcriptionSdkProvider: openai
 # sdkProvider: "openai"
@@ -25,10 +26,11 @@ pricingPerModel:
     inputPerMillion: 0.15
     outputPerMillion: 0.5
     cacheReadPerMillion: 0.03
-  mimo-v2.6-flash:
-    inputPerMillion: 0.14
-    outputPerMillion: 0.28
-    cacheReadPerMillion: 0.0028
+  claude-haiku-5-5:
+    inputPerMillion: 0.1
+    outputPerMillion: 0.5
+    cacheReadPerMillion: 0.01
+    cacheWritePerMillion: 0.13
 usageLimit:
   dollarAmount: 12
   duration: 5h
