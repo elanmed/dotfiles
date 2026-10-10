@@ -1,4 +1,3 @@
-# model: glm-5.3-flash
 model: claude-haiku-5-5
 transcriptionModel: gpt-4o-mini-transcribe
 baseURL: https://opencode.ai/zen/go/v1
@@ -8,10 +7,8 @@ contextWindowPerModel:
   gpt-6-luna: 1050000
   glm-5.3-flash: 1300000
   claude-haiku-5-5: 100000
-# sdkProvider: openai-compatible
 sdkProvider: anthropic
 transcriptionSdkProvider: openai
-# sdkProvider: "openai"
 gateway: opencode
 pricingPerModel:
   kimi-k3:
