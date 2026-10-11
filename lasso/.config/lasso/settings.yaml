@@ -1,20 +1,14 @@
-model: claude-haiku-5-5
+model: glm-5.3-flash
 transcriptionModel: gpt-4o-mini-transcribe
 baseURL: https://opencode.ai/zen/go/v1
 # baseURL: https://opencode.ai/zen/v1
 contextWindowPerModel:
-  kimi-k3: 1000000
   gpt-6-luna: 1050000
   glm-5.3-flash: 1300000
-  claude-haiku-5-5: 100000
-sdkProvider: anthropic
+sdkProvider: openai-compatible
 transcriptionSdkProvider: openai
 gateway: opencode
 pricingPerModel:
-  kimi-k3:
-    inputPerMillion: 3
-    outputPerMillion: 15
-    cacheReadPerMillion: 0.3
   gpt-6-luna:
     inputPerMillion: 0.1
     outputPerMillion: 0.5
@@ -24,11 +18,6 @@ pricingPerModel:
     inputPerMillion: 0.15
     outputPerMillion: 0.5
     cacheReadPerMillion: 0.03
-  claude-haiku-5-5:
-    inputPerMillion: 0.1
-    outputPerMillion: 0.5
-    cacheReadPerMillion: 0.01
-    cacheWritePerMillion: 0.13
 usageLimit:
   dollarAmount: 12
   duration: 5h
