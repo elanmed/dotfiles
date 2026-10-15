@@ -30,7 +30,10 @@ suppressToolEditDiffs: true
 # -b---fg--jkl-nop-rstu-wxy- available
 keymaps:
   history:
-    name: "p"
+    name: "y"
+    ctrl: true
+  steer:
+    name: "s"
     ctrl: true
   paste:
     name: "v"
