@@ -35,6 +35,9 @@ keymaps:
   paste:
     name: "v"
     ctrl: true
+  steer:
+    name: "s"
+    ctrl: true
   record:
     name: "r"
     ctrl: true
