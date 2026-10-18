@@ -3,6 +3,51 @@ name: testing-neovim-plugins
 description: Use when writing tests for Neovim plugins
 ---
 
+# User preferences
+
+Guidelines distilled from the user's own plugin test suites (e.g. ff.nvim).
+Apply these in addition to the general guidance below — where they conflict
+with the general guidance, follow these.
+
+- **Exercise real code in-process by default.** No child process for logic
+  tests; no mocking framework. Inject test data through seams the code already
+  exposes (e.g. a stubbed clock like `F._now`, a cwd field like `H.cwd`, or a
+  configurable external command like `find_cmd`). Stub externals at the
+  boundary, not deeper.
+- **Use a child process (`MiniTest.new_child_neovim`) for UI-involving tests**
+  (windows, floating previews, keymaps, screen state). This is the user's
+  explicit preference: async in-process UI tests let mini.test's executor
+  interleave cases, leaking events/state across cases — a child process avoids
+  this entirely (single-threaded, per-case `child.restart`).
+- **Avoid embedding multi-statement Lua in strings for child interaction.**
+  Prefer `child.*` redirections (`child.g.*`, `child.api.*`) and
+  `child.lua_func(fn, ...)`. Only functions passed to `child.lua_func` get
+  dumped — they must not capture upvalues; pass all needed data as plain RPC
+  serializable args and read state back as a single structured return value
+  instead of many `child.lua_get("...")` string lookups.
+- **Strict assertion style:** always exact `MiniTest.expect.equality` with full
+  literal expected values (deep-equal whole tables where practical), never
+  aliases and never derived-from-the-same-math inline expectations. If
+  floating-point precision forces tolerance, prefer explicit tolerance over
+  commented-out assertions — and don't let the test runner's timeout mask
+  precision problems (set a generous `timeout` in the test Makefile target so
+  hangs and real failures surface instead of being killed silently).
+- **Test organization** mirrors source modules: per-module top-level sets,
+  one sub-set per function named with a `#` prefix, behavior-sentence case
+  names ("avoids adding deleted files"). Group cases that share setup state
+  under a nested sub-set.
+- **Hooks are the isolation mechanism.** Each set's `pre_case`/`post_case`
+  resets exactly the global state it touches (caches, `vim.g`,
+  cwd); `post_once` handles one-time teardown of on-disk fixtures.
+- **Determinism:** fixed stubbed timestamps and expected values precomputed
+  once at file scope as named constants. Real on-disk fixtures in a sandbox
+  directory (created/deleted in hooks) rather than stubbing the filesystem.
+- **Plan large test additions first,** grouped by related tests, and get
+  approval before implementing (see a `PLAN.md` with prioritized items and
+  nested test-case lists). Enumerate concrete observable assertions per case
+  (db contents, formatted strings, event payloads, window/buffer state) — not
+  internal call counts.
+
 # How to test with 'mini.test'
 
 Writing tests for Neovim Lua plugin is hard. Writing good tests for Neovim Lua plugin is even harder. The 'mini.test' module is designed to make it reasonably easier while still allowing lots of flexibility. It deliberately favors a more verbose and program-like style of writing tests, opposite to "human readable, DSL like" approach of [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim) ("busted-style testing" from [Olivine-Labs/busted](https://github.com/Olivine-Labs/busted)). Although the latter is also possible.
