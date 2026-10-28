@@ -123,33 +123,6 @@ sources. Since neither template file is guaranteed to match, it's critical
 to ask the user to supply the latest async lua file. The file should be named
 `async-iterators.lua`.
 
-Use these adapters at callback-based API boundaries when calling `vim.system`,
-`vim.ui.input`, or when an API needs a callback dispatched through
-`vim.schedule`:
-
-```lua
---- @type fun(cmd: string[], opts: vim.SystemOpts?): vim.SystemCompleted
-local system_async = vim.async.wrap(3, vim.system)
-
---- @type fun(opts: vim.ui.input.Opts?): string?
-local ui_input_async = vim.async.wrap(2, vim.ui.input)
-
-local cb_async = function(callback)
-  return function(...)
-    local arguments = { ... }
-    vim.async
-      .run(function()
-        callback(unpack(arguments))
-      end)
-      :raise_on_error()
-  end
-end
-
-local ensure_main_loop = function()
-  vim.async.sleep(0)
-end
-```
-
 Replace legacy `await`/async wrappers with native `vim.async` coroutine
 execution and `vim.async.wrap` for callback-style APIs; use `cb_async` to run
 callbacks in an async context and `ensure_main_loop()` where legacy code needs
