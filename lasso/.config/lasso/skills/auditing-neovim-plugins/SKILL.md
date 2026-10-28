@@ -70,7 +70,7 @@ A different mechanism can still satisfy a principle — keep it and say why.
 - **Testing**: Missing test coverage, or test coverage which doesn't correspond to
   the `testing-neovim-plugins` skill
 - **Format config**: `stylua.toml` with `.styluaignore` - many older plugins use `.editorconfig` and
-  `.luarc.json` instead
+  `.luarc.json` instead, both of which should be deleted
 - **Legacy async**: Using a local `async.nvim` plugin instead of the latest `vim.async` standards.
   See section #5 below for more information.
 
