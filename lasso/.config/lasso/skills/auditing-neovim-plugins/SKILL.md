@@ -22,6 +22,8 @@ generators that modify files, or commit anything while preparing the plan. Wait
 for explicit user approval before implementing any part of it; the steps below
 are guidance for the approved implementation phase.
 
+Write your plan to a local `PLAN.md` file
+
 When the user approves the plan and you complete a step, show all the remaining
 steps to do so the user can view what's left.
 
