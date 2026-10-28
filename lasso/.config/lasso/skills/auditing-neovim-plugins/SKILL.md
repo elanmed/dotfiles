@@ -108,10 +108,12 @@ plugin. Treat it as vendored code and migrate its call sites to Neovim's native
 `vim.async` APIs. Remove the copied library and its dependency unless the plugin
 still needs iterator helpers. If it does, ask the user to include the latest
 `async.nvim` version, which provides `batched_iterator` and
-`throttled_iterator`; its implementation in the template plugin is
-`lua/template/latest_async.lua`. The original legacy implementation is
-`lua/template/legacy_async.lua`; use it to identify legacy behavior, not as code
-to copy forward. Do not port the legacy promise/coroutine implementation.
+`throttled_iterator`; `lua/template/latest_async.lua` is a useful reference for
+that version. `lua/template/legacy_async.lua` is likewise a useful reference
+for identifying legacy behavior. Neither template file is guaranteed to match
+the plugin's copy exactly; expect similar code, inspect the plugin's actual
+implementation, and use the references as guidance rather than assumed exact
+sources. Do not port the legacy promise/coroutine implementation.
 
 Use these adapters at callback-based API boundaries when calling `vim.system`,
 `vim.ui.input`, or when an API needs a callback dispatched through
