@@ -100,19 +100,20 @@ _shape_, not features.
 
 ## 5. Migrate legacy async to `vim.async`
 
-A single-file legacy async library (often named `async.nvim`) may appear as a
+A single-file legacy async library (often named `async.lua`) may appear as a
 plugin dependency even though its implementation was copied and pasted into the
 plugin. Treat it as vendored code and migrate its call sites to Neovim's native
 `vim.async` APIs. Remove the copied library and its dependency unless the plugin
 still needs iterator helpers. If it does, **ask the user to include the latest
-`async.nvim` version**, which provides `batched_iterator` and
+`async-iterators.nvim` version**, which provides `batched_iterator` and
 `throttled_iterator`; `lua/template/latest_async.lua` is a useful reference for
 that version. `lua/template/legacy_async.lua` is likewise a useful reference
 for identifying legacy behavior. Neither template file is guaranteed to match
 the plugin's copy exactly; expect similar code, inspect the plugin's actual
 implementation, and use the references as guidance rather than assumed exact
 sources. Since neither template file is guaranteed to match, it's critical
-to ask the user to supply the latest async lua file.
+to ask the user to supply the latest async lua file. The file should be named
+`async-iterators.lua`.
 
 Use these adapters at callback-based API boundaries when calling `vim.system`,
 `vim.ui.input`, or when an API needs a callback dispatched through
