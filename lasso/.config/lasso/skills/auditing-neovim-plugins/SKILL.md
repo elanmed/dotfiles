@@ -74,7 +74,9 @@ A different mechanism can still satisfy a principle — keep it and say why.
 
 - **Quality gates**:
 - **Testing**: Missing test coverage, or test coverage which doesn't correspond to
-  the `testing-neovim-plugins` skill
+  the `testing-neovim-plugins` skill. Use `mini.test` for the test framework; if a
+  plugin includes all of `mini.nvim` only to access its test framework, replace it
+  with the focused `mini.test` dependency.
 - **Format config**: `stylua.toml` with `.styluaignore` - many older plugins use `.editorconfig` and
   `.luarc.json` instead, both of which should be deleted
 - **Legacy async**: Using a local `async.nvim` plugin instead of the latest `vim.async` standards.
@@ -91,13 +93,15 @@ _shape_, not features.
    rename points: module paths, the `pack/dev/start/<name>.nvim` stow target in
    `make dev`, the `doc/<name>.txt` output and help tag in `make docs`, and
    `require("<name>").setup()` in tests and `plugin/<name>.lua`.
-2. Synchronize the plugin’s `.gitignore` with the model’s current `.gitignore` contents; do not merely compare them.
-3. Wire everything into the single `deploy` target so nothing is optional.
-4. Regenerate artifacts and run the full gate:
+2. Use `mini.test` rather than the full `mini.nvim` repository when adding the
+   test framework dependency.
+3. Synchronize the plugin’s `.gitignore` with the model’s current `.gitignore` contents; do not merely compare them.
+4. Wire everything into the single `deploy` target so nothing is optional.
+5. Regenerate artifacts and run the full gate:
    ```sh
    make test lint format docs
    ```
-5. Commit. If your plugin uses the pre-push hook pattern, install it
+6. Commit. If your plugin uses the pre-push hook pattern, install it
    (`scripts/install_hooks.sh` equivalent) and let it enforce the gate.
 
 ## 5. Migrate legacy async to `vim.async`
@@ -157,4 +161,5 @@ remove the old library only after all call sites and tests have been migrated.
       one-sentence justification
 - [ ] Help docs generate under your plugin's name and `:h <name>` resolves
 - [ ] Lint and format run clean with zero manual formatting
+- [ ] Tests use `mini.test`; the full `mini.nvim` dependency is not used solely for testing
 - [ ] Plugin `.gitignore` matches the model’s current `.gitignore`
