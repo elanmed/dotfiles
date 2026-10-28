@@ -73,8 +73,10 @@ A different mechanism can still satisfy a principle — keep it and say why.
 ## 3. What typically needs updating
 
 - **Quality gates**:
-- **Testing**: Missing test coverage, or test coverage which doesn't correspond to
-  the `testing-neovim-plugins` skill. Use `mini.test` for the test framework; if a
+- **Testing**: Identify missing or insufficient tests by mapping the plugin’s
+  public behavior, important edge cases, and error paths to existing coverage;
+  propose tests for uncovered behavior. Ensure tests correspond to the
+  `testing-neovim-plugins` skill. Use `mini.test` for the test framework; if a
   plugin includes all of `mini.nvim` only to access its test framework, replace it
   with the focused `mini.test` dependency.
 - **Format config**: `stylua.toml` with `.styluaignore` - many older plugins use `.editorconfig` and
@@ -161,5 +163,6 @@ remove the old library only after all call sites and tests have been migrated.
       one-sentence justification
 - [ ] Help docs generate under your plugin's name and `:h <name>` resolves
 - [ ] Lint and format run clean with zero manual formatting
+- [ ] Missing or insufficient test coverage has been identified and addressed
 - [ ] Tests use `mini.test`; the full `mini.nvim` dependency is not used solely for testing
 - [ ] Plugin `.gitignore` matches the model’s current `.gitignore`
