@@ -15,12 +15,14 @@ which differences are gaps worth closing, and close them.
 
 ## Plan first; do not make changes
 
-The audit is read-only until the user approves a plan. Inspect the model and
-plugin, then present a prioritized plan describing the proposed changes and
-verification. Do not edit files, add or remove dependencies, run formatters or
-generators that modify files, or commit anything while preparing the plan. Wait
-for explicit user approval before implementing any part of it; the steps below
-are guidance for the approved implementation phase.
+The audit is read-only until the user approves a plan, except for updating
+submodule checkouts as described in section 1a. Inspect the model and plugin,
+then present a prioritized plan describing the proposed changes and
+verification. Do not edit project files, add or remove dependencies, run
+formatters or generators that modify files, or commit anything while preparing
+the plan. Wait for explicit user approval before implementing any code or
+configuration changes; the steps below are guidance for the approved
+implementation phase.
 
 Write your plan to a local `PLAN.md` file. Show the user the steps outlined in
 the plan. Note that the plan should not be committed.
@@ -36,6 +38,25 @@ git clone --depth 1 https://github.com/elanmed/template.nvim /tmp/template.nvim
 
 Read from it; never merge from it. There is no shared history and no shared
 naming, so `git diff`/`git merge` against the model are meaningless.
+
+### 1a. Update every submodule to latest `master`
+
+Before auditing the plugin, inspect its working-tree status, including every
+submodule. Do not overwrite, stash, or reset user changes; if a submodule is
+dirty or cannot be safely updated, stop and report that blocker. Initialize
+submodules recursively, then fetch and fast-forward each submodule to its
+remote `master` branch (including nested submodules). For example:
+
+```sh
+git submodule update --init --recursive
+git submodule foreach --recursive 'git fetch origin master && (git switch master || git switch --track -c master origin/master) && git pull --ff-only origin master'
+```
+
+Do not reset or force-update branches. If a submodule has no `master` branch,
+uses a different remote, or cannot fast-forward, report it and do not silently
+substitute another branch. This intentionally changes submodule checkouts and
+may change the superproject's recorded gitlinks; report every resulting change,
+do not commit it, and include the update in the plan for user review.
 
 ## 2. Determine how your plugin differs
 
@@ -69,6 +90,19 @@ When judging divergence, compare against the _principle_, not the mechanism. See
 these principles.
 
 A different mechanism can still satisfy a principle — keep it and say why.
+
+### Look for bugs as well as template gaps
+
+Inspect the plugin's implementation and tests for concrete correctness defects,
+not just missing conventions. Trace public APIs through their callers and cover
+normal behavior, boundary and empty inputs, invalid arguments, error paths,
+resource cleanup, state/lifecycle transitions, and asynchronous callbacks or
+coroutine scheduling where applicable. Check that tests actually assert the
+observable behavior and failure cases. Run existing non-mutating checks when
+safe, but do not fix issues during the audit. Report each suspected bug with
+severity, file and line, a concise explanation, and a reproducible scenario or
+missing test; distinguish confirmed defects from risks or coverage gaps, and
+include proposed fixes/tests in the prioritized `PLAN.md`.
 
 ## 3. What typically needs updating
 
@@ -134,6 +168,10 @@ remove the old library only after all call sites and tests have been migrated.
 - [ ] `make deploy` (or your plugin's single gate) passes
 - [ ] Every row of the section-2 table has an explicit classification with a
       one-sentence justification
+- [ ] Every submodule was fast-forwarded to remote `master`, or any blocker and
+      resulting gitlink changes were explicitly reported
+- [ ] Bug findings distinguish confirmed defects, risks, and coverage gaps, with
+      locations and reproducible evidence
 - [ ] Help docs generate under your plugin's name and `:h <name>` resolves
 - [ ] Lint and format run clean with zero manual formatting
 - [ ] Missing or insufficient test coverage has been identified and addressed
