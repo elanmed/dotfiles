@@ -13,6 +13,15 @@ which differences are gaps worth closing, and close them.
 - **the model** — this repo (`elanmed/template.nvim`).
 - **your plugin** — the repo this file has been copied into.
 
+## Plan first; do not make changes
+
+The audit is read-only until the user approves a plan. Inspect the model and
+plugin, then present a prioritized plan describing the proposed changes and
+verification. Do not edit files, add or remove dependencies, run formatters or
+generators that modify files, or commit anything while preparing the plan. Wait
+for explicit user approval before implementing any part of it; the steps below
+are guidance for the approved implementation phase.
+
 ## 1. Get the model for reference (read-only)
 
 ```sh
