@@ -39,6 +39,12 @@ git clone --depth 1 https://github.com/elanmed/template.nvim /tmp/template.nvim
 Read from it; never merge from it. There is no shared history and no shared
 naming, so `git diff`/`git merge` against the model are meaningless.
 
+Before inspecting the plugin, read the model's `PRINCIPLES.md` in full. Treat
+it as the primary source of audit criteria, not optional background reading.
+Keep its principles in mind throughout inspection, planning, and implementation;
+re-read relevant principles whenever a decision is unclear. Do not assume the
+model's files or mechanisms are themselves the goal.
+
 ### 1a. Update every submodule to its target branch
 
 Inspect the superproject and submodule status, then discard local changes in
@@ -89,10 +95,13 @@ For each component, classify the difference as one of:
 4. **Essentially different** — divergence is a deliberate design decision of
    your plugin. Keep it, and inform the user of the reason
 
-When judging divergence, compare against the _principle_, not the mechanism. See `PRINCIPLES.md` for
-these principles.
-
-A different mechanism can still satisfy a principle — keep it and say why.
+When judging every divergence, compare against the relevant principle in the
+model's `PRINCIPLES.md`, not just the model's implementation. Explicitly map
+proposed changes and deliberate differences to the principle they serve (or
+explain why no principle applies) in `PLAN.md`; do not recommend a change solely
+because the model does it. A different mechanism can fully satisfy a principle—
+keep it and explain the evidence. If a model pattern conflicts with a principle,
+follow the principle and call out the conflict.
 
 ### Look for bugs as well as template gaps
 
@@ -127,8 +136,9 @@ _shape_, not features.
 
 ## 4. How to update
 
-1. For each adopted component, port the **pattern**, not the file: copy the
-   model's file, then rename/trim to your plugin's name and layout. Typical
+1. For each adopted component, first identify the principle it serves, then
+   port the **pattern**, not the file: copy the model's file, then rename/trim
+   to your plugin's name and layout. Typical
    rename points: module paths, the `pack/dev/start/<name>.nvim` stow target in
    `make dev`, the `doc/<name>.txt` output and help tag in `make docs`, and
    `require("<name>").setup()` in tests and `plugin/<name>.lua`.
@@ -169,6 +179,9 @@ remove the old library only after all call sites and tests have been migrated.
 ## 6. Verification checklist
 
 - [ ] `make deploy` (or your plugin's single gate) passes
+- [ ] The model's `PRINCIPLES.md` was read in full before plugin inspection
+- [ ] Every recommendation and retained divergence is assessed against relevant
+      principles, with the principle and rationale made explicit in `PLAN.md`
 - [ ] Every row of the section-2 table has an explicit classification with a
       one-sentence justification
 - [ ] Every submodule was fast-forwarded to remote `master`, or any blocker and
