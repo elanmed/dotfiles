@@ -39,24 +39,16 @@ git clone --depth 1 https://github.com/elanmed/template.nvim /tmp/template.nvim
 Read from it; never merge from it. There is no shared history and no shared
 naming, so `git diff`/`git merge` against the model are meaningless.
 
-### 1a. Update every submodule to latest `master`
+### 1a. Update every submodule to its remote's default branch
 
 Before auditing the plugin, inspect its working-tree status, including every
 submodule. Do not overwrite, stash, or reset user changes; if a submodule is
 dirty or cannot be safely updated, stop and report that blocker. Initialize
-submodules recursively, then fetch and fast-forward each submodule to its
-remote `master` branch (including nested submodules). For example:
-
-```sh
-git submodule update --init --recursive
-git submodule foreach --recursive 'git fetch origin master && (git switch master || git switch --track -c master origin/master) && git pull --ff-only origin master'
-```
-
-Do not reset or force-update branches. If a submodule has no `master` branch,
-uses a different remote, or cannot fast-forward, report it and do not silently
-substitute another branch. This intentionally changes submodule checkouts and
-may change the superproject's recorded gitlinks; report every resulting change,
-do not commit it, and include the update in the plan for user review.
+submodules recursively, then fetch and fast-forward each submodule to the
+branch advertised as the default by its `origin` remote (including nested
+submodules). This accommodates repositories whose default branch is `main`,
+`master`, or another name. For the `mini.nvim` submodule used by `mini.test`,
+use `main` explicitly, even if the remote advertises `stable` as its default.
 
 ## 2. Determine how your plugin differs
 
