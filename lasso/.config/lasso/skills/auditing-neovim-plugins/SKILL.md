@@ -118,15 +118,52 @@ include proposed fixes/tests in the prioritized `PLAN.md`.
 
 ## 3. What typically needs updating
 
-- **Quality gates**:
+- **Quality gates**: Keep linting aligned with `template.nvim`: use the repo's
+  `.luarc.json` configuration, report warnings as well as errors, and lint test
+  files in addition to plugin code. Review and fix actionable warnings rather
+  than treating only errors as lint failures.
 - **Testing**: Identify missing or insufficient tests by mapping the plugin’s
   public behavior, important edge cases, and error paths to existing coverage;
   propose tests for uncovered behavior. Ensure tests correspond to the
   `testing-neovim-plugins` skill. Use `mini.test` for the test framework; if a
   plugin includes all of `mini.nvim` only to access its test framework, replace it
   with the focused `mini.test` dependency.
-- **Format config**: `stylua.toml` with `.styluaignore` - many older plugins use `.editorconfig` and
-  `.luarc.json` instead, both of which should be deleted
+- **Format config**: Use `stylua.toml` with `.styluaignore` for formatting.
+  Keep `.luarc.json` for Lua language-server configuration; older plugins may
+  need to add or update it to match the model.
+- **Linting Lua and tests**: Ensure the lint target checks both implementation
+  and test Lua files, and surfaces warning-level diagnostics as well as errors.
+  Common test lint fixes include importing `mini.test` directly, naming inner
+  callback arguments to avoid shadowing annotated outer arguments, and adding
+  return annotations when async task inference needs help. For example:
+
+  ```lua
+  local MiniTest = require "mini.test"
+  ```
+
+  ```lua
+  --- @param fn_name string
+  --- @param content string
+  local function mock_run_diff_cmd(fn_name, content)
+    child.lua_func(
+      --- @param fn_name_arg string
+      --- @param content_arg string
+      function(fn_name_arg, content_arg)
+        -- Use fn_name_arg and content_arg inside this callback.
+      end
+    )
+  end
+  ```
+
+  ```lua
+  return vim.async.run(
+    --- @return string?
+    function()
+      return files_arg[rel_filename]
+    end
+  )
+  ```
+
 - **Legacy async**: Using a local `async.nvim` plugin instead of the latest `vim.async` standards.
   See section #5 below for more information.
 
