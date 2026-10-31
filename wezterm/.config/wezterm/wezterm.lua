@@ -117,6 +117,11 @@ config.keys = {
   { key = "l", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Right" },
   { key = "h", mods = "LEADER|CTRL", action = wezterm.action.ActivatePaneDirection "Left" },
   { key = "Enter", mods = "SHIFT", action = wezterm.action.SendString "\x16\n" },
+  {
+    key = "r",
+    mods = "LEADER|CTRL",
+    action = wezterm.action.SendString "\nI will send futher context in the next message via voice transcription, await that context.\x17",
+  },
 }
 if is_linux() then
   config.window_decorations = "NONE"
