@@ -135,7 +135,8 @@ include proposed fixes/tests in the prioritized `PLAN.md`.
   and test Lua files, and surfaces warning-level diagnostics as well as errors.
   Common test lint fixes include importing `mini.test` directly, naming inner
   callback arguments to avoid shadowing annotated outer arguments, and adding
-  return annotations when async task inference needs help. For example:
+  return annotations or `---@as` casts when async type inference needs help.
+  Add these only where the inferred type is insufficient. For example:
 
   ```lua
   local MiniTest = require "mini.test"
@@ -158,13 +159,15 @@ include proposed fixes/tests in the prioritized `PLAN.md`.
   ```lua
   --- @return string?
   return vim.async.run(function()
-    local out = system_async(cmd, opts)
-    if out.code ~= 0 then
+    local result = get_async_result()
+    if not result then
       return nil
     end
 
-    return out.stdout
+    return result
   end)
+
+  local value = vim.async.await(start_async_operation()) --[[@as string?]]
   ```
 
 - **Legacy async**: Using a local `async.nvim` plugin instead of the latest `vim.async` standards.
