@@ -31,6 +31,7 @@ export EDITOR="$NVIM_CMD"
 export VISUAL="$NVIM_CMD"
 export MANPAGER="$NVIM_CMD +Man!"
 export BAT_THEME="ansi"
+export VIMRUNTIME="$(nvim --headless -c 'lua print(vim.env.VIMRUNTIME)' -c 'qa')"
 
 if [[ $_H_OS == "Linux" ]]; then
   # https://superuser.com/a/613754
