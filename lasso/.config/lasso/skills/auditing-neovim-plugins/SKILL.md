@@ -156,12 +156,15 @@ include proposed fixes/tests in the prioritized `PLAN.md`.
   ```
 
   ```lua
-  return vim.async.run(
-    --- @return string?
-    function()
-      return files_arg[rel_filename]
+  --- @return string?
+  return vim.async.run(function()
+    local out = system_async(cmd, opts)
+    if out.code ~= 0 then
+      return nil
     end
-  )
+
+    return out.stdout
+  end)
   ```
 
 - **Legacy async**: Using a local `async.nvim` plugin instead of the latest `vim.async` standards.
