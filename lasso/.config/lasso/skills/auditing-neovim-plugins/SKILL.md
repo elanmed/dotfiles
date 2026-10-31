@@ -135,40 +135,9 @@ include proposed fixes/tests in the prioritized `PLAN.md`.
   and test Lua files, and surfaces warning-level diagnostics as well as errors.
   Common test lint fixes include importing `mini.test` directly, naming inner
   callback arguments to avoid shadowing annotated outer arguments, and adding
-  return annotations or `---@as` casts when async type inference needs help.
-  Add these only where the inferred type is insufficient. For example:
-
-  ```lua
-  local MiniTest = require "mini.test"
-  ```
-
-  ```lua
-  --- @param fn_name string
-  --- @param content string
-  local function mock_run_diff_cmd(fn_name, content)
-    child.lua_func(
-      --- @param fn_name_arg string
-      --- @param content_arg string
-      function(fn_name_arg, content_arg)
-        -- Use fn_name_arg and content_arg inside this callback.
-      end
-    )
-  end
-  ```
-
-  ```lua
-  --- @return string?
-  return vim.async.run(function()
-    local result = get_async_result()
-    if not result then
-      return nil
-    end
-
-    return result
-  end)
-
-  local value = vim.async.await(start_async_operation()) --[[@as string?]]
-  ```
+  return annotations or casts when async type inference needs help. Add these
+  only where the inferred type is insufficient. Follow the model's
+  `PRINCIPLES.md` for these conventions
 
 - **Legacy async**: Using a local `async.nvim` plugin instead of the latest `vim.async` standards.
   See section #5 below for more information.
