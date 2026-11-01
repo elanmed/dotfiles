@@ -137,14 +137,24 @@ include proposed fixes/tests in the prioritized `PLAN.md`.
   callback arguments to avoid shadowing annotated outer arguments, and adding
   return annotations or casts when async type inference needs help. Add these
   only where the inferred type is insufficient. Follow the model's
-  `PRINCIPLES.md` for these conventions
-
-- **Legacy async**: Using a local `async.nvim` plugin instead of the latest `vim.async` standards.
-  See section #5 below for more information.
+  `PRINCIPLES.md` for these conventions.
+- **README accuracy**: Audit the plugin's README against the current source,
+  tests, configuration, and generated documentation. In the approved
+  implementation phase, remove descriptions of features or options no longer
+  present, add user-facing features that exist but are undocumented, and correct
+  examples, setup instructions, requirements, and other stale claims. Do not
+  infer behavior from the old README; verify each claim against the current
+  implementation. If the README reports code LOC, recalculate it from the
+  current code using a consistent scope and round to the nearest hundred; omit
+  or correct the figure if it cannot be measured reliably. Include README
+  updates and their verification in `PLAN.md` and the final verification.
+- **Legacy async**: Using a local `async.nvim` plugin instead of the latest
+  `vim.async` standards. See section #5 below for more information.
 
 Skip from the model: the stub feature code (`setup()` is intentionally empty),
-the `template` naming, `LICENSE`, and README prose. The model demonstrates
-_shape_, not features.
+the `template` naming, and `LICENSE`. The model demonstrates _shape_, not
+features; unlike the model, the target plugin's README must be checked for
+accuracy against its actual features.
 
 ## 4. How to update
 
@@ -203,5 +213,6 @@ remove the old library only after all call sites and tests have been migrated.
 - [ ] Help docs generate under your plugin's name and `:h <name>` resolves
 - [ ] Lint and format run clean with zero manual formatting
 - [ ] Missing or insufficient test coverage has been identified and addressed
+- [ ] README claims, examples, and feature descriptions match the current source; LOC is recalculated and rounded to the nearest hundred if listed
 - [ ] Tests use `mini.test`; the full `mini.nvim` dependency is not used solely for testing
 - [ ] Plugin `.gitignore` matches the model’s current `.gitignore`
