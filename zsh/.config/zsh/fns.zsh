@@ -35,11 +35,13 @@ cd() {
   ls
 }
 
-if h_is_macos; then
-  alias copy="pbcopy"
-else
-  alias copy="xclip -selection clipboard"
-fi
+copy() {
+  if h_is_macos; then
+    pbcopy
+  else
+    xclip -selection clipboard
+  fi
+}
 
 abspath() {
   local abs_path="$(realpath "$1")"
