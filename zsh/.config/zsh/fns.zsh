@@ -11,9 +11,13 @@ ls() {
   fi
 }
 
-# lsa_cmd="command ls -a --color=tty"
-# [[ "$(uname -s)" == "Linux" ]] && lsa_cmd+=" --group-directories-first"
-# alias lsa="$lsa_cmd"
+lsa() {
+  if [[ $_H_OS == "Linux" ]]; then
+    command ls -a --color=tty --group-directories-first
+  else
+    command ls -a --color=tty
+  fi
+}
 
 unalias z
 # need `function`
