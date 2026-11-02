@@ -3,18 +3,25 @@ local supported_flags = { "excl", "dir", "sep", "help" }
 local flags = {}
 
 for _, raw_arg in ipairs(arg) do
-  local flag_name, flag_value = raw_arg:match("^%-%-(%w+)=?(.*)")
+  local flag_name, flag_value = raw_arg:match "^%-%-(%w+)=?(.*)"
   if flag_name == nil then
     error(("Malformed flag, supported flags are --{%s}"):format(table.concat(supported_flags, ",")))
   end
 
   flags[flag_name] = (function()
-    if flag_value == "" then return nil end
+    if flag_value == "" then
+      return nil
+    end
     return flag_value
   end)()
 
   if not vim.tbl_contains(supported_flags, flag_name) then
-    error(("Unsupported flag: %s, supported flags are --{%s}"):format(flag_name, table.concat(supported_flags, ",")))
+    error(
+      ("Unsupported flag: %s, supported flags are --{%s}"):format(
+        flag_name,
+        table.concat(supported_flags, ",")
+      )
+    )
   end
 end
 
@@ -33,7 +40,7 @@ if flags["help"] then
 end
 
 if flags["dir"] == nil then
-  error("Missing required flag --dir")
+  error "Missing required flag --dir"
 end
 
 local abs_dir = vim.fs.normalize(vim.fs.abspath(flags["dir"]))
@@ -43,8 +50,10 @@ end
 
 local sep = flags["sep"] or "FILE: %s"
 local excl_tbl = (function()
-  if flags["excl"] == nil then return {} end
-  return vim.split(flags['excl'], ",")
+  if flags["excl"] == nil then
+    return {}
+  end
+  return vim.split(flags["excl"], ",")
 end)()
 
 local accumed_files = {}
@@ -63,9 +72,7 @@ accum_string = function(dir)
 
     local path = vim.fs.joinpath(dir, name)
     if type == "file" then
-      local content = table.concat(
-        vim.fn.readfile(path
-        ), "\n")
+      local content = table.concat(vim.fn.readfile(path), "\n")
       table.insert(accumed_files, sep:format(path))
       table.insert(accumed_files, content)
     elseif type == "directory" then
