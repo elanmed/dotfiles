@@ -2,6 +2,7 @@
 
 alias gs="git status"
 alias gc="git checkout"
+alias gcb="git checkout -b"
 alias e="exit"
 alias c="clear"
 alias tm="tmux"
