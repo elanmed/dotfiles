@@ -5,6 +5,7 @@ baseURL: https://opencode.ai/zen/go/v1
 contextWindowPerModel:
   gpt-6-luna: 1050000
   glm-5.3-flash: 1300000
+  deepseek-v4.1-flash: 1048576
 sdkProvider: openai-compatible
 transcriptionSdkProvider: openai
 gateway: opencode
