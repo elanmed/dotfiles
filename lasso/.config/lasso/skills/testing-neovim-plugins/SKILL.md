@@ -276,14 +276,11 @@ return M
 
 # Examples
 
-All snippets below assume `local test_helpers = require "tests._helpers"` plus that module's expectations and fixtures.
+All snippets assume `local test_helpers = require "tests._helpers"` plus the helpers above.
 
-## Child-process set
+## Set skeletons
 
 ```lua
-local MiniTest = require "mini.test"
-local test_helpers = require "tests._helpers"
-
 local child = MiniTest.new_child_neovim()
 
 local T = MiniTest.new_set {
@@ -294,252 +291,84 @@ local T = MiniTest.new_set {
     post_once = child.stop,
   },
 }
-
-local load_config = function()
-  child.lua [[require "barebones"]]
-end
 ```
 
-## In-process set
+In-process sets skip the child entirely; `mock` restores whatever a case touches.
 
-No child: `mock` restores what a case touches, so only pure Lua logic needs cleanup.
+## Stubs
 
-```lua
-local MiniTest = require "mini.test"
-local h = require "helpers"
-local T = MiniTest.new_set()
-
-T["tbl.reverse()"]["reverses without changing the input"] = function()
-  local input = { "a", "b", "c" }
-
-  MiniTest.expect.equality(h.tbl.reverse(input), { "c", "b", "a" })
-  MiniTest.expect.equality(input, { "a", "b", "c" })
-end
-```
-
-## Stub at the boundary in the child
-
-The child-side stub is a file-scope function, so its data arrives as arguments:
+Child side: the stub is a file-scope function, so its data arrives as arguments, and `get_calls` reads back the published calls.
 
 ```lua
---- @param cwd string?
-local stub_cwd = function(cwd)
-  require("tests._helpers").mock_child(vim.uv, {
-    cwd = function()
-      return cwd
+--- @param choice any
+local stub_select = function(choice)
+  require("tests._helpers").mock_child(vim.ui, {
+    select = function(_, _, on_choice)
+      on_choice(choice)
     end,
   })
 end
 
-T["<leader>ye"]["warns when the working directory is unavailable"] = function()
-  load_config()
-  child.lua_func(test_helpers.open_named_buffer, "/root/one/foo.lua")
-  child.lua_func(stub_cwd, nil)
+T["list()"]["notifies the picked entry"] = function()
+  child.lua_func(stub_select, "first")
   child.lua_func(test_helpers.stub_notify)
 
-  child.type_keys "\\ye"
+  child.lua [[require("my_plugin").list()]]
 
   MiniTest.expect.equality(test_helpers.get_calls(child, "notifications"), {
-    { name = "notify", args = { "cwd is nil", vim.log.levels.WARN } },
+    { name = "notify", args = { "picked first", vim.log.levels.INFO } },
   })
 end
 ```
 
-## Stub in process and assert the recorded calls
+In process, assert the returned calls as a full literal list:
 
 ```lua
-T["fs.readfile()"]["closes the descriptor after reading the contents"] = function()
-  local content = "first\n\nlast\n"
+T["run()"]["resolves the paths against the working directory"] = function()
   local calls = test_helpers.mock(vim.uv, {
-    fs_open = function(_, _, _, callback)
-      callback(nil, 17)
-    end,
-    fs_fstat = function(_, callback)
-      callback(nil, { size = #content })
-    end,
-    fs_read = function(_, _, _, callback)
-      callback(nil, content)
-    end,
-    fs_close = function(_, callback)
-      callback(nil)
+    cwd = function()
+      return "/project"
     end,
   })
 
-  local read_err, read_content = readfile "mocked.txt"
+  h.run()
 
-  MiniTest.expect.equality(read_err, nil)
-  MiniTest.expect.equality(read_content, { lines = { "first", "", "last" }, str = content })
-  MiniTest.expect.equality(calls, {
-    { name = "fs_open", args = { "mocked.txt", 0, 0, "<function>" } },
-    { name = "fs_fstat", args = { 17, "<function>" } },
-    { name = "fs_read", args = { 17, #content, 0, "<function>" } },
-    { name = "fs_close", args = { 17, "<function>" } },
-  })
-end
-```
-
-## Publish only the serializable part of a stub
-
-A recorded argument holding a function (a `format_item` callback, say) cannot cross the RPC boundary: compute what you need on `_G` and read that with `get_calls`.
-
-```lua
---- @class SelectStubOpts
---- @field choice? any
-
---- @param opts SelectStubOpts
-local stub_select = function(opts)
-  require("tests._helpers").mock_child(vim.ui, {
-    select = function(items, select_opts, on_choice)
-      _G.selected_items = items
-      _G.selected_formatted_items = vim.tbl_map(select_opts.format_item, items)
-      on_choice(opts.choice)
-    end,
-  })
-end
-
-T["<leader>b"]["formats buffers relative to the working directory"] = function()
-  load_config()
-  local paths = test_helpers.make_files { "a.lua", "b.lua" }
-  child.lua_func(test_helpers.edit_file, paths[1])
-  child.lua_func(test_helpers.edit_file, paths[2])
-  child.lua_func(stub_cwd, vim.fs.dirname(paths[1]))
-  child.lua_func(stub_select, {})
-
-  child.type_keys "\\b"
-
-  MiniTest.expect.equality(
-    test_helpers.get_calls(child, "selected_formatted_items"),
-    { "a.lua", "b.lua" }
-  )
-end
-```
-
-## Stub the async process runner by command
-
-`stub_async_system` keys the canned `{ err, stdout }` by executable and still records the calls, so assertions can cover both halves of the boundary:
-
-```lua
-T["ctags"]["runs ctags with the files of the git root on write"] = function()
-  child.lua_func(stub_ctags)
-  child.lua_func(test_helpers.stub_async_system, {
-    git = { err = nil, stdout = "/repo\n" },
-    rg = { err = nil, stdout = "a.lua\nb.lua\n" },
-  })
-  child.lua [[vim.api.nvim_exec_autocmds("BufWritePost", {})]]
-  run_last_timer_callback()
-  expect_ctags_finished()
-
-  MiniTest.expect.equality(test_helpers.get_calls(child, "async_system_calls"), {
-    { name = "system", args = { { "git", "rev-parse", "--show-toplevel" } } },
-    { name = "system", args = { { "rg", "--files" }, { cwd = "/repo" } } },
-  })
+  MiniTest.expect.equality(calls, { { name = "cwd", args = {} } })
 end
 ```
 
 ## Expectations
 
 ```lua
-T["pairs"]["inserts a pair after the cursor"] = function()
-  child.type_keys("i", "ab", "<Esc>")
-
   test_helpers.expect_lines(child, { "ab()" })
   test_helpers.expect_cursor(child, { 1, 3 })
-end
-
-T["<leader>a"]["starts the grep prompt"] = function()
-  child.type_keys "\\a"
-
   test_helpers.expect_cmdline(child, "grep ")
   test_helpers.expect_cmdline_cursor(child, 6)
-end
 ```
 
-Poll instead of sleeping when the state settles asynchronously:
+Poll for async state instead of sleeping: `test_helpers.expect_eventually(function() return child.api.nvim_win_get_cursor(0) end, { 14, 0 })`.
+
+## Fixtures
+
+`write_temp_file`/`make_files`/`make_temp_dir` cover files and paths, `file_contains` asserts written output by whitespace-normalized literal line, and `vim.fn.executable` guards (`MiniTest.skip "requires ripgrep"`) cover missing binaries.
 
 ```lua
-T["<C-d>"]["scrolls by half a page"] = function()
-  child.lua_func(test_helpers.open_buffer, hundred_lines)
+T["write()"]["writes the buffer back to disk"] = function()
+  local path = test_helpers.write_temp_file "first\n"
+  child.lua_func(test_helpers.edit_file, path)
+  child.type_keys("o", "second", "<Esc>")
 
-  child.type_keys "<C-d>"
+  child.cmd "write"
 
-  test_helpers.expect_eventually(function()
-    return child.api.nvim_win_get_cursor(0)
-  end, { 14, 0 })
+  MiniTest.expect.equality(test_helpers.file_contains(path, "second"), true)
 end
 ```
-
-## Filesystem fixtures
-
-```lua
-T["K"]["jumps to the tag under the cursor in a split window"] = function()
-  load_config()
-  local def_path = test_helpers.write_temp_file "first\nsecond\n"
-  local source_path = test_helpers.write_temp_file "foo\nbar\n"
-  child.o.tags = test_helpers.write_temp_file("foo\t" .. def_path .. "\t2\n")
-  child.lua_func(test_helpers.edit_file, source_path)
-
-  child.type_keys "K"
-
-  test_helpers.expect_cursor(child, { 2, 0 })
-end
-
-T["<leader>b"]["lists only loaded, listed, and named buffers"] = function()
-  load_config()
-  local paths = test_helpers.make_files { "a.lua", "b.lua", "c.lua" }
-  child.lua_func(test_helpers.edit_file, paths[1])
-  child.api.nvim_create_buf(true, false)
-  child.lua_func(test_helpers.edit_file, paths[2])
-  child.bo.buflisted = false
-  child.lua_func(test_helpers.edit_file, paths[3])
-  child.lua_func(stub_cwd, vim.fs.dirname(paths[1]))
-  child.lua_func(stub_select, { choice = child.fn.bufnr(paths[1]) })
-
-  child.type_keys "\\b"
-
-  MiniTest.expect.equality(test_helpers.get_calls(child, "selected_items"), {
-    child.fn.bufnr(paths[1]),
-  })
-end
-```
-
-`make_temp_dir` for a directory the code under test writes into, asserted through `file_contains` (whitespace-normalized literal lines, no Lua patterns):
-
-```lua
-T["PrintRemaps"]["writes the remaps"] = function()
-  local sandbox_dir = test_helpers.make_temp_dir()
-  child.cmd("cd " .. vim.fn.fnameescape(sandbox_dir))
-  child.lua [[vim.keymap.set("n", "gzq", "<cmd>echo 1<CR>")]]
-
-  child.cmd "PrintRemaps"
-
-  MiniTest.expect.equality(
-    test_helpers.file_contains(vim.fs.joinpath(sandbox_dir, "remaps.txt"), "n gzq * <Cmd>echo 1<CR>"),
-    true
-  )
-end
-```
-
-## Buffer fixtures
 
 ```lua
 child.lua_func(test_helpers.open_buffer, { "line 1", "line 2" }) -- unnamed, listed
-child.lua_func(test_helpers.open_named_buffer, "/root/one/foo.lua") -- named for path assertions
+child.lua_func(test_helpers.open_named_buffer, "/root/one/foo.lua") -- named, for path assertions
 child.lua_func(test_helpers.open_scratch_buffer, { "abc" }, { 1, 0 }) -- scratch + cursor
 child.lua_func(test_helpers.open_file_buffer, { "abc" }) -- real file on disk, returns its path
-child.lua_func(test_helpers.edit_file, path) -- `:edit` an existing file
-```
-
-## Async plumbing in process
-
-```lua
-T["async.system()"]["returns the command output"] = function()
-  local task = vim.async.run(function()
-    return vim.async.await(h.async.system { "printf", "%s", "async output" })
-  end)
-  local err, stdout = task:wait(1000)
-
-  MiniTest.expect.equality({ err = err, stdout = stdout }, { err = nil, stdout = "async output" })
-end
 ```
 
 # How to test with 'mini.test'
