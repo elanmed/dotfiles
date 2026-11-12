@@ -10,8 +10,8 @@ conventions are the standard to meet. Expect your plugin to differ in name, stru
 and scope — your job is to determine _how_ it differs from the model, decide
 which differences are gaps worth closing, and close them.
 
-- **the model** — this repo (`elanmed/template.nvim`).
-- **your plugin** — the repo this file has been copied into.
+- **the model** — `elanmed/template.nvim`.
+- **your plugin** — the repo this audit applies to.
 
 ## Plan first; do not make changes
 
@@ -30,20 +30,26 @@ the plan. Note that the plan should not be committed.
 When the user approves the plan and you complete a step, show all the remaining
 steps to do so the user can view what's left.
 
-## 1. Get the model for reference (read-only)
+## 1. Get the model and the criteria
 
 ```sh
 git clone --depth 1 https://github.com/elanmed/template.nvim /tmp/template.nvim
 ```
 
-Read from it; never merge from it. There is no shared history and no shared
-naming, so `git diff`/`git merge` against the model are meaningless.
+Read from the model; never merge from it. There is no shared history and no
+shared naming, so `git diff`/`git merge` against the model are meaningless.
 
-Before inspecting the plugin, read the model's `PRINCIPLES.md` in full. Treat
-it as the primary source of audit criteria, not optional background reading.
-Keep its principles in mind throughout inspection, planning, and implementation;
-re-read relevant principles whenever a decision is unclear. Do not assume the
-model's files or mechanisms are themselves the goal.
+The written-down design conventions live in skills, not in the model's files.
+They are the primary source of audit criteria, not optional background reading:
+read the relevant ones in full before inspecting the plugin, keep them in mind
+throughout inspection, planning, and implementation, and re-read the relevant
+one whenever a decision is unclear.
+
+- `writing-neovim-lua` — code style, native APIs, type annotations, notifications, helpers, and the plugin config surface.
+- `writing-async-neovim-lua` — async wrappers, coroutine typing, and the legacy-async migration.
+- `testing-neovim-plugins` — test layout, child-process testing, fixtures, stubs, and assertions.
+
+Do not assume the model's files or mechanisms are themselves the goal.
 
 ### 1a. Update every submodule to its target branch
 
@@ -83,7 +89,6 @@ plugin's counterpart (or note that it has none):
 | `scripts/pre-push` + `install_hooks.sh` | Runs all checks on push of master                          | hooks / CI config                |
 | `deps/*` (git submodules)               | Pinned dev-only deps: mini.test, ts-vimdoc.nvim            | deps/, CI, plugin manager config |
 | `make docs` → `doc/template.txt`        | Help docs generated from `README.md` via ts-vimdoc         | doc generation                   |
-| `PRINCIPLES.md`                         | Written-down design conventions                            | should not appear in the plugin  |
 | `.gitignore` (`tags`, `!doc/tags`)      | Ignore rules synchronized with the model                   | `.gitignore`                     |
 
 For each component, classify the difference as one of:
@@ -95,13 +100,14 @@ For each component, classify the difference as one of:
 4. **Essentially different** — divergence is a deliberate design decision of
    your plugin. Keep it, and inform the user of the reason
 
-When judging every divergence, compare against the relevant principle in the
-model's `PRINCIPLES.md`, not just the model's implementation. Explicitly map
-proposed changes and deliberate differences to the principle they serve (or
-explain why no principle applies) in `PLAN.md`; do not recommend a change solely
-because the model does it. A different mechanism can fully satisfy a principle—
-keep it and explain the evidence. If a model pattern conflicts with a principle,
-follow the principle and call out the conflict.
+When judging every divergence, compare against the relevant convention in
+`writing-neovim-lua` and `writing-async-neovim-lua`, not just the model's
+implementation. Explicitly map proposed changes and deliberate differences to
+the convention they serve (or explain why no convention applies) in `PLAN.md`;
+do not recommend a change solely because the model does it. A different
+mechanism can fully satisfy a convention—keep it and explain the evidence. If a
+model pattern conflicts with a convention, follow the convention and call out
+the conflict.
 
 ### Look for bugs as well as template gaps
 
@@ -136,8 +142,8 @@ include proposed fixes/tests in the prioritized `PLAN.md`.
   Common test lint fixes include importing `mini.test` directly, naming inner
   callback arguments to avoid shadowing annotated outer arguments, and adding
   return annotations or casts when async type inference needs help. Add these
-  only where the inferred type is insufficient. Follow the model's
-  `PRINCIPLES.md` for these conventions.
+  only where the inferred type is insufficient. Follow the `writing-neovim-lua`
+  and `writing-async-neovim-lua` skills for these conventions.
 - **README accuracy**: Audit the plugin's README against the current source,
   tests, configuration, and generated documentation. In the approved
   implementation phase, remove descriptions of features or options no longer
@@ -158,7 +164,7 @@ accuracy against its actual features.
 
 ## 4. How to update
 
-1. For each adopted component, first identify the principle it serves, then
+1. For each adopted component, first identify the convention it serves, then
    port the **pattern**, not the file: copy the model's file, then rename/trim
    to your plugin's name and layout. Typical
    rename points: module paths, the `pack/dev/start/<name>.nvim` stow target in
@@ -179,31 +185,22 @@ accuracy against its actual features.
 
 A single-file legacy async library (often named `async.lua`) may appear as a
 plugin dependency even though its implementation was copied and pasted into the
-plugin. Treat it as vendored code and migrate its call sites to Neovim's native
-`vim.async` APIs. Remove the copied library and its dependency unless the plugin
-still needs iterator helpers. If it does, **ask the user to include the latest
-`async-iterators.nvim` version**, which provides `batched_iterator` and
-`throttled_iterator`; `lua/template/latest_async.lua` is a useful reference for
-that version. `lua/template/legacy_async.lua` is likewise a useful reference
-for identifying legacy behavior. Neither template file is guaranteed to match
-the plugin's copy exactly; expect similar code, inspect the plugin's actual
-implementation, and use the references as guidance rather than assumed exact
-sources. Since neither template file is guaranteed to match, it's critical
-to ask the user to supply the latest async lua file. The file should be named
-`async-iterators.lua`.
+plugin. Detect it during inspection and include its removal in `PLAN.md`.
 
-Replace legacy `await`/async wrappers with native `vim.async` coroutine
-execution and `vim.async.wrap` for callback-style APIs; use `cb_async` to run
-callbacks in an async context and `ensure_main_loop()` where legacy code needs
-to yield back to the main loop. Preserve behavior and error propagation, and
-remove the old library only after all call sites and tests have been migrated.
+The migration procedure — wrapping callback APIs, `cb_async`, `ensure_main_loop()`,
+preserving error propagation, and asking the user to supply the latest
+`async-iterators.nvim` Lua file when iterator helpers are still needed — is
+specified in the `writing-async-neovim-lua` skill. Follow it, and migrate the
+tests alongside the call sites.
 
 ## 6. Verification checklist
 
 - [ ] `make deploy` (or your plugin's single gate) passes
-- [ ] The model's `PRINCIPLES.md` was read in full before plugin inspection
-- [ ] Every recommendation and retained divergence is assessed against relevant
-      principles, with the principle and rationale made explicit in `PLAN.md`
+- [ ] `writing-neovim-lua`, `writing-async-neovim-lua`, and
+      `testing-neovim-plugins` were read in full before plugin inspection
+- [ ] Every recommendation and retained divergence is assessed against the
+      relevant convention, with that convention and the rationale made explicit
+      in `PLAN.md`
 - [ ] Every row of the section-2 table has an explicit classification with a
       one-sentence justification
 - [ ] Every submodule was fast-forwarded to remote `master`, or any blocker and
