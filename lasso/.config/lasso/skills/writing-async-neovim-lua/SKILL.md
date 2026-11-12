@@ -44,6 +44,8 @@ local ensure_main_loop = function()
 end
 ```
 
+`sleep(0)` yields to the main loop; it is not a way to wait for state. Never sleep for a fixed duration hoping the work finished - poll the condition itself (in tests, `vim.wait` with a predicate).
+
 ## Type async functions and awaited values
 
 Annotate values returned from `vim.async.run` and use a cast when the awaited result's type cannot be inferred:
