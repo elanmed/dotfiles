@@ -7,6 +7,16 @@ description: Use when writing or reviewing Lua that runs in Neovim (a plugin, a 
 
 Conventions for any Lua that runs inside Neovim. Async code has its own skill: `writing-async-neovim-lua`.
 
+## Verify APIs against the installed Neovim
+
+Target nightly Neovim, which the user runs as well, and read `:help` instead of assuming an API exists or recalling its signature from memory — the APIs in use are the modern ones. Dump a help topic to a file:
+
+```sh
+nvim --headless -c "help vim.text.diff" -c ".,.+100w! /tmp/help.txt" -c "qa" 2>&1
+```
+
+Adjust `100` as needed.
+
 ## Prefer an immediately invoked function expression over `cond and a or b`
 
 The ternary-style `cond and a or b` silently drops a falsy `a` and hides multi-step branches:
@@ -27,6 +37,24 @@ The native Lua implementation skips the Vimscript bridge and carries types. Use 
 
 ```lua
 local text = vim.trim(item.text)
+```
+
+## Declare one `local` per variable
+
+```lua
+local first = 1
+local second = 2
+```
+
+## Use long strings for multi-line literals
+
+Prefer `[[...]]` over escaped `\n`:
+
+```lua
+local template = [[
+line one
+line two
+]]
 ```
 
 ## Type annotations
