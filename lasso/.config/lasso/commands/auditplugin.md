@@ -1,1 +1,1 @@
-Use the auditing-neovim-plugins skill
+Use the auditing-neovim-plugin-tests skill
