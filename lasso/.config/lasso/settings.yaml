@@ -62,7 +62,7 @@ keymaps:
   editpage:
     name: "f"
     ctrl: true
-promptPrefix: "􀀀   ▶ "
+promptPrefix: "􀀀   » "
 loadingStateFrames:
   - "􀂗  "
   - "􀂘  "
