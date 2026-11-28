@@ -10,3 +10,7 @@ You are being called in a container, not in the root system where the user is. T
 - Minimize diffs — only change what's necessary
 - Minimize comments - only add a comment when the user asks for one. Do not removing existing comments
 - JavaScript, TypeScript: prefer template literals for multi-line string literals instead of escaped `\n`.
+
+### Interacting with the user
+
+- When you need input from me, ask one question per turn and wait for my answer before asking another. Don’t bundle multiple questions together.
